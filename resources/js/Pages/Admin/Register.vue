@@ -11,15 +11,22 @@
                 <div class="text-center text-md-center mb-4 mt-md-0">
                   <h1 class="mb-0 h3">Create Account </h1>
                 </div>
-                <form action="#" class="mt-4">
+                <form @submit.prevent="submitForm" class="mt-4">
+                  <!-- Form -->
+                  <div class="form-group mb-4">
+                    <label for="email">Your Name</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" v-model="vName" placeholder="Enter your name" id="name" autofocus required>
+                    </div>
+                  </div>
                   <!-- Form -->
                   <div class="form-group mb-4">
                     <label for="email">Your Email</label>
                     <div class="input-group">
-                                        <span class="input-group-text" id="basic-addon1">
-                                            <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                                        </span>
-                      <input type="email" class="form-control" placeholder="example@company.com" id="email" autofocus required>
+                      <span class="input-group-text" id="basic-addon1">
+                          <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                      </span>
+                      <input type="email" class="form-control" v-model="vEmail" placeholder="example@company.com" id="email" autofocus required>
                     </div>
                   </div>
                   <!-- End of Form -->
@@ -28,10 +35,10 @@
                     <div class="form-group mb-4">
                       <label for="password">Your Password</label>
                       <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2">
-                                                <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
-                                            </span>
-                        <input type="password" placeholder="Password" class="form-control" id="password" required>
+                        <span class="input-group-text" id="basic-addon2">
+                            <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                        </span>
+                        <input type="password" placeholder="Password" v-model="vPassword" class="form-control" id="password" required>
                       </div>
                     </div>
                     <!-- End of Form -->
@@ -39,10 +46,10 @@
                     <div class="form-group mb-4">
                       <label for="confirm_password">Confirm Password</label>
                       <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2">
-                                                <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
-                                            </span>
-                        <input type="password" placeholder="Confirm Password" class="form-control" id="confirm_password" required>
+                        <span class="input-group-text" id="basic-addon2">
+                            <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                        </span>
+                        <input type="password" placeholder="Confirm Password" v-model="vConfirmPassword" class="form-control" id="confirm_password" required>
                       </div>
                     </div>
                     <!-- End of Form -->
@@ -74,6 +81,52 @@
     </template>
   </AdminLoginLayout>
 </template>
-<script setup>
+<script>
 import AdminLoginLayout from "../AdminLoginLayout.vue";
+import axios from "axios";
+export default {
+  components: {
+    AdminLoginLayout
+  },
+  data() {
+    return {
+      vEmail: '',
+      vPassword: '',
+      data: '',
+      vConfirmPassword: '',
+      vName:''
+    };
+  },
+  methods: {
+    submitForm() {
+      const formData = {
+        email: this.vEmail,
+        password: this.vPassword,
+        user_name: this.vName
+      };
+      const vConfirmPassword = this.vConfirmPassword;
+
+      if((this.vPassword == vConfirmPassword)){
+        axios.post('/register-action', formData)
+          .then(response => {
+            // Handle the response from the Laravel controller
+            console.log(response.data);
+            if(response.data.status == 200){
+              window.location.href = 'login';
+            }else if(response.data.status == 500){
+              alert(response.data.message);
+            }else{
+              alert(response.data.message);
+            }
+          })
+          .catch(error => {
+            // Handle any errors
+            console.error(error);
+          });
+      }else{
+        alert('your password didnt match');
+      }
+    }
+  }
+};
 </script>

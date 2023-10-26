@@ -4,7 +4,7 @@
     <SideNav />
     <main class="content">
       <TopBar />
-      <Footer />
+<!--      <Footer />-->
       <!-- Middle page content -->
       <slot name="middleContent"></slot>
     </main>

@@ -95,7 +95,7 @@ export default {
             // Handle the response from the Laravel controller
             console.log(response.data);
             if(response.data.status == 200){
-              window.location.href = 'tag';
+              window.location.href = 'page';
             }else if(response.data.status == 500){
               alert(response.data.message);
             }else{

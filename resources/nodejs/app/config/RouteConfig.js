@@ -4,4 +4,6 @@ module.exports = app =>{
     require("../routes/TagRoutes.js")(app)
     require("../routes/PostTagRoutes.js")(app)
     require("../routes/AuthRoutes.js")(app)
+    require("../routes/PageRoutes.js")(app)
+    require("../routes/SliderRoutes.js")(app)
 }

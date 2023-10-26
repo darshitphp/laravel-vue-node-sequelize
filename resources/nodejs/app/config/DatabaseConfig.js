@@ -16,7 +16,7 @@ module.exports ={
     PORT:"3306",
     USER :"root",
     Password:"",
-    DB:"darshit_nodejs",
+    DB:"laravel_volt",
     dialect:"mysql",
     logging: (query) => {
         console.log('Executing query:', query);
