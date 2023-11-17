@@ -123,7 +123,7 @@ return [
     */
 
     'key' => env('APP_KEY'),
-
+    'NODE_BASEURL' => env('NODE_BASEURL'),
     'cipher' => 'AES-256-CBC',
 
     /*

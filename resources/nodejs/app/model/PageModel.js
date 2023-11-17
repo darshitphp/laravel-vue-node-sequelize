@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('./index.js')
-
+// const FooterModel = require('./FooterModel');
 const PageModel = db.define('pages',{
     id:{
         type:Sequelize.INTEGER,
@@ -41,6 +41,7 @@ const PageModel = db.define('pages',{
     createdAt:false,
     updatedAt:false   
 });
+
 //get all tags data
 PageModel.getAllPageData = (req)=>{
     return PageModel.findAll({})
@@ -70,5 +71,9 @@ PageModel.deletePageData = (req)=>{
         where: { id: req.body.id }
     });
 }
+
+// PageModel.associate = function(models) {
+//   PageModel.hasMany(models.FooterTransactionModel, { foreignKey: 'page_id', as: 'footerTransactions', });
+// };
 module.exports = PageModel
 

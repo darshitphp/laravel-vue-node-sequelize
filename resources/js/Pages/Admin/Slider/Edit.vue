@@ -79,7 +79,7 @@
                 <div class="mb-4">
                   <label for="start_from">Start Date</label>
                   <div class="input-group">
-                    <input type="date" id="start_from" v-model="slider.start_from" @input="updatePage('start_from')" class="form-control" name="start_from" value="">
+                    <input type="date" id="start_from" v-model="slider.start_from" @input="updatePage('start_from')" class="form-control" name="start_from">
                   </div>
                   <div id="start_fromError" className="text-danger d-none">Please select start date</div>
                 </div>
@@ -87,7 +87,7 @@
                 <div class="mb-4">
                   <label for="end_to">End Date</label>
                   <div class="input-group">
-                    <input type="date" id="end_to" v-model="slider.end_to" @input="updatePage('end_to')" class="form-control" name="end_to" value="">
+                    <input type="date" id="end_to" v-model="slider.end_to" @input="updatePage('end_to')" class="form-control" name="end_to">
                   </div>
                   <div id="end_toError" className="text-danger d-none">Please select start date</div>
                 </div>
@@ -125,7 +125,7 @@ $(document).on("click",".fa-close",function(){
   //convert into JSON
   slider_image = JSON.stringify(slider_image)
   const removeItems = async () => {
-    const response = await fetch('http://localhost:7000/api/slider/UpdateAfterRemoveImgData', {
+    const response = await fetch('http://customweb.adorncommerce.com:7000/api/slider/UpdateAfterRemoveImgData', {
       method: 'POST',
       body: JSON.stringify({
         slider_image: slider_image,
@@ -283,7 +283,7 @@ export default {
       if (error === false) {
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://localhost:7000/api/slider/updateSliderData', {
+            const response = await fetch('http://customweb.adorncommerce.com:7000/api/slider/updateSliderData', {
               method: 'POST',
               body: this.formData,
             });

@@ -65,7 +65,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await axios.post('http://localhost:7000/api/slider/sliderData');
+        const response = await axios.post('http://customweb.adorncommerce.com:7000/api/slider/sliderData');
         this.data = response.data.data;
       } catch (error) {
         console.error(error);

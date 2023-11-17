@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\HeaderController;
+use App\Http\Controllers\FooterController;
 use Inertia\Inertia;
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +52,25 @@ Route::get('/slider/add', [SliderController::class, 'create']);
 Route::get('/slider/edit/{id}', [SliderController::class, 'edit']);
 Route::get('/slider/delete/{id}', [SliderController::class, 'destroy']);
 Route::post('/slider/store', [SliderController::class, 'store']);
+
+//Form CRUD routes
+Route::get('/form', [FormController::class, 'index']);
+Route::get('/form/add', [FormController::class, 'create']);
+Route::get('/form/edit/{id}', [FormController::class, 'edit']);
+Route::get('/form/delete/{id}', [FormController::class, 'destroy']);
+
+//Header CRUD routes
+Route::get('/header', [HeaderController::class, 'index']);
+Route::get('/header/add', [HeaderController::class, 'create']);
+Route::get('/header/edit/{id}', [HeaderController::class, 'edit']);
+Route::get('/header/delete/{id}', [HeaderController::class, 'destroy']);
+
+//Footer CRUD routes
+Route::get('/footer', [FooterController::class, 'index']);
+Route::get('/footer/add', [FooterController::class, 'create']);
+Route::get('/footer/edit/{id}', [FooterController::class, 'edit']);
+Route::get('/footer/delete/{id}', [FooterController::class, 'destroy']);
+
 });
 
 //Login Register Forgot Password

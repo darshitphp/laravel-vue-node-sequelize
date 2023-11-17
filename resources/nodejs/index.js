@@ -28,5 +28,5 @@ require("./app/config/RouteConfig.js")(app)
 const PORT = process.env.PORT || 7000;
 
 app.listen(PORT,()=>{
-    console.log(`server is running on http://localhost:${PORT}`)
+    console.log(`local server is running on http://customweb.adorncommerce.com:${PORT}`)
 });

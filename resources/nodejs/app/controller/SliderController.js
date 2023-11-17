@@ -202,22 +202,6 @@ exports.UpdateData = (req, resp) => {
       });
 
     });
-
-  // SliderModel.updateSliderData(req,req.body.id)
-  // .then((result) => {
-  //     resp.send({
-  //         status: "success",
-  //         code: "200",
-  //         message: "your record has been updated successfully.",
-  //     });
-  // })
-  // .catch((error) => {
-  //   resp.send({
-  //     status: "error",
-  //     code: "500",
-  //     message: error,
-  //   });
-  // });
 };
 
 exports.DeleteData = (req, resp) => {

@@ -199,7 +199,7 @@ export default {
 
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://localhost:7000/api/page/addPageData', {
+            const response = await fetch('http://customweb.adorncommerce.com:7000/api/page/addPageData', {
               method: 'POST',
               body: JSON.stringify({
                 name: name,

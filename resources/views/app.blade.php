@@ -87,6 +87,9 @@
     <!-- Simplebar -->
     <script src="/assets/js/simplebar.min.js"></script>
 
+    <!-- Tinymce -->
+    <script src="https://cdn.tiny.cloud/1/2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 

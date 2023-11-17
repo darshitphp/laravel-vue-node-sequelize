@@ -72,7 +72,7 @@ export default {
       if (error === false) {
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://localhost:7000/api/tags/updateTagData', {
+            const response = await fetch('http://customweb.adorncommerce.com:7000/api/tags/updateTagData', {
               method: 'POST',
               body: JSON.stringify({
                 vName: vName,
