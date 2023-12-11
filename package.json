@@ -28,6 +28,7 @@
         "vue-html-to-paper": "^2.0.3",
         "vue-loader": "^17.2.2",
         "vue-router": "^4.2.5",
+        "vue-sweetalert2": "^5.0.5",
         "watch": "^0.13.0",
         "zooming": "^2.1.1"
     },

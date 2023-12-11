@@ -29,45 +29,38 @@
                   </div>
                   <div id="shortcodeError" className="text-danger d-none">Please Enter Slider Name</div>
                 </div>
-                <div class="mb-4">
-                  <label for="content">Content</label>
-                  <editor v-model="content" id="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
-                    plugins: 'code',
-                    toolbar: 'code',
-                  }"></editor>
-                  <div id="contentError" className="text-danger d-none">Please enter slider content</div>
-                </div>
-                <div class="mb-4">
-                  <label for="options">Options</label>
-                  <editor v-model="options" id="options" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
-                    plugins: 'code',
-                    toolbar: 'code',
-                  }"></editor>
-                  <div id="optionsError" className="text-danger d-none">Please enter slider options</div>
-                </div>
-                <div class="mb-4">
-                  <label for="options">Upload slider images</label>
-                  <div class="input-group mb-2">
-                    <input type="file" :name="'slider_image[' + index + ']'" class="form-control slider_image" @change="handleFileUpload" accept="image/*">
+                <div style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
+                  <div class="mb-4">
+                    <label for="slider_content_0">Content</label>
+                    <editor id="slider_content_0" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
+                      menubar: 'file edit view format tools',
+                      plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
+                      toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | charmap | preview',
+                    }"></editor>
+                    <div id="contentError" className="text-danger d-none">Please enter slider content</div>
                   </div>
-                  <div v-for="(fileUpload, index) in fileUploads" :key="index" class="fileUpload">
+                  <div class="mb-4">
+                    <label>Upload slider images</label>
                     <div class="input-group mb-2">
-                      <input type="file" :name="'slider_image[' + index + ']'" class="form-control slider_image" @change="handleFileUpload" accept="image/*">
-                      <button @click="removeFileUpload(index)" type="button" class="btn btn-danger">Remove</button>
+                      <input type="file" name="slider_image[0]" class="form-control slider_image" @change="handleFileUpload" accept="image/*">
                     </div>
                   </div>
-                </div>
-                <button @click="addFileUpload" type="button" class="btn btn-primary">Add More</button>
-                <div class="mb-4">
-                  <label for="status">Select status</label>
-                  <div class="input-group">
-                    <select id="status" name="status" class="form-control">
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
-                    </select>
+                  <div class="mb-4">
+                    <label>Select status</label>
+                    <div class="input-group">
+                      <select name="status" class="form-control status">
+                        <option value=""> Select slider status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+                    </div>
+                    <div class="statusError text-danger d-none">Please Select Slider Status</div>
                   </div>
                 </div>
-
+                <div id="appendMoreSliders"></div>
+                <div class="col-12 text-end mt-2">
+                  <button type="button" class="btn btn-primary" id="addSlider">Add More</button>
+                </div>
                 <div class="mb-4">
                   <label for="start_from">Start Date</label>
                   <div class="input-group">
@@ -96,7 +89,51 @@
   </AdminLayout>
 </template>
 <script>
+$(document).ready(function () {
+  var clicker = 1;
+  $(document).on("click","#addSlider",function(){
+    var uniqueId = 'slider_content_'+clicker;
+    var html = `<div style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
+                  <div class="mb-4">
+                    <label>Content</label>
+                    <editor id="`+uniqueId+`" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{ plugins: 'code',toolbar: 'code',}"></editor>
+                  </div>
+                  <div class="mb-4">
+                    <label>Upload slider images</label>
+                    <div class="input-group mb-2">
+                      <input type="file" name="slider_image[`+clicker+`]" class="form-control slider_image" @change="handleFileUpload" accept="image/*">
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label>Select status</label>
+                    <div class="input-group">
+                      <select name="status" class="form-control status">
+                        <option value=""> Select slider status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+                    </div>
+                    <div class="statusError text-danger d-none">Please Select Slider Status</div>
+                  </div>
+                  <div class="col-12 text-end">
+                    <button type="button" class="btn btn-danger removeSliders mb-2">Remove</button>
+                  </div>
+                </div>`;
+    $("#appendMoreSliders").append(html);
+    tinymce.init({
+      selector: '#'+uniqueId,
+      apiKey: '2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh',
+      menubar: 'file edit view format tools',
+      plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
+      toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | charmap | preview',
+    });
+    clicker++;
+  })
 
+  $(document).on("click",".removeSliders",function(){
+    $(this).parent().parent().remove();
+  });
+})
 import AdminLayout from "@/Pages/AdminLayout.vue";
 import Editor from '@tinymce/tinymce-vue';
 
@@ -127,12 +164,6 @@ export default {
     };
   },
   methods: {
-    addFileUpload() {
-      this.fileUploads.push({});
-    },
-    removeFileUpload(index) {
-      this.fileUploads.splice(index, 1);
-    },
     handleFileUpload(event) {
       var files = event.target.files;
       for (let i = 0; i < files.length; i++) {
@@ -150,25 +181,38 @@ export default {
       });
       this.formData.title = document.getElementById("title").value;
       this.formData.shortcode = document.getElementById("shortcode").value;
-      this.formData.content = tinymce.get('content').getContent();
-      this.formData.options = tinymce.get('options').getContent();
       this.formData.start_from = document.getElementById("start_from").value;
       this.formData.end_to = document.getElementById("end_to").value;
-      this.formData.status = document.getElementById("status").value;
+
+      var content = new Array();
+      $(".content").each(function(){
+        var id = $(this).attr('id');
+        if(id != undefined){
+          const innercontent = tinymce.get(id).getContent();
+          content.push(innercontent);
+        }
+      })
+      this.formData.content = content;
+      this.formData.append('content', this.formData.content);
+
+      var status = new Array();
+      $(".status").each(function(){
+        const activestatus = $(this).val();
+        status.push(activestatus);
+      })
+      this.formData.status = status;
+      this.formData.append('status', this.formData.status);
 
       this.formData.append('title', this.formData.title);
       this.formData.append('shortcode', this.formData.shortcode);
-      this.formData.append('content', this.formData.content);
-      this.formData.append('options', this.formData.options);
       this.formData.append('start_from', this.formData.start_from);
       this.formData.append('end_to', this.formData.end_to);
-      this.formData.append('status', this.formData.status);
+
 
       //
       var titleError = document.getElementById("titleError");
       var shortcodeError = document.getElementById("shortcodeError");
       var contentError = document.getElementById("contentError");
-      var optionsError = document.getElementById("optionsError");
       var start_fromError = document.getElementById("start_fromError");
       var end_toError = document.getElementById("end_toError");
 
@@ -197,19 +241,12 @@ export default {
         shortcodeError.classList.add("d-none");
       }
 
-      if (this.formData.content.length === 0) {
-        contentError.classList.remove("d-none");
-        error = true;
-      } else {
-        contentError.classList.add("d-none");
-      }
-
-      if (this.formData.options.length === 0) {
-        optionsError.classList.remove("d-none");
-        error = true;
-      } else {
-        optionsError.classList.add("d-none");
-      }
+      // if (this.formData.content.length === 0) {
+      //   contentError.classList.remove("d-none");
+      //   error = true;
+      // } else {
+      //   contentError.classList.add("d-none");
+      // }
 
       if (this.formData.start_from.length === 0) {
         start_fromError.classList.remove("d-none");
@@ -226,10 +263,10 @@ export default {
       }
 
       if (error === false) {
-
+        console.log(this.formData);
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://customweb.adorncommerce.com:7000/api/slider/addSliderData', {
+            const response = await fetch(apiBaseUrl+'slider/addSliderData', {
               method: 'POST',
               body: this.formData,
             });

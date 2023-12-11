@@ -1,141 +1,161 @@
 <template>
-  <AdminLayout :page="header">
-    <!-- Your middle page content goes here -->
+  <AdminLayout :footer="footer" :data="data">
+  <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
         <div class="card-body">
           <div class="row justify-content-end">
             <div class="col-auto">
-              <a href="/header" class="btn btn-gray-800 me-2 my-2">Back</a>
+              <a href="/footer" class="btn btn-gray-800 me-2 my-2">Back</a>
             </div>
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Page</h1>
+              <h1 class="h3 mb-4">Add Footer</h1>
               <form>
                 <!-- Form -->
                 <div class="mb-4">
-                  <label for="title">Header title</label>
+                  <label for="title">Footer title</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter title name" v-model="header.title" @input="updatePage('title')" id="title" required>
-                    <input type="hidden" name="id" id="id" :value="header.id">
+                    <input type="text" class="form-control" placeholder="Enter title name" id="title" v-model="footer['footer']['title']" @input="updatePage(footer['footer']['title'])" required>
+                    <input type="hidden" class="form-control" id="id" v-model="footer['footer']['id']">
                   </div>
-                  <div id="titleError" className="text-danger d-none">Please Enter Header Title</div>
+                  <div id="titleError" style="display: none" className="text-danger">Please Enter Header Title</div>
                 </div>
                 <div class="mb-4">
-                  <label for="position">Select Position type</label>
+                  <label for="position">Footer status</label>
                   <div class="input-group">
-                    <select id="position" name="position" class="form-control">
-                      <option value="">Select header position type</option>
-                      <option :selected="header.position === 'left'" value="left">Left</option>
-                      <option :selected="header.position === 'center'" value="center">Center</option>
-                      <option :selected="header.position === 'right'" value="right">Right</option>
+                    <select id="footerStatus" name="footerStatus" class="form-control">
+                      <option value="">Select footer status</option>
+                      <option :selected="footer['footer']['status'] === 'active'" value="active">Active</option>
+                      <option :selected="footer['footer']['status'] === 'inactive'" value="inactive">Inactive</option>
                     </select>
                   </div>
-                  <div id="positionError" className="text-danger d-none">Please Select header position type</div>
+                  <div id="footerStatusError" style="display: none" className="text-danger">Please Select Footer Status</div>
                 </div>
                 <div class="mb-4">
-                  <label>Header Logo</label>
-                  <div class="input-group">
-                    <input type="file" class="form-control" id="header_logo" name="image" accept="image/*" @change="handleHeaderLogoUpload" required>
-                    <input type="hidden" id="old_header_logo" :value="header.logo_img">
+                  <div class="">
+                    <div class="mb-4">
+                      <label>Link Type</label>
+                      <div class="input-group">
+                        <select name="position" class="form-control linkType">
+                          <option value="">Select Link Type</option>
+                          <option value="predefined">Predefined</option>
+                          <option value="custom">Custom</option>
+                        </select>
+                      </div>
+                      <div id="positionError" style="display: none" className="text-danger">Please Select header position type</div>
+                    </div>
+                    <div class="mb-4 customLinkWrapper" style="display: none;">
+                      <label>Custom link</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control customLink" placeholder="Enter custom link" required>
+                      </div>
+                      <div id="customLinkError" style="display: none" className="text-danger">Please Enter Custom Link</div>
+                    </div>
+                    <div class="mb-4 pageLinkWrapper" style="display: none;">
+                      <label>Select page link</label>
+                      <div class="input-group">
+                        <select name="pageLink" class="form-control pageLink">
+                          <option value="">Select Page Link</option>
+                          <option v-for="(item, index) in data" id="pageLink" :value="item.id">{{ item.name }}</option>
+                        </select>
+                      </div>
+                      <div id="positionError" style="display: none" className="text-danger">Please Select header position type</div>
+                    </div>
+                    <div class="mb-4">
+                      <label>Content Text</label>
+                      <editor id="content" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
+                          menubar: false,
+                          plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                          ],
+                          toolbar:
+                            'undo redo | formatselect | bold italic backcolor | \
+                            alignleft aligncenter alignright alignjustify | \
+                            bullist numlist outdent indent | removeformat | help'
+                      }"></editor>
+                    </div>
+                    <div class="mb-4">
+                      <label for="position">Footer link status</label>
+                      <div class="input-group">
+                        <select name="footerLinkStatus" class="form-control footerLinkStatus">
+                          <option value="">Select footer link status</option>
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                        </select>
+                      </div>
+                      <div id="footerLinkStatusError" style="display: none" className="text-danger">Please Select header position type</div>
+                    </div>
                   </div>
-                  <img :src="'/assets/img/header_logo/'+header.logo_img" alt="" height="100" width="100">
-                  <div id="imageError" className="text-danger d-none">Please select logo image</div>
-                </div>
-                <div class="mb-4">
-                  <label>Social Links</label>
-<!--                  <div class="">-->
-<!--                    <div class="mb-4">-->
-<!--                      <label>Social account title</label>-->
-<!--                      <div class="input-group">-->
-<!--                        <input type="text" class="form-control social_title" placeholder="Enter title name" v-model="header.logo_title" @input="updatePage('logo_title')" name="logo_title" required>-->
-<!--                      </div>-->
-<!--                      <div id="titleError" className="text-danger d-none">Please enter social title</div>-->
-<!--                    </div>-->
-<!--                    <div class="mb-4">-->
-<!--                      <label>Social account image</label>-->
-<!--                      <div class="input-group">-->
-<!--                        <input type="file" class="form-control social_image" :name="'social_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>-->
-<!--                      </div>-->
-<!--                      <div id="imageError" className="text-danger d-none">Please select logo image</div>-->
-<!--                    </div>-->
-<!--                    <div class="mb-4">-->
-<!--                      <label>Social account link</label>-->
-<!--                      <div class="input-group">-->
-<!--                        <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" required>-->
-<!--                      </div>-->
-<!--                      <div id="titleError" className="text-danger d-none">Please enter social link</div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-
-                  <button type="button" @click="addFileUpload" id="addMoreInputs" class="btn btn-gray-800">Add</button>
+                  <button type="button" id="addMoreFooters1" class="btn btn-gray-800">Add</button>
                   <div class="moreSocialContents">
-                    <div v-for="(datas, index) in header.social_links">
+                    <div class="" v-for="(datas, index) in footer['footerTransaction']">
                       <div class="mb-4">
-                        <label>Social account title</label>
+                        <label>Link Type</label>
                         <div class="input-group">
-                          <input type="text" class="form-control social_title" placeholder="Enter title name" name="logo_title" v-model="datas[0]" @input="updatePage(datas[0])" required>
+                          <select name="position" class="form-control linkType">
+                            <option value="">Select Link Type</option>
+                            <option :selected="datas['page_id'] != null" value="predefined">Predefined</option>
+                            <option :selected="datas['custom_link'] != null" value="custom">Custom</option>
+                          </select>
                         </div>
-                        <div id="titleError" className="text-danger d-none">Please enter social title</div>
+                        <div id="positionError" class="text-danger d-none">Please Select header position type</div>
+                      </div>
+                      <div class="mb-4 customLinkWrapper" v-if="datas['custom_link'] != null" :style="{ display: datas['custom_link'] ? 'block' : 'none' }">
+                        <label>Custom link</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control customLink" placeholder="Enter custom link" v-model="datas['custom_link']" @input="updatePage(datas['custom_link'])" required>
+                        </div>
+                        <div id="customLinkError" class="text-danger" style="display: none">Please Enter Custom Link</div>
+                      </div>
+                      <div class="mb-4 pageLinkWrapper" v-if="datas['page_id'] != null" :style="{ display: datas['page_id'] ? 'block' : 'none' }">
+                        <label>Select page link</label>
+                        <div class="input-group">
+                          <select name="pageLink" class="form-control pageLink">
+                            <option value="">Select Page Link</option>
+                            <option :selected="datas['page_id'] == item.id" v-for="(item, index) in data" id="pageLink" :value="item.id">{{ item.name }}</option>
+                          </select>
+                        </div>
+                        <div class="text-danger positionError" style="display: none">Please Select header position type</div>
                       </div>
                       <div class="mb-4">
-                        <label>Social account image</label>
-                        <div class="input-group">
-                          <input type="file" class="form-control social_image dp" :name="'social_image[' + index + ']'" @change="handleFileUpload($event, index)" accept="image/*" required>
-                          <input type="hidden" name="social_image" class="hidden_social_image" :value="datas[1]">
-                        </div>
-                        <img :src="'/assets/img/header_logo/social_media/'+datas[1]" alt="" height="100" width="100">
-                        <div id="imageError" className="text-danger d-none">Please select logo image</div>
+                        <label>Content Text</label>
+                        <editor :id="'editor_'.index" v-model="datas.content" @input="updatePage(datas.content)" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{ menubar: false, plugins: [ 'advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount' ], toolbar: 'undo redo | formatselect | bold italic backcolor | \ alignleft aligncenter alignright alignjustify | \ bullist numlist outdent indent | removeformat | help' }"></editor>
                       </div>
                       <div class="mb-4">
-                        <label>Social account link</label>
+                        <label for="position">Footer link status</label>
                         <div class="input-group">
-                          <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" v-model="datas[2]" required>
+                          <select name="footerLinkStatus" class="form-control footerLinkStatus">
+                            <option value="">Select footer link status</option>
+                            <option :selected="datas.status === 'active'" value="active">Active</option>
+                            <option :selected="datas.status === 'inactive'" value="inactive">Inactive</option>
+                          </select>
                         </div>
-                        <div id="titleError" className="text-danger d-none">Please enter social link</div>
+                        <div className="text-danger footerLinkStatusError" style="display: none">Please Select header position type</div>
                       </div>
-                      <button type="button" @click="removeFileUpload(index)" class="btn btn-danger removeMoreSocial">Remove</button>
+                      <button type="button" class="btn btn-danger removeMoreSocial">Remove</button>
                     </div>
                   </div>
-                  <div class="input-group" id="socialGroup" style="display: none">
-                    <div>
-                      <div class="mb-4">
-                        <label>Social account title</label>
-                        <div class="input-group">
-                          <input type="text" class="form-control social_title" placeholder="Enter title name" name="logo_title" required>
-                        </div>
-                        <div id="titleError" className="text-danger d-none">Please enter social title</div>
+                  <div id="hiddenPageLink">
+                    <div class="mb-4 pageLinkWrapper" style="display: none;">
+                      <label>Select page link</label>
+                      <div class="input-group">
+                        <select name="pageLink" class="form-control pageLink">
+                          <option value="">Select Page Link</option>
+                          <option v-for="(item, index) in data" id="pageLink" :value="item.id">{{ item.name }}</option>
+                        </select>
                       </div>
-                      <div class="mb-4">
-                        <label>Social account image</label>
-                        <div class="input-group">
-                          <input type="file" class="form-control social_image" :name="'social_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>
-                        </div>
-                        <div id="imageError" className="text-danger d-none">Please select logo image</div>
-                      </div>
-                      <div class="mb-4">
-                        <label>Social account link</label>
-                        <div class="input-group">
-                          <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" required>
-                        </div>
-                        <div id="titleError" className="text-danger d-none">Please enter social link</div>
-                      </div>
-                      <button type="button" @click="removeFileUpload(index)" class="btn btn-danger removeMoreSocial">Remove</button>
+                      <div id="positionError" style="display: none" className="text-danger">Please Select header position type</div>
                     </div>
                   </div>
                 </div>
 
-                <div class="mb-4">
-                  <label for="content">Content Text</label>
-                  <editor id="content" v-model="header.content" @input="updatePage('content')" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
-                    plugins: 'code',
-                    toolbar: 'code',
-                  }"></editor>
-                </div>
                 <div class="d-grid offset-4 col-3 align-items-center justify-content-center">
-                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Update</button>
+                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Submit</button>
                 </div>
               </form>
             </div>
@@ -147,10 +167,73 @@
 </template>
 <script>
 $(document).ready(function() {
-
-  $(document).on("click","#addMoreInputs",function() {
-    var hiddenInputs = $('#socialGroup').html();
+  var count = 0;
+  $(document).on("click","#addMoreFooters1",function() {
+    // var hiddenInputs = $('#socialGroup').html();
+    var uniqueId = 'editor_'+count;
+    var hiddenPageLink = $("#hiddenPageLink").html();
+    var hiddenInputs = `<div class="">
+      <div class="mb-4">
+        <label>Link Type</label>
+        <div class="input-group">
+          <select name="position" class="form-control linkType">
+            <option value="">Select Link Type</option>
+            <option value="predefined">Predefined</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div id="positionError" class="text-danger d-none">Please Select header position type</div>
+      </div>
+      <div class="mb-4 customLinkWrapper" style="display: none;">
+        <label>Custom link</label>
+        <div class="input-group">
+          <input type="text" class="form-control customLink" placeholder="Enter custom link" required>
+        </div>
+        <div id="customLinkError" class="text-danger" style="display: none">Please Enter Custom Link</div>
+      </div>`;
+    hiddenInputs += hiddenPageLink;
+    hiddenInputs += `<div class="mb-4">
+        <label>Content Text</label>
+        <editor id="`+uniqueId+`" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{ menubar: false, plugins: [ 'advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount' ], toolbar: 'undo redo | formatselect | bold italic backcolor | \ alignleft aligncenter alignright alignjustify | \ bullist numlist outdent indent | removeformat | help' }"></editor>
+      </div>
+      <div class="mb-4">
+        <label for="position">Footer link status</label>
+        <div class="input-group">
+          <select name="footerLinkStatus" class="form-control footerLinkStatus">
+            <option value="">Select footer link status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div className="text-danger footerLinkStatusError" style="display: none">Please Select header position type</div>
+      </div>
+      <button type="button" class="btn btn-danger removeMoreSocial">Remove</button>
+    </div>`;
     $('.moreSocialContents').append(hiddenInputs);
+    tinymce.init({
+      selector: '#'+uniqueId,
+      apiKey: '2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh',
+      menubar: false,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount'
+      ],
+      toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+    });
+    count++;
+  });
+
+  $(document).on("change",".linkType",function() {
+    var linkType = $(this).val();
+    if(linkType == 'predefined'){
+      $(this).parent().parent().parent().find(".pageLinkWrapper").show();
+      $(this).parent().parent().parent().find(".customLinkWrapper").hide();
+    }
+    else if(linkType == 'custom'){
+      $(this).parent().parent().parent().find(".customLinkWrapper").show();
+      $(this).parent().parent().parent().find(".pageLinkWrapper").hide();
+    }
   });
 
   $(document).on('click', '.removeMoreSocial', function() {
@@ -160,30 +243,25 @@ $(document).ready(function() {
 });
 
 import AdminLayout from "@/Pages/AdminLayout.vue";
-import editor from "@tinymce/tinymce-vue";
+import Editor from '@tinymce/tinymce-vue';
 
 export default {
   components: {
-    editor,
-    AdminLayout
+    AdminLayout,
+    'editor': Editor
   },
   props: {
-    header: {
+    data: {
+      type: Array, // Adjust the type based on your data type
+      required: true,
+    },
+    footer: {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
   },
   data() {
     return {
-      header: this.header,
-      data: '',
-      body: '',
-      fileUploads: [],
-      social_image: [],
-      header_logo: '',
-      formData : new FormData(),
-      custom_js: '',
-      custom_css: '',
       editorConfig: {
         // Example options
         menubar: false,
@@ -197,135 +275,116 @@ export default {
     };
   },
   methods: {
-    addFileUpload() {
-      this.fileUploads.push({});
-    },
-    removeFileUpload(index) {
-      this.fileUploads.splice(index, 1);
-    },
-    handleFileUpload(event, index) {
-      const fileInput = event.target;
-      const selectedFile = fileInput.files[0];
-
-      // Assuming you have an array named 'socialImages' to store the selected files
-      this.socialImages[index] = selectedFile;
-
-      var files = event.target.files;
-      for (let i = 0; i < files.length; i++) {
-        this.formData.social_image = files[i];
-      }
-    },
-    handleHeaderLogoUpload(event) {
-      var files = event.target.files;
-      for (let i = 0; i < files.length; i++) {
-        this.formData.header_logo = files[i];
-      }
-    },
     updatePage(propertyName, event) {
       if (event.target) {
         this.page[propertyName] = event.target.value;
       }
     },
     handleSubmit(){
-      this.formData.title = document.getElementById("title").value;
-      this.formData.position = document.getElementById("position").value;
-      this.formData.content = tinymce.get('content').getContent();
-      this.formData.id = document.getElementById("id").value;
+      var title = document.getElementById("title").value;
+      var footerStatus = document.getElementById("footerStatus").value;
+      var id = document.getElementById("id").value;
+      const content = [];
+      $('textarea.content').each(function () {
+        // Get the TinyMCE instance for each element
+        var editor = tinymce.get($(this).attr('id'));
 
-      this.formData.append('title', this.formData.title);
-      this.formData.append('position', this.formData.position);
-      this.formData.append('content', this.formData.content);
-      this.formData.append('id', this.formData.id);
-
-      // const formData = new FormData();
-      const fileInputs = document.querySelectorAll('.social_image'); // Get all elements with class name "slider_image"
-      var socialImageArray = new Array();
-      fileInputs.forEach((fileInput) => {
-        //getting old files data
-        var social_image = $(fileInput).parent().find(".hidden_social_image").val();
-        const file = fileInput.files[0];
-        if(file != null){
-          //here if get new file element then we try to replace with new one
-          this.formData.append('social_image[]', file);
-          socialImageArray.push(file);
-          console.log("file: "+file);
-        }else{
-          //else we remains same to old file names
-          if(social_image != undefined){
-            this.formData.append('social_image[]', social_image);
-            socialImageArray.push(social_image);
-          }
+        // Check if the editor instance exists
+        if (editor) {
+          // Get the content and log it to the console
+          var contentWithClass = editor.getContent({ format: 'html' });
+          content.push(contentWithClass);
         }
       });
 
-      // const social_title = document.querySelectorAll('.social_title');
-      const social_title = new Array();
-      $(".social_title").each(function(){
-        var vTitle = $(this).val();
-        if(vTitle.length != 0){
-          social_title.push(vTitle);
+      var footerLinkStatusArray = new Array();
+      $(".footerLinkStatus").each(function(){
+        var linkStatus = $(this).val();
+        footerLinkStatusArray.push(linkStatus);
+      });
+
+      var pageLinkArray = new Array();
+      var customLinkArray = new Array();
+
+      $('editor.content').each(function () {
+        // Get the TinyMCE instance for each element
+        var editor = tinymce.get($(this).attr('id'));
+
+        // Check if the editor instance exists
+        if (editor) {
+          // Get the content and log it to the console
+          var contentWithClass = editor.getContent({ format: 'html' });
+          content.push(contentWithClass);
+        }
+      });
+
+      var transactionArray = [];
+      $(".linkType").each(function(index, element){
+        if (!transactionArray[index]) {
+          // If the index doesn't exist, initialize it as an array
+          transactionArray[index] = [];
+        }
+        var linkType = $(this).val();
+        if(linkType == 'predefined'){
+          var pLink = $(this).parent().parent().parent().find('.pageLink').val();
+          if (pLink.length != 0){
+            pageLinkArray.push(pLink);
+            transactionArray[index].push(["page_id" , pLink]);
+            transactionArray[index].push(["custom_link", null]);
+          }
+        }
+        else if(linkType == 'custom'){
+          var cLink = $(this).parent().parent().parent().find('.customLink').val();
+          if (cLink.length != 0){
+            customLinkArray.push(cLink);
+            transactionArray[index].push(["page_id", null]);
+            transactionArray[index].push(["custom_link", cLink]);
+          }
+        }
+        if (content[index].length != 0){
+          const currentContent = content[index];
+          transactionArray[index].push(["content", currentContent]);
+        }
+        if (footerLinkStatusArray[index] != 0){
+          const currentfooterLinkStatus = footerLinkStatusArray[index];
+          transactionArray[index].push(["status", currentfooterLinkStatus]);
         }
       })
-
-      this.formData.social_title = social_title;
-      this.formData.append('social_title', this.formData.social_title);
-      // const social_link = document.querySelectorAll('.social_link');
-      const social_link = new Array();
-      $(".social_link").each(function(){
-        var vLink = $(this).val();
-        if(vLink.length != 0){
-          social_link.push(vLink);
-        }
-      })
-
-      this.formData.social_link = social_link;
-      this.formData.append('social_link', this.formData.social_link);
-
-      var header_logo = document.getElementById("header_logo");
-
-      var headerLogoFile = header_logo.files[0];
-      if(headerLogoFile = undefined){
-        this.formData.append('header_logo', headerLogoFile); // Append the header logo file to formData
-      }
-      else{
-        const headerLogoFile = $("#old_header_logo").val();
-        this.formData.append('header_logo', headerLogoFile); // Append the header logo file to formData
-      }
-
-      var titleError = document.getElementById("titleError");
-      var positionError = document.getElementById("positionError");
-
-      console.log("social_title:" +social_title);
-      console.log("social_image:" +socialImageArray);
-      console.log("social_link:" +social_link);
 
       let error = false;
 
-      if (this.formData.title.length === 0) {
-        titleError.classList.remove("d-none");
+      if (title.length == 0) {
+        $("#titleError").show();
         error = true;
       } else {
-        titleError.classList.add("d-none");
+        $("#titleError").hide();
       }
 
-      if (this.formData.position.length === 0) {
-        positionError.classList.remove("d-none");
+      if (footerStatus.length == 0) {
+        $("#footerStatusError").show();
         error = true;
       } else {
-        positionError.classList.add("d-none");
+        $("#footerStatusError").hide();
       }
 
-      if (error === false) {
-        console.log(this.formData);
+      if (error == false) {
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://127.0.0.1:7000/api/header/updateHeaderData',  {
+            const response = await fetch(apiBaseUrl+'footer/updateFooterData', {
               method: 'POST',
-              body: this.formData,
+              body: JSON.stringify({
+                id:id,
+                title:title,
+                status:footerStatus,
+                transactionArray:transactionArray
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){
-              window.location.href = '/header';
+              window.location.href = '/footer';
             }
           } catch (error) {
             console.error(error);

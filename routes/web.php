@@ -7,6 +7,13 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\HeaderController;
 use App\Http\Controllers\FooterController;
+use App\Http\Controllers\BlogCategoryController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\PopupController;
+use App\Http\Controllers\GallaryController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Inertia\Inertia;
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +78,44 @@ Route::get('/footer/add', [FooterController::class, 'create']);
 Route::get('/footer/edit/{id}', [FooterController::class, 'edit']);
 Route::get('/footer/delete/{id}', [FooterController::class, 'destroy']);
 
+//Blog Category CRUD routes
+Route::get('/blog-category', [BlogCategoryController::class, 'index']);
+Route::get('/blog-category/add', [BlogCategoryController::class, 'create']);
+Route::get('/blog-category/edit/{id}', [BlogCategoryController::class, 'edit']);
+Route::get('/blog-category/delete/{id}', [BlogCategoryController::class, 'destroy']);
+
+//Blog Category CRUD routes
+Route::get('/blog', [BlogController::class, 'index']);
+Route::get('/blog/add', [BlogController::class, 'create']);
+Route::get('/blog/edit/{id}', [BlogController::class, 'edit']);
+Route::get('/blog/delete/{id}', [BlogController::class, 'destroy']);
+
+//Blog Category CRUD routes
+Route::get('/popup', [PopupController::class, 'index']);
+Route::get('/popup/add', [PopupController::class, 'create']);
+Route::get('/popup/edit/{id}', [PopupController::class, 'edit']);
+Route::get('/popup/delete/{id}', [PopupController::class, 'destroy']);
+
+//Slider CRUD routes
+Route::get('/gallary', [GallaryController::class, 'index']);
+Route::get('/gallary/add', [GallaryController::class, 'create']);
+Route::get('/gallary/edit/{id}', [GallaryController::class, 'edit']);
+Route::get('/gallary/delete/{id}', [GallaryController::class, 'destroy']);
+
+//Category CRUD routes
+Route::get('/category', [CategoryController::class, 'index']);
+Route::get('/category/add', [CategoryController::class, 'create']);
+Route::get('/category/edit/{id}', [CategoryController::class, 'edit']);
+Route::get('/category/delete/{id}', [CategoryController::class, 'destroy']);
+
+//Product CRUD routes
+Route::get('/product', [ProductController::class, 'index']);
+Route::get('/product/add', [ProductController::class, 'create']);
+Route::get('/product/edit/{id}', [ProductController::class, 'edit']);
+Route::get('/product/delete/{id}', [ProductController::class, 'destroy']);
+
+//Blog Category CRUD routes
+Route::get('/setting', [SettingController::class, 'index']);
 });
 
 //Login Register Forgot Password

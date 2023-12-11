@@ -15,7 +15,11 @@ class PageController extends Controller
     public function index()
     {
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Page/List");
+        $data = [
+            'title' => 'Page | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
+        return Inertia::render("Admin/Page/List")->with($data);
     }
 
     /**
@@ -23,7 +27,18 @@ class PageController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Admin/Page/Add");
+        $data = [
+            'title' => 'Page-Add | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
+        $sliderResponse = Http::post(env('NODE_BASEURL_LIVE').'slider/sliderData', $data);
+        $sliderData = $sliderResponse->json();
+        $formResponse = Http::post(env('NODE_BASEURL_LIVE').'form/formData', $data);
+        $formData = $formResponse->json();
+        return Inertia::render("Admin/Page/Add",[
+            'slider' => $sliderData['data'],
+            'form' => $formData['data']
+        ])->with($data);
     }
 
     /**
@@ -50,12 +65,23 @@ class PageController extends Controller
         $data = [
             'id' => $iPageId
         ];
-        $response = Http::post('http://localhost:7000/api/page/getPageDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'page/getPageDataById', $data);
         $data = $response->json();
+        $sliderResponse = Http::post(env('NODE_BASEURL_LIVE').'slider/sliderData', $data);
+        $sliderData = $sliderResponse->json();
+        $formResponse = Http::post(env('NODE_BASEURL_LIVE').'form/formData', $data);
+        $formData = $formResponse->json();
+//        dd($data);
+        $metaData = [
+            'title' => 'Page-Edit | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Page/Edit",[
-            'page' => $data['data']
-        ]);
+            'page' => $data['data'],
+            'slider' => $sliderData['data'],
+            'form' => $formData['data']
+        ])->with($metaData);
     }
 
     /**
@@ -74,7 +100,7 @@ class PageController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post('http://localhost:7000/api/page/deletePageData', $data);
+            $response = Http::post(env('NODE_BASEURL_LIVE').'page/deletePageData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

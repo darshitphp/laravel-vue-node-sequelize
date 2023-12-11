@@ -1,4 +1,5 @@
 const SliderModel = require('../model/SliderModel');
+const SliderTransaction = require('../model/SliderTransactionModel');
 
 exports.FindAllData = (req, resp) => {
   SliderModel.getAllSliderData(req)
@@ -82,19 +83,37 @@ exports.AddData = (req, resp) => {
 
       // Access the uploaded files
       const files = req.files;
-      sliderImageArray = JSON.stringify(sliderImageArray);
-      
-      req.body.slider_image = sliderImageArray;
-      console.log(req);
-      // Do something with the form data and uploaded files
+      console.log(sliderImageArray);
+      var transactionArray = [];
+      for (var i = content.length - 1; i >= 0; i--) {
+        transactionArray.push([
+          ["slider_image", sliderImageArray[i]],
+          ["content", content[i]],
+          ["status", status[i]]
+        ]);
+      }
 
       SliderModel.addSliderData(req)
       .then((result) => {
+        const lastInsertedId = result.dataValues.id;
+        console.log(lastInsertedId);
+        console.log(transactionArray);
+        console.log(req.body);
+        SliderTransaction.addSliderTransactionData(transactionArray)
+        .then((result1) => {
           resp.send({
-              status: "success",
-              code: "200",
-              message: "your record has been inserted successfully.",
+            status: "success",
+            code: "200",
+            message: "your record has been inserted successfully.",
           });
+        })
+        .catch((error) => {
+          resp.send({
+            status: "error",
+            code: "500",
+            message: error,
+          });
+        });
       })
       .catch((error) => {
         resp.send({
@@ -103,6 +122,23 @@ exports.AddData = (req, resp) => {
           message: error,
         });
       });
+      // Do something with the form data and uploaded files
+
+      // SliderModel.addSliderData(req)
+      // .then((result) => {
+      //     resp.send({
+      //         status: "success",
+      //         code: "200",
+      //         message: "your record has been inserted successfully.",
+      //     });
+      // })
+      // .catch((error) => {
+      //   resp.send({
+      //     status: "error",
+      //     code: "500",
+      //     message: error,
+      //   });
+      // });
     });
 
   
@@ -182,7 +218,7 @@ exports.UpdateData = (req, resp) => {
         });
         
         req.body.slider_image = JSON.stringify(oldSliderImagesData);
-
+        console.log(req.body);
         SliderModel.updateSliderData(req,req.body.id)
         .then((result) => {
             resp.send({

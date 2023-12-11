@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const db = require('./index.js');
-const FooterModel = require('./FooterModel');
 
 const FooterTransactionModel = db.define('footer_transaction',{
     id:{
@@ -42,21 +41,38 @@ FooterTransactionModel.getIdFooterTransactionData = (req) => {
   });
 };
 
+//get by id tags data
+FooterTransactionModel.getByFooterIdTransactionData = (req) => {
+  return FooterTransactionModel.findAll({
+    where: { footer_id: req }
+  });
+};
+
 //insert into tag table
-FooterTransactionModel.addFooterTransactionData = (req)=>{
-    const updatedArray = [];
-    for (let i = 0; i < req.body.length; i++) {
-      const { social_image, social_title, social_link, ...rest } = req.body[i];
-      updatedArray.push(rest);
-    }
-    return FooterTransactionModel.create(req.body)
-}
+FooterTransactionModel.addFooterTransactionData = (req) => {
+    // Convert the array of arrays to an array of objects
+    const transactions = req.map((transactionArray) => {
+      const transactionObject = {};
+      transactionArray.forEach(([key, value]) => {
+        transactionObject[key] = value;
+      });
+      return transactionObject;
+    });    // Use bulkCreate to insert multiple records
+    return FooterTransactionModel.bulkCreate(transactions)
+};
 
 FooterTransactionModel.updateFooterTransactionData = (req,updateId)=>{
     return FooterTransactionModel.update(req.body, { where: { id: updateId } })
 }
 
-//deleted into tag table
+//deleted from Footer Transaction table
+FooterTransactionModel.deleteFooterTransactionDataByFooterId = (req)=>{
+    return FooterTransactionModel.destroy({
+        where: { footer_id: req }
+    });
+}
+
+//deleted into footer transaction table
 FooterTransactionModel.deleteFooterTransactionData = (req)=>{
     return FooterTransactionModel.destroy({
         where: { id: req.body.id }

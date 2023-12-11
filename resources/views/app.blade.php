@@ -1,34 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="canonical" href="https://themesberg.com/product/laravel/volt-admin-dashboard-template">
-    <meta  name="keywords" content="themesberg, updivision, html dashboard, laravel, livewire, laravel livewire, alpine.js, html css dashboard laravel, Volt Laravel Admin Dashboard, livewire volt dashboard, volt admin, livewire dashboard, livewire admin, web dashboard, bootstrap 5 dashboard laravel, bootstrap 5, css3 dashboard, bootstrap 5 admin laravel, volt dashboard bootstrap 5 laravel, frontend, responsive bootstrap 5 dashboard, volt dashboard, volt laravel bootstrap 5 dashboard"></meta>
-    <meta  name="description" content="Volt Laravel Admin Dashboard features dozens of UI components and a Laravel backend with Livewire & Alpine.js"></meta>
-    <meta  itemprop="name" content="Volt Laravel Admin Dashboard by Themesberg & UPDIVISION"></meta>
-    <meta  itemprop="description" content="Volt Laravel Admin Dashboard features dozens of UI components and a Laravel backend with Livewire & Alpine.js"></meta>
-    <meta  itemprop="image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-laravel-dashboard/volt-free-laravel-dashboard.jpg"></meta>
-    <meta  name="twitter:card" content="product"></meta>
-    <meta  name="twitter:site" content="@themesberg"></meta>
-    <meta  name="twitter:title" content="Volt Laravel Admin Dashboard by Themesberg & UPDIVISION"></meta>
-    <meta  name="twitter:description" content="Volt Laravel Admin Dashboard features dozens of UI components and a Laravel backend with Livewire & Alpine.js"></meta>
-    <meta  name="twitter:creator" content="@themesberg"></meta>
-    <meta  name="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-laravel-dashboard/volt-free-laravel-dashboard.jpg"></meta>
-    <meta  property="fb:app_id" content="655968634437471"></meta>
-    <meta  property="og:title" content="Volt Laravel Admin Dashboard by Themesberg & UPDIVISION"></meta>
-    <meta  property="og:type" content="article"></meta>
-    <meta  property="og:url" content="https://themesberg.com/product/laravel/volt-admin-dashboard-template/preview"></meta>
-    <meta  property="og:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-laravel-dashboard/volt-free-laravel-dashboard.jpg"></meta>
-    <meta  property="og:description" content="Volt Laravel Admin Dashboard features dozens of UI components and a Laravel backend with Livewire & Alpine.js"></meta>
-    <meta  property="og:site_name" content="Themesberg"></meta>
-    <link rel="apple-touch-icon" href="../../assets/img/favicon/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" href="../../assets/img/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="../../assets/img/favicon/favicon-16x16.png" sizes="16x16" type="image/png">
-
-    <link rel="mask-icon" href="../../assets/img/favicon/safari-pinned-tab.svg" color="#563d7c">
-    <link rel="icon" href="../../assets/img/favicon/favicon.ico">
-    <meta name="msapplication-config" content="../../assets/img/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#563d7c">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <?php $baseUrl = env('NODE_BASEURL_LIVE'); ?>
+    <title>{{ $page['props']['title'] ?? 'Custom Web|Adorn commerce' }}</title>
+    <meta property="og:title" content="{{ $metaDescription ?? 'Custom Web|Adorn commerce' }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AdornCommerce">
+    <meta property="og:url" content="https://www.adorncommerce.com/">
+    <meta property="og:description" content="AdornCommerce is the most renowned Magento eCommerce website design & development company. Globally present with offices in Ahmedabad, India & USA">
+    <meta property="og:image" content="https://assets-global.website-files.com/651ab75e1593e4377b7954ca/65215ec4f6d6c2778cd69c17_AdornCommerce%20Logo.png">
+    <link rel="icon" href="../../assets/img/favicon/fav-icon.svg" type="image/svg">
 
     <!-- Apex Charts -->
     <link type="text/css" href="/vendor/apexcharts/apexcharts.css" rel="stylesheet">
@@ -92,6 +73,11 @@
 
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script>
+        var apiBaseUrl = "<?php echo $baseUrl ?>";
+        console.log(apiBaseUrl);
+    </script>
 
     <!-- Volt JS -->
 {{--    <script src="/assets/js/volt.js"></script>--}}

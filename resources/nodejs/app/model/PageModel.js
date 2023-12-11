@@ -20,23 +20,34 @@ const PageModel = db.define('pages',{
         type:Sequelize.STRING
     },
     meta_data:{
-        type:Sequelize.STRING
+        type:Sequelize.TEXT,
+        length: 'long', // Use the 'long' option for longer text
     },
     meta_keyword:{
-        type:Sequelize.STRING
+        type:Sequelize.TEXT,
+        length: 'long', // Use the 'long' option for longer text
     },
     meta_description:{
-        type:Sequelize.STRING
-    },
-    body:{
-        type:Sequelize.TEXT
+        type:Sequelize.TEXT,
+        length: 'long', // Use the 'long' option for longer text
     },
     custom_js:{
-        type:Sequelize.TEXT
+        type:Sequelize.TEXT,
+        length: 'long', // Use the 'long' option for longer text
     },
     custom_css:{
-        type:Sequelize.TEXT
-    }
+        type:Sequelize.TEXT,
+        length: 'long', // Use the 'long' option for longer text
+    },
+    layout:{
+        type:Sequelize.STRING
+    },
+    left_layout_content:{
+        type:Sequelize.STRING
+    },
+    right_layout_content:{
+        type:Sequelize.STRING
+    },
 },{
     createdAt:false,
     updatedAt:false   
@@ -60,8 +71,6 @@ PageModel.addPageData = (req)=>{
 }
 
 PageModel.updatePageData = (req,updateId)=>{
-    console.log("req: "+req);
-    console.log("updateId: "+updateId);
     return PageModel.update(req.body, { where: { id: updateId } })
 }
 

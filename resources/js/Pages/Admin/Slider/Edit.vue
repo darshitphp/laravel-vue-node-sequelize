@@ -60,7 +60,7 @@
                     <div style="width: 100px!important;position: relative;" v-for="arr in JSON.parse(slider.slider_image)" :key="arr">
                       <input type="hidden" id="slider_img_src" :value="slider.slider_image">
                       <input type="hidden" name="old_slider_image" id="old_slider_image" class="form-control" :value="slider.slider_image">
-                      <i class="fa fa-close" :data-id="slider.id" :data-src="arr" style="font-size:14px;color:darkgrey;cursor: pointer;position: absolute;padding-left: 63px"></i>
+                      <i class="fa fa-close removeSliderImage" :data-id="slider.id" :data-src="arr" style="font-size:14px;color:darkgrey;cursor: pointer;position: absolute;padding-left: 63px"></i>
                       <img :src="'/assets/img/slider_image/' + arr" height="75" style="width: 100px!important;border: 2px solid grey;border-radius: 5px;" />
                     </div>
                   </div>
@@ -106,8 +106,7 @@
 <script>
 import AdminLayout from "@/Pages/AdminLayout.vue";
 import editor from "@tinymce/tinymce-vue";
-
-$(document).on("click",".fa-close",function(){
+$(document).on("click",".removeSliderImage",function(){
   var source = $(this).data('src');
   var array = JSON.parse($("#slider_img_src").val());
   var id = $(this).data('id');
@@ -125,7 +124,7 @@ $(document).on("click",".fa-close",function(){
   //convert into JSON
   slider_image = JSON.stringify(slider_image)
   const removeItems = async () => {
-    const response = await fetch('http://customweb.adorncommerce.com:7000/api/slider/UpdateAfterRemoveImgData', {
+    const response = await fetch(apiBaseUrl+'slider/UpdateAfterRemoveImgData', {
       method: 'POST',
       body: JSON.stringify({
         slider_image: slider_image,
@@ -140,7 +139,13 @@ $(document).on("click",".fa-close",function(){
       $(this).parent().remove();
     }
   };
-  removeItems();
+
+  var result = window.confirm('Are you sure?');
+  if (result == false) {
+    event.preventDefault();
+  }else{
+    removeItems();
+  }
 })
 
 export default {
@@ -283,7 +288,7 @@ export default {
       if (error === false) {
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://customweb.adorncommerce.com:7000/api/slider/updateSliderData', {
+            const response = await fetch(apiBaseUrl+'slider/updateSliderData', {
               method: 'POST',
               body: this.formData,
             });

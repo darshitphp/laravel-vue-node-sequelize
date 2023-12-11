@@ -14,8 +14,12 @@ class HeaderController extends Controller
      */
     public function index()
     {
+        $metadata = [
+            'title' => 'Header-List | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Header/List");
+        return Inertia::render("Admin/Header/List")->with($metadata);
     }
 
     /**
@@ -23,7 +27,11 @@ class HeaderController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Admin/Header/Add");
+        $metadata = [
+            'title' => 'Header-Add | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
+        return Inertia::render("Admin/Header/Add")->with($metadata);
     }
 
     /**
@@ -47,17 +55,20 @@ class HeaderController extends Controller
      */
     public function edit($id)
     {
+        $metadata = [
+            'title' => 'Header-Edit | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
         $data = [
             'id' => $id
         ];
-        $response = Http::post('http://localhost:7000/api/header/getHeaderDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'header/getHeaderDataById', $data);
         $data = $response->json();
         $data['data']['social_links'] = json_decode($data['data']['social_links']);
-//        dd($data);
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Header/Edit",[
             'header' => $data['data']
-        ]);
+        ])->with($metadata);
     }
 
     /**
@@ -76,7 +87,7 @@ class HeaderController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post('http://localhost:7000/api/header/deleteHeaderData', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'header/deleteHeaderData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

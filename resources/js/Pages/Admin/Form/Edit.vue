@@ -17,7 +17,7 @@
                 <div class="mb-4">
                   <label for="name">Form name</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter page name" v-model="form.name" @input="updatePage('name')" id="name" required>
+                    <input type="text" class="form-control" placeholder="Enter page name" v-model="form.name" @input="updatePage('name',$event)" id="name" required>
                     <input type="hidden" name="id" id="id" :value="form.id">
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Page Name</div>
@@ -25,21 +25,21 @@
                 <div class="mb-4">
                   <label for="title">Form title</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter title name" v-model="form.title" @input="updatePage('title')" id="title" required>
+                    <input type="text" class="form-control" placeholder="Enter title name" v-model="form.title" @input="updatePage('title',$event)" id="title" required>
                   </div>
                   <div id="titleError" className="text-danger d-none">Please Enter Page Title</div>
                 </div>
                 <div class="mb-4">
                   <label for="slug">Form slug</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter page name" v-model="form.slug" @input="updatePage('slug')" id="slug" required>
+                    <input type="text" class="form-control" placeholder="Enter page name" v-model="form.slug" @input="updatePage('slug',$event)" id="slug" required>
                   </div>
                   <div id="slugError" className="text-danger d-none">Please Enter Page Name</div>
                 </div>
                 <div class="mb-4">
                   <label for="action_url">Form action url</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter Form Action Url" v-model="form.action_url" @input="updatePage('action_url')" id="action_url" required>
+                    <input type="text" class="form-control" placeholder="Enter Form Action Url" v-model="form.action_url" @input="updatePage('action_url',$event)" id="action_url" required>
                   </div>
                   <div id="action_urlError" className="text-danger d-none">Please Enter Form Action Url</div>
                 </div>
@@ -57,7 +57,7 @@
                 <div class="mb-4 sendEmailWrapper" :style="(form.submit_type == 'send_email')?'display:block':'display:none'">
                   <label>Enter Email Addresses With Comma Separator</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="e.g test@gmail.com,test1@gmail.com" v-model="form.email_adds" @input="updatePage('email_adds')" id="email_adds" required>
+                    <input type="text" class="form-control" placeholder="e.g test@gmail.com,test1@gmail.com" v-model="form.email_adds" @input="updatePage('email_adds',$event)" id="email_adds" required>
                   </div>
                   <div class="text-danger d-none" id="email_addsError" style="display:none;">Please Enter Input Email</div>
                 </div>
@@ -151,21 +151,21 @@
                 </div>
                 <div class="mb-4">
                   <label for="content">Body Text</label>
-                  <editor v-model="form.content" @input="updatePage('content')" id="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
+                  <editor v-model="form.content" @input="updatePage('content',$event)" id="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
                     toolbar: 'code',
                   }"></editor>
                 </div>
                 <div class="mb-4">
                   <label for="custom_js">Custom JS Text</label>
-                  <editor v-model="form.custom_js" @input="updatePage('custom_js')" id="custom_js" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
+                  <editor v-model="form.custom_js" @input="updatePage('custom_js',$event)" id="custom_js" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
                     toolbar: 'code',
                   }"></editor>
                 </div>
                 <div class="mb-4">
                   <label for="custom_css">Custom CSS Text</label>
-                  <editor v-model="form.custom_css" @input="updatePage('custom_css')" id="custom_css" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
+                  <editor v-model="form.custom_css" @input="updatePage('custom_css',$event)" id="custom_css" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
                     toolbar: 'code',
                   }"></editor>
@@ -222,7 +222,7 @@ export default {
   methods: {
     updatePage(propertyName, event) {
       if (event.target) {
-        this.page[propertyName] = event.target.value;
+        this.form[propertyName] = event.target.value;
       }
     },
     handleSubmit(){
@@ -298,7 +298,7 @@ export default {
       if (error === false) {
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://customweb.adorncommerce.com:7000/api/form/updateFormData', {
+            const response = await fetch(apiBaseUrl+'form/updateFormData', {
               method: 'POST',
               body: JSON.stringify({
                 name: name,

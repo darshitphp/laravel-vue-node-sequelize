@@ -29,7 +29,7 @@ class UserController extends Controller
         $data = [
             'iTagId' => $iTagId
         ];
-        $response = Http::post('http://localhost:7000/api/tags/getTagDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'tags/getTagDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Tag/Edit",[
@@ -41,7 +41,7 @@ class UserController extends Controller
         $data = [
             'iTagId' => $iTagId
         ];
-        $response = Http::post('http://localhost:7000/api/tags/deleteTagData', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'tags/deleteTagData', $data);
         $data = $response->json();
         if($data['code']  == 200){
             return redirect('/tag');

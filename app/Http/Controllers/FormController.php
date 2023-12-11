@@ -14,8 +14,12 @@ class FormController extends Controller
      */
     public function index()
     {
+        $metadata = [
+            'title' => 'Form-List | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Form/List");
+        return Inertia::render("Admin/Form/List")->with($metadata);
     }
 
     /**
@@ -23,7 +27,11 @@ class FormController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Admin/Form/Add");
+        $metadata = [
+            'title' => 'Form-Add | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
+        return Inertia::render("Admin/Form/Add")->with($metadata);
     }
 
     /**
@@ -47,16 +55,19 @@ class FormController extends Controller
      */
     public function edit($id)
     {
-        //
+        $metadata = [
+            'title' => 'Form-Edit | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
         $data = [
             'id' => $id
         ];
-        $response = Http::post('http://localhost:7000/api/form/getFormDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'form/getFormDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Form/Edit",[
             'form' => $data['data']
-        ]);
+        ])->with($metadata);
     }
 
     /**
@@ -75,7 +86,7 @@ class FormController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post('http://localhost:7000/api/form/deleteFormData', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'form/deleteFormData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

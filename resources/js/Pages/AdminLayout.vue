@@ -7,8 +7,8 @@
 <!--      <Footer />-->
       <!-- Middle page content -->
       <slot name="middleContent"></slot>
+      <Footer2 />
     </main>
-    <Footer2 />
   </div>
 </template>
 

@@ -14,9 +14,12 @@ class FooterController extends Controller
      */
     public function index()
     {
-        //
+        $metadata = [
+            'title' => 'Footer-List | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Footer/List");
+        return Inertia::render("Admin/Footer/List")->with($metadata);
     }
 
     /**
@@ -24,12 +27,15 @@ class FooterController extends Controller
      */
     public function create()
     {
-        $response = Http::post('http://127.0.0.1:7000/api/page/pageData');
+        $metadata = [
+            'title' => 'Footer-Add | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
+        $response = Http::post(env('NODE_BASEURL_LIVE').'page/pageData');
         $data = $response->json();
-//        dd($data);
         return Inertia::render("Admin/Footer/Add",[
             'data' => $data['data']
-        ]);
+        ])->with($metadata);
     }
 
     /**
@@ -53,17 +59,21 @@ class FooterController extends Controller
      */
     public function edit($id)
     {
+        $metadata = [
+            'title' => 'Footer-Edit | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
         $data = [
             'id' => $id
         ];
-        $response = Http::post('http://localhost:7000/api/footer/getFooterDataById', $data);
+        $pageData = Http::post(env('NODE_BASEURL_LIVE').'page/pageData');
+        $response = Http::post(env('NODE_BASEURL_LIVE').'footer/getFooterDataById', $data);
         $data = $response->json();
-        $data['data']['social_links'] = json_decode($data['data']['social_links']);
-//        dd($data);
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Footer/Edit",[
-            'footer' => $data['data']
-        ]);
+            'footer' => $data['data'],
+            'data' => $pageData['data']
+        ])->with($metadata);
     }
 
     /**
@@ -82,7 +92,7 @@ class FooterController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post('http://localhost:7000/api/footer/deleteFooterData', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'footer/deleteFooterData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

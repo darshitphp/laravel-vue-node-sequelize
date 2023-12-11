@@ -20,7 +20,7 @@
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter title name" id="title" required>
                   </div>
-                  <div id="titleError" className="text-danger d-none">Please Enter Header Title</div>
+                  <div id="titleError" style="display: none" className="text-danger">Please Enter Header Title</div>
                 </div>
                 <div class="mb-4">
                   <label for="position">Footer status</label>
@@ -31,7 +31,7 @@
                       <option value="inactive">Inactive</option>
                     </select>
                   </div>
-                  <div id="footerStatusError" className="text-danger d-none">Please Select header position type</div>
+                  <div id="footerStatusError" style="display: none" className="text-danger">Please Select Footer Status</div>
                 </div>
                 <div class="mb-4">
                   <div class="">
@@ -56,7 +56,7 @@
                     <div class="mb-4 pageLinkWrapper" style="display: none;">
                       <label>Select page link</label>
                       <div class="input-group">
-                        <select name="pageLink" class="form-control">
+                        <select name="pageLink" class="form-control pageLink">
                           <option value="">Select Page Link</option>
                           <option v-for="(item, index) in data" id="pageLink" :value="item.id">{{ item.name }}</option>
                         </select>
@@ -81,7 +81,7 @@
                     <div class="mb-4">
                       <label for="position">Footer link status</label>
                       <div class="input-group">
-                        <select id="footerLinkStatus" name="footerLinkStatus" class="form-control">
+                        <select name="footerLinkStatus" class="form-control footerLinkStatus">
                           <option value="">Select footer link status</option>
                           <option value="active">Active</option>
                           <option value="inactive">Inactive</option>
@@ -92,6 +92,18 @@
                   </div>
                   <button type="button" id="addMoreFooters" class="btn btn-gray-800">Add</button>
                   <div class="moreSocialContents"></div>
+                  <div id="hiddenPageLink">
+                    <div class="mb-4 pageLinkWrapper" style="display: none;">
+                      <label>Select page link</label>
+                      <div class="input-group">
+                        <select name="pageLink" class="form-control pageLink">
+                          <option value="">Select Page Link</option>
+                          <option v-for="(item, index) in data" id="pageLink" :value="item.id">{{ item.name }}</option>
+                        </select>
+                      </div>
+                      <div id="positionError" style="display: none" className="text-danger">Please Select header position type</div>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="d-grid offset-4 col-3 align-items-center justify-content-center">
@@ -111,6 +123,7 @@ $(document).ready(function() {
   $(document).on("click","#addMoreFooters",function() {
     // var hiddenInputs = $('#socialGroup').html();
     var uniqueId = 'editor_'+count;
+    var hiddenPageLink = $("#hiddenPageLink").html();
     var hiddenInputs = `<div class="">
       <div class="mb-4">
         <label>Link Type</label>
@@ -129,25 +142,16 @@ $(document).ready(function() {
           <input type="text" class="form-control customLink" placeholder="Enter custom link" required>
         </div>
         <div id="customLinkError" class="text-danger" style="display: none">Please Enter Custom Link</div>
-      </div>
-      <div class="mb-4 pageLinkWrapper" style="display: none;">
-        <label>Select page link</label>
-        <div class="input-group">
-          <select name="pageLink" class="form-control">
-            <option value="">Select Page Link</option>
-            <option v-for="(item, index) in data" id="pageLink" :value="item.id">{{ item.name }}</option>
-          </select>
-        </div>
-        <div class="text-danger positionError" style="display: none">Please Select header position type</div>
-      </div>
-      <div class="mb-4">
+      </div>`;
+      hiddenInputs += hiddenPageLink;
+      hiddenInputs += `<div class="mb-4">
         <label>Content Text</label>
         <editor id="`+uniqueId+`" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{ menubar: false, plugins: [ 'advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount' ], toolbar: 'undo redo | formatselect | bold italic backcolor | \ alignleft aligncenter alignright alignjustify | \ bullist numlist outdent indent | removeformat | help' }"></editor>
       </div>
       <div class="mb-4">
         <label for="position">Footer link status</label>
         <div class="input-group">
-          <select id="footerLinkStatus" name="footerLinkStatus" class="form-control">
+          <select name="footerLinkStatus" class="form-control footerLinkStatus">
             <option value="">Select footer link status</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
@@ -221,73 +225,96 @@ export default {
   methods: {
     handleSubmit(){
       var title = document.getElementById("title").value;
-      var content = tinymce.get('.content').getContent();
+      var footerStatus = document.getElementById("footerStatus").value;
+      const content = [];
+      $('textarea.content').each(function () {
+        // Get the TinyMCE instance for each element
+        var editor = tinymce.get($(this).attr('id'));
 
-      this.formData.append('title', this.formData.title);
-      this.formData.append('position', this.formData.position);
-      this.formData.append('content', this.formData.content);
-
-      // const formData = new FormData();
-      const fileInputs = document.querySelectorAll('.social_image'); // Get all elements with class name "slider_image"
-
-      fileInputs.forEach((fileInput) => {
-        const file = fileInput.files[0];
-        this.formData.append('social_image[]', file);
+        // Check if the editor instance exists
+        if (editor) {
+          // Get the content and log it to the console
+          var contentWithClass = editor.getContent({ format: 'html' });
+          content.push(contentWithClass);
+        }
       });
 
-      // const social_title = document.querySelectorAll('.social_title');
-      const social_title = new Array();
-      $(".social_title").each(function(){
-        var vTitle = $(this).val();
-        if(vTitle.length != 0){
-          social_title.push(vTitle);
+      var footerLinkStatusArray = new Array();
+      $(".footerLinkStatus").each(function(){
+        var linkStatus = $(this).val();
+        footerLinkStatusArray.push(linkStatus);
+      });
+
+      var pageLinkArray = new Array();
+      var customLinkArray = new Array();
+
+      $('editor.content').each(function () {
+        // Get the TinyMCE instance for each element
+        var editor = tinymce.get($(this).attr('id'));
+
+        // Check if the editor instance exists
+        if (editor) {
+          // Get the content and log it to the console
+          var contentWithClass = editor.getContent({ format: 'html' });
+          content.push(contentWithClass);
         }
-      })
+      });
 
-      this.formData.social_title = social_title;
-      this.formData.append('social_title', this.formData.social_title);
-      // const social_link = document.querySelectorAll('.social_link');
-      const social_link = new Array();
-      $(".social_link").each(function(){
-        var vLink = $(this).val();
-        if(vLink.length != 0){
-          social_link.push(vLink);
+      var transactionArray = [];
+      $(".linkType").each(function(index, element){
+        if (!transactionArray[index]) {
+          // If the index doesn't exist, initialize it as an array
+          transactionArray[index] = [];
         }
+        var linkType = $(this).val();
+        if(linkType == 'predefined'){
+          var pLink = $(this).parent().parent().parent().find('.pageLink').val();
+          pageLinkArray.push(pLink);
+          transactionArray[index].push(["page_id" , pLink]);
+          transactionArray[index].push(["custom_link", null]);
+        }
+        else if(linkType == 'custom'){
+          var cLink = $(this).parent().parent().parent().find('.customLink').val();
+          customLinkArray.push(cLink);
+          transactionArray[index].push(["page_id", null]);
+          transactionArray[index].push(["custom_link", cLink]);
+        }
+        const currentContent = content[index];
+        const currentfooterLinkStatus = footerLinkStatusArray[index];
+
+        transactionArray[index].push(["content", currentContent]);
+        transactionArray[index].push(["status", currentfooterLinkStatus]);
       })
-
-      this.formData.social_link = social_link;
-      this.formData.append('social_link', this.formData.social_link);
-
-      var header_logo = document.getElementById("header_logo");
-      var headerLogoFile = header_logo.files[0];
-      this.formData.append('header_logo', headerLogoFile); // Append the header logo file to formData
-
-      var titleError = document.getElementById("titleError");
-      var positionError = document.getElementById("positionError");
 
       let error = false;
 
-      if (this.formData.title.length === 0) {
-        titleError.classList.remove("d-none");
+      if (title.length == 0) {
+        $("#titleError").show();
         error = true;
       } else {
-        titleError.classList.add("d-none");
+        $("#titleError").hide();
       }
 
-      if (this.formData.position.length === 0) {
-        positionError.classList.remove("d-none");
+      if (footerStatus.length == 0) {
+        $("#footerStatusError").show();
         error = true;
       } else {
-        positionError.classList.add("d-none");
+        $("#footerStatusError").hide();
       }
 
-      if (error === false) {
-        console.log(this.formData);
+      if (error == false) {
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://127.0.0.1:7000/api/footer/addFooterData', {
+            const response = await fetch(apiBaseUrl+'footer/addFooterData', {
               method: 'POST',
-              body: this.formData,
+              body: JSON.stringify({
+                title:title,
+                status:footerStatus,
+                transactionArray:transactionArray
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){

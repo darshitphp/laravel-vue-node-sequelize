@@ -66,7 +66,7 @@
                       <div id="titleError" className="text-danger d-none">Please enter social link</div>
                     </div>
                   </div>
-                  <button type="button" @click="addFileUpload" id="addMoreInputs" class="btn btn-gray-800">Add</button>
+                  <button type="button" id="addMoreInputs" class="btn btn-gray-800">Add</button>
                   <div class="moreSocialContents"></div>
                   <div class="input-group" id="socialGroup" style="display: none">
                     <div>
@@ -117,10 +117,10 @@
 <script>
 $(document).ready(function() {
 
-  // $(document).on("click","#addMoreInputs",function() {
-  //   var hiddenInputs = $('#socialGroup').html();
-  //   $('.moreSocialContents').append(hiddenInputs);
-  // });
+  $(document).on("click","#addMoreInputs",function() {
+    var hiddenInputs = $('#socialGroup').html();
+    $('.moreSocialContents').append(hiddenInputs);
+  });
 
   $(document).on('click', '.removeMoreSocial', function() {
     $(this).parent().remove();
@@ -159,9 +159,6 @@ export default {
     };
   },
   methods: {
-    addFileUpload() {
-      this.fileUploads.push({});
-    },
     removeFileUpload(index) {
       this.fileUploads.splice(index, 1);
     },
@@ -194,7 +191,6 @@ export default {
         this.formData.append('social_image[]', file);
       });
 
-      // const social_title = document.querySelectorAll('.social_title');
       const social_title = new Array();
       $(".social_title").each(function(){
         var vTitle = $(this).val();
@@ -244,7 +240,7 @@ export default {
         console.log(this.formData);
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://customweb.adorncommerce.com:7000/api/header/addHeaderData', {
+            const response = await fetch(apiBaseUrl+'header/addHeaderData', {
               method: 'POST',
               body: this.formData,
             });

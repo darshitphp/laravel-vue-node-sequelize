@@ -14,8 +14,12 @@ class SliderController extends Controller
      */
     public function index()
     {
+        $metadata = [
+            'title' => 'Slider-List | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Slider/List");
+        return Inertia::render("Admin/Slider/List")->with($metadata);
     }
 
     /**
@@ -23,7 +27,11 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Admin/Slider/Add");
+        $metadata = [
+            'title' => 'Slider-Add | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
+        return Inertia::render("Admin/Slider/Add")->with($metadata);
     }
 
     /**
@@ -48,15 +56,19 @@ class SliderController extends Controller
      */
     public function edit($id)
     {
+        $metadata = [
+            'title' => 'Slider-Edit | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
         $data = [
             'id' => $id
         ];
-        $response = Http::post('http://localhost:7000/api/slider/getSliderDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'slider/getSliderDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Slider/Edit",[
             'slider' => $data['data']
-        ]);
+        ])->with($metadata);
     }
 
     /**
@@ -75,7 +87,7 @@ class SliderController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post('http://localhost:7000/api/slider/deleteSliderData', $data);
+        $response = Http::post(env('NODE_BASEURL_LIVE').'slider/deleteSliderData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

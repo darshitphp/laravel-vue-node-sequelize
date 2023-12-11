@@ -1,0 +1,4 @@
+.sidebar .active .nav-link .sidebar-icon,
+.active .nav-link {
+    color: rgb(251, 80, 59) !important;
+}

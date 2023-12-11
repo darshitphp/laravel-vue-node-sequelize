@@ -471,7 +471,7 @@ export default {
 
         const fetchItems = async () => {
           try {
-            const response = await fetch('http://customweb.adorncommerce.com:7000/api/form/addFormData', {
+            const response = await fetch(apiBaseUrl+'form/addFormData', {
               method: 'POST',
               body: JSON.stringify({
                 name: name,

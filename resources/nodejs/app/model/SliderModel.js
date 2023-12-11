@@ -13,18 +13,6 @@ const SliderModel = db.define('slider',{
     shortcode:{
         type:Sequelize.STRING
     },
-    slider_image:{
-        type:Sequelize.TEXT
-    },
-    content:{
-        type:Sequelize.TEXT
-    },
-    options:{
-        type:Sequelize.TEXT
-    },
-    status:{
-        type: Sequelize.ENUM('active','inactive'),
-    },
     start_from:{
         type:Sequelize.DATE
     },

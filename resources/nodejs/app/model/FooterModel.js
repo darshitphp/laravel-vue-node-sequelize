@@ -53,12 +53,7 @@ FooterModel.getIdFooterData = (req) => {
 };
 
 //insert into tag table
-FooterModel.addFooterData = (req)=>{
-    const updatedArray = [];
-    for (let i = 0; i < req.body.length; i++) {
-      const { social_image, social_title, social_link, ...rest } = req.body[i];
-      updatedArray.push(rest);
-    }
+FooterModel.addFooterData = (req)=>{    
     return FooterModel.create(req.body)
 }
 
