@@ -62,7 +62,7 @@ class CategoryController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'category/getCategoryDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'category/getCategoryDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Category/Edit",[
@@ -86,7 +86,7 @@ class CategoryController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'category/deleteCategoryData', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'category/deleteCategoryData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

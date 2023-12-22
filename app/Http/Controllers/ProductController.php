@@ -31,7 +31,7 @@ class ProductController extends Controller
             'title' => 'Product-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'category/categoryData');
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'category/categoryData');
         $data = $response->json();
         return Inertia::render("Admin/Product/Add",[
             'category' => $data['data']
@@ -66,9 +66,9 @@ class ProductController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'product/getProductDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'product/getProductDataById', $data);
         $data = $response->json();
-        $categoryData = Http::post(env('NODE_BASEURL_LIVE').'category/categoryData');
+        $categoryData = Http::post(env('NODE_BASEURL_LOCAL').'category/categoryData');
         $category_data = $categoryData->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Product/Edit",[
@@ -93,7 +93,7 @@ class ProductController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'product/deleteProductData', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'product/deleteProductData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

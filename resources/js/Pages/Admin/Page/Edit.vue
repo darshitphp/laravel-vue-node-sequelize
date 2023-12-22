@@ -14,7 +14,7 @@
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Edit Page</h1>
               <form>
-                <div class="accordion" id="accordionExample" style="width: 85%!important;">
+                <div class="accordion" id="accordionExample">
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -24,7 +24,7 @@
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                       <div class="accordion-body row">
                         <div class="mb-4 col-3">
-                          <label for="name">Page name</label>
+                          <label for="name">Name</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter page name" id="name" v-model="page.page.name" @input="updatePage('name',$event)" required>
                             <input type="hidden" name="id" id="id" :value="page.page.id">
@@ -32,28 +32,28 @@
                           <div id="nameError" className="text-danger d-none">Please Enter Page Name</div>
                         </div>
                         <div class="mb-4 col-3">
-                          <label for="slug">Page slug</label>
+                          <label for="slug">Slug</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter page slug" id="slug" v-model="page.page.slug" @input="updatePage('slug',$event)" required>
                           </div>
                           <div id="slugError" className="text-danger d-none">Please Enter Page Slug</div>
                         </div>
                         <div class="mb-4 col-3">
-                          <label for="title">Page title</label>
+                          <label for="title">Title</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter page title" id="title" v-model="page.page.title" @input="updatePage('title',$event)" required>
                           </div>
                           <div id="titleError" className="text-danger d-none">Please Enter Page Title</div>
                         </div>
                         <div class="mb-4 col-3">
-                          <label for="meta_title">Page meta title</label>
+                          <label for="meta_title">Meta title</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter meta title" id="meta_title" v-model="page.page.meta_title" @input="updatePage('meta_title',$event)" required>
                           </div>
                           <div id="meta_titleError" className="text-danger d-none">Please Enter Page Meta Title</div>
                         </div>
                         <div class="mb-4 col-6">
-                          <label for="meta_data">Page meta data</label>
+                          <label for="meta_data">Meta data</label>
                           <editor v-model="page.page.meta_data" @input="updatePage('meta_data',$event)" id="meta_data" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     menubar: 'file edit view format tools',
                     plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
@@ -62,7 +62,7 @@
                           <div id="meta_dataError" className="text-danger d-none">Please Enter Page Meta Data</div>
                         </div>
                         <div class="mb-4 col-6">
-                          <label for="meta_keyword">Page meta keyword</label>
+                          <label for="meta_keyword">Meta keyword</label>
                           <editor v-model="page.page.meta_keyword" @input="updatePage('meta_keyword',$event)" id="meta_keyword" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     menubar: 'file edit view format tools',
                     plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
@@ -71,7 +71,7 @@
                           <div id="meta_keywordError" className="text-danger d-none">Please Enter Page Meta Keyword</div>
                         </div>
                         <div class="mb-4 col-6">
-                          <label for="meta_description">Page meta description</label>
+                          <label for="meta_description">Meta description</label>
                           <editor v-model="page.page.meta_description" @input="updatePage('meta_description',$event)" id="meta_description" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     menubar: 'file edit view format tools',
                     plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
@@ -266,12 +266,12 @@
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                       <div class="accordion-body row">
                         <div class="mb-4 col-6">
-                          <label for="custom_js">Custom JS Text</label>
-                          <textarea name="custom_js" id="custom_js" v-model="page.page.custom_js" @input="updatePage('custom_js',$event)" cols="40" rows="10"></textarea>
+                          <label for="custom_js">JS</label>
+                          <textarea name="custom_js" id="custom_js" v-model="page.page.custom_js" @input="updatePage('custom_js',$event)" cols="50" rows="10"></textarea>
                         </div>
                         <div class="mb-4 col-6">
-                          <label for="custom_css">Custom CSS Text</label>
-                          <textarea name="custom_css" id="custom_css" v-model="page.page.custom_css" @input="updatePage('custom_css',$event)" cols="40" rows="10"></textarea>
+                          <label for="custom_css">CSS</label>
+                          <textarea name="custom_css" id="custom_css" v-model="page.page.custom_css" @input="updatePage('custom_css',$event)" cols="50" rows="10"></textarea>
                         </div>
                       </div>
                     </div>
@@ -286,9 +286,9 @@
                       <div class="accordion-body row d-flex">
                         <label>Select Page Layout</label>
                         <div class="image-radio col-2">
-                          <input type="radio" :checked="page.page.layout === 'layout1'" name="page_layout" id="layout1" value="layout1">
-                          <label for="layout1">
-                            <img src="/assets/img/layouts/img-2.png" alt="layout 1">
+                          <input type="radio" :checked="page.page.layout === 'layout3'" name="page_layout" id="layout3" value="layout3">
+                          <label for="layout3">
+                            <img src="/assets/img/layouts/img-5.png" alt="layout 3">
                           </label>
                         </div>
                         <div class="image-radio col-2">
@@ -298,9 +298,9 @@
                           </label>
                         </div>
                         <div class="image-radio col-2">
-                          <input type="radio" :checked="page.page.layout === 'layout3'" name="page_layout" id="layout3" value="layout3">
-                          <label for="layout3">
-                            <img src="/assets/img/layouts/img-5.png" alt="layout 3">
+                          <input type="radio" :checked="page.page.layout === 'layout1'" name="page_layout" id="layout1" value="layout1">
+                          <label for="layout1">
+                            <img src="/assets/img/layouts/img-2.png" alt="layout 1">
                           </label>
                         </div>
                         <div class="image-radio col-6">
@@ -347,7 +347,6 @@
 <script>
 $(document).ready(function () {
   var counter = $(".addSectionWrapper").length;
-  console.log("Number of elements with class 'addSectionWrapper':", counter);
   $(document).on("click","#addMorePageSection",function(){
     $("#addMorePageSection").remove();
     $(".addMoreWrapper").each(function(){

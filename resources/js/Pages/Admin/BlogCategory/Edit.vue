@@ -12,9 +12,9 @@
 
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Category</h1>
-              <form>
-                <div class="mb-4">
+              <h1 class="h3 mb-4">Edit Blog Category</h1>
+              <form class="row">
+                <div class="mb-4 col-4">
                   <label for="name">Category name</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter category name" v-model="data.name" @input="updatePage('name')" id="name" required>
@@ -22,14 +22,14 @@
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Page Name</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="slug">Page slug</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter data name" v-model="data.slug" @input="updatePage('slug')" id="slug" required>
                   </div>
                   <div id="slugError" className="text-danger d-none">Please Enter Page Name</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label>Select parent category</label>
                   <div class="input-group">
                     <select name="parent_id" id="parent_id" class="form-control pageLink">
@@ -45,8 +45,8 @@
                     toolbar: 'code',
                   }"></editor>
                 </div>
-                <div class="d-grid">
-                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Submit</button>
+                <div class="d-grid offset-4 col-3 align-items-center justify-content-center">
+                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Update</button>
                 </div>
               </form>
             </div>

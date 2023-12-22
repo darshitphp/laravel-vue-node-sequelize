@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('./index.js');
 const SliderModel = require('./SliderModel');
 
-const SliderTransactionModel = db.define('slider_transaction',{
+const SliderTransactionModel = db.define('slider_transactions',{
     id:{
         type:Sequelize.INTEGER,
         primaryKey:true,
@@ -22,7 +22,7 @@ const SliderTransactionModel = db.define('slider_transaction',{
         type:Sequelize.ENUM('active','inactive')
     },
 },{
-    tableName: 'footer_transaction',
+    tableName: 'slider_transactions',
     createdAt:false,
     updatedAt:false
 });
@@ -49,14 +49,32 @@ SliderTransactionModel.getBySliderIdTransactionData = (req) => {
 //insert into tag table
 SliderTransactionModel.addSliderTransactionData = (req) => {
     // Convert the array of arrays to an array of objects
+    const transactionArray = req.map(innerArray => {
+      const obj = {};
+      innerArray.forEach(([key, value]) => {
+        obj[key] = value;
+      });
+      return obj;
+    });
+    
+    var resId = null;
+    for (var i = transactionArray.length - 1; i >= 0; i--) {
+        resId = SliderTransactionModel.create(transactionArray[i])
+    }
+    return resId;
+};
+
+//insert into tag table
+SliderTransactionModel.updateSliderAddTransactionData = (req) => {
+    // Convert the array of arrays to an array of objects
     const transactions = req.map((transactionArray) => {
       const transactionObject = {};
       transactionArray.forEach(([key, value]) => {
         transactionObject[key] = value;
       });
       return transactionObject;
-    });
-    // Use bulkCreate to insert multiple records
+    });    // Use bulkCreate to insert multiple records
+    console.log(transactions);
     return SliderTransactionModel.bulkCreate(transactions)
 };
 

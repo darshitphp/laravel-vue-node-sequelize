@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php $baseUrl = env('NODE_BASEURL_LIVE'); ?>
+    <?php $baseUrl = env('NODE_BASEURL_LOCAL'); ?>
+    <?php $laravelBaseUrl = env('BASEURL_LIVE'); ?>
+
     <title>{{ $page['props']['title'] ?? 'Custom Web|Adorn commerce' }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta property="og:title" content="{{ $metaDescription ?? 'Custom Web|Adorn commerce' }}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AdornCommerce">
@@ -76,7 +79,7 @@
 
     <script>
         var apiBaseUrl = "<?php echo $baseUrl ?>";
-        console.log(apiBaseUrl);
+        var laravelBaseUrl = "<?php echo $laravelBaseUrl ?>";
     </script>
 
     <!-- Volt JS -->

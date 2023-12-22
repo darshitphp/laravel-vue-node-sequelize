@@ -14,71 +14,68 @@
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Add Slider</h1>
               <form>
+                <div class="d-flex col-12 row">
                 <!-- Form -->
-                <div class="mb-4">
-                  <label for="title">Slider title</label>
+                <div class="mb-4 col-6">
+                  <label for="title">Title</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter title name" id="title" required>
                   </div>
                   <div id="titleError" className="text-danger d-none">Please Enter Slider Title</div>
                 </div>
-                <div class="mb-4">
-                  <label for="slug">Slider shortcode</label>
+                <div class="mb-4 col-6">
+                  <label for="slug">Shortcode</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter page name" id="shortcode" required>
                   </div>
                   <div id="shortcodeError" className="text-danger d-none">Please Enter Slider Name</div>
                 </div>
-                <div style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
-                  <div class="mb-4">
-                    <label for="slider_content_0">Content</label>
-                    <editor id="slider_content_0" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
+                <div id="appendMoreSliders">
+                  <div class="row" style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
+                    <div class="mb-4 col-6">
+                      <label for="slider_content_0">Content</label>
+                      <editor id="slider_content_0" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                       menubar: 'file edit view format tools',
                       plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
                       toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | charmap | preview',
                     }"></editor>
-                    <div id="contentError" className="text-danger d-none">Please enter slider content</div>
-                  </div>
-                  <div class="mb-4">
-                    <label>Upload slider images</label>
-                    <div class="input-group mb-2">
-                      <input type="file" name="slider_image[0]" class="form-control slider_image" @change="handleFileUpload" accept="image/*">
+                      <div id="contentError" className="text-danger d-none">Please enter slider content</div>
                     </div>
-                  </div>
-                  <div class="mb-4">
-                    <label>Select status</label>
-                    <div class="input-group">
-                      <select name="status" class="form-control status">
-                        <option value=""> Select slider status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                      </select>
+                    <div class="mb-4 col-4">
+                      <label>Upload slider images</label>
+                      <div class="input-group mb-2">
+                        <input type="file" name="slider_image_add[0]" class="form-control slider_image_add" @change="handleFileUpload" accept="image/*">
+                      </div>
                     </div>
-                    <div class="statusError text-danger d-none">Please Select Slider Status</div>
+                    <div class="mb-4 col-2">
+                      <div class="form-check form-switch">
+                        <input class="form-check-input status" type="checkbox" id="flexSwitchCheckChecked" >
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+                      </div>
+                      <div class="statusError text-danger d-none">Please Select Slider Status</div>
+                    </div>
                   </div>
                 </div>
-                <div id="appendMoreSliders"></div>
                 <div class="col-12 text-end mt-2">
                   <button type="button" class="btn btn-primary" id="addSlider">Add More</button>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="start_from">Start Date</label>
                   <div class="input-group">
                     <input type="date" id="start_from" class="form-control" name="start_from" value="">
                   </div>
                   <div id="start_fromError" className="text-danger d-none">Please select start date</div>
                 </div>
-
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="end_to">End Date</label>
                   <div class="input-group">
                     <input type="date" id="end_to" class="form-control" name="end_to" value="">
                   </div>
-                  <div id="end_toError" className="text-danger d-none">Please select start date</div>
+                  <div id="end_toError" className="text-danger d-none">Please select end date</div>
                 </div>
-
                 <div class="d-grid offset-4 col-3 align-items-center justify-content-center">
                   <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Submit</button>
+                </div>
                 </div>
               </form>
             </div>
@@ -93,30 +90,27 @@ $(document).ready(function () {
   var clicker = 1;
   $(document).on("click","#addSlider",function(){
     var uniqueId = 'slider_content_'+clicker;
-    var html = `<div style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
-                  <div class="mb-4">
+    var uniqueCheckBox = 'status_'+clicker;
+    var html = `<div class="row" style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
+                  <div class="mb-4 col-6">
                     <label>Content</label>
                     <editor id="`+uniqueId+`" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{ plugins: 'code',toolbar: 'code',}"></editor>
                   </div>
-                  <div class="mb-4">
+                  <div class="mb-4 col-4">
                     <label>Upload slider images</label>
                     <div class="input-group mb-2">
-                      <input type="file" name="slider_image[`+clicker+`]" class="form-control slider_image" @change="handleFileUpload" accept="image/*">
+                      <input type="file" name="slider_image_add[`+clicker+`]" class="form-control slider_image_add" @change="handleFileUpload" accept="image/*">
                     </div>
                   </div>
-                  <div class="mb-4">
-                    <label>Select status</label>
-                    <div class="input-group">
-                      <select name="status" class="form-control status">
-                        <option value=""> Select slider status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                      </select>
+                  <div class="mb-4 col-2">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input status" type="checkbox" id="`+uniqueCheckBox+`">
+                      <label class="form-check-label" for="`+uniqueCheckBox+`">Status</label>
                     </div>
                     <div class="statusError text-danger d-none">Please Select Slider Status</div>
                   </div>
                   <div class="col-12 text-end">
-                    <button type="button" class="btn btn-danger removeSliders mb-2">Remove</button>
+                    <button type="button" class="btn btn-danger removeSlider mb-2">Remove</button>
                   </div>
                 </div>`;
     $("#appendMoreSliders").append(html);
@@ -130,7 +124,7 @@ $(document).ready(function () {
     clicker++;
   })
 
-  $(document).on("click",".removeSliders",function(){
+  $(document).on("click",".removeSlider",function(){
     $(this).parent().parent().remove();
   });
 })
@@ -149,7 +143,7 @@ export default {
       custom_js: '',
       custom_css: '',
       fileUploads: [],
-      slider_image: [],
+      slider_image_add: [],
       formData : new FormData(),
       editorConfig: {
         // Example options
@@ -167,7 +161,7 @@ export default {
     handleFileUpload(event) {
       var files = event.target.files;
       for (let i = 0; i < files.length; i++) {
-        this.formData.slider_image = files[i];
+        this.formData.slider_image_add = files[i];
       }
     },
     handleSubmit(){
@@ -189,7 +183,9 @@ export default {
         var id = $(this).attr('id');
         if(id != undefined){
           const innercontent = tinymce.get(id).getContent();
-          content.push(innercontent);
+          if(innercontent.length != 0){
+            content.push(innercontent);
+          }
         }
       })
       this.formData.content = content;
@@ -197,7 +193,11 @@ export default {
 
       var status = new Array();
       $(".status").each(function(){
-        const activestatus = $(this).val();
+        if($(this).is(':checked')){
+          var activestatus = 'active';
+        }else{
+          var activestatus = 'inactive';
+        }
         status.push(activestatus);
       })
       this.formData.status = status;
@@ -212,17 +212,16 @@ export default {
       //
       var titleError = document.getElementById("titleError");
       var shortcodeError = document.getElementById("shortcodeError");
-      var contentError = document.getElementById("contentError");
       var start_fromError = document.getElementById("start_fromError");
       var end_toError = document.getElementById("end_toError");
 
       // const formData = new FormData();
-      const fileInputs = document.querySelectorAll('.slider_image'); // Get all elements with class name "slider_image"
+      const fileInputs = document.querySelectorAll('.slider_image_add'); // Get all elements with class name "slider_image_add"
 
       fileInputs.forEach((fileInput) => {
         const file = fileInput.files[0];
         // formData.append('file', file);
-        this.formData.append('slider_image[]', file); // Add each file separately
+        this.formData.append('slider_image_add[]', file); // Add each file separately
       });
 
       //
@@ -240,13 +239,6 @@ export default {
       } else {
         shortcodeError.classList.add("d-none");
       }
-
-      // if (this.formData.content.length === 0) {
-      //   contentError.classList.remove("d-none");
-      //   error = true;
-      // } else {
-      //   contentError.classList.add("d-none");
-      // }
 
       if (this.formData.start_from.length === 0) {
         start_fromError.classList.remove("d-none");

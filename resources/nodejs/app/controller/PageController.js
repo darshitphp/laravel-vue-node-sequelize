@@ -21,6 +21,7 @@ exports.FindAllData = (req, resp) => {
 
 exports.FindIdData = (req, resp) => {
   // Use Promise.all to wait for both promises to resolve    
+  // Promises are working simentaneousely both requests are running at the same time.
   Promise.all([
     PageModel.getIdPageData(req),
     PageSectionModel.getByPageIdTransactionData(req.body.id), // Assuming id is passed as a parameter
@@ -82,7 +83,6 @@ exports.AddData = (req, resp) => {
 };
 
 exports.UpdateData = (req, resp) => {
-  console.log(req.body.id);
   PageModel.updatePageData(req,req.body.id)
     .then((result) => {
       const lastInsertedId = req.body.id;
@@ -120,30 +120,25 @@ exports.UpdateData = (req, resp) => {
       message: error,
     });
   });
-  // PageModel.updatePageData(req,req.body.id)
-  //   .then((result) => {
-  //       resp.send({
-  //           status: "success",
-  //           code: "200",
-  //           message: "your record has been updated successfully.",
-  //       });
-  //   })
-  //   .catch((error) => {
-  //     resp.send({
-  //       status: "error",
-  //       code: "500",
-  //       message: error,
-  //     });
-  //   });
 };
 
 exports.DeleteData = (req, resp) => {
   PageModel.deletePageData(req)
     .then((result) => {
-        resp.send({
-            status: "success",
-            code: "200",
-            message: "your record has been deleted successfully.",
+      PageSectionModel.deletePageSectionByPageId(req.body.id)
+        .then((result1) => {
+          resp.send({
+              status: "success",
+              code: "200",
+              message: "your record has been deleted successfully.",
+          });
+        })
+        .catch((error) => {
+          resp.send({
+            status: "error",
+            code: "500",
+            message: error,
+          });
         });
     })
     .catch((error) => {

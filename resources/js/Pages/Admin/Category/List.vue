@@ -41,11 +41,11 @@
                     </button>
                     <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
                       <a class="dropdown-item d-flex align-items-center" :href="'/category/edit/'+arr.id">
-                        <span class="fa fa-th-large me-2"></span>
+                        <span class="fa fa-eye me-2"></span>
                         View Category
                       </a>
                       <a class="dropdown-item text-danger d-flex align-items-center" :href="'/category/delete/'+arr.id">
-                        <span class="fa fa-th-large me-2"></span>
+                        <span class="fa fa-trash me-2"></span>
                         Delete Category
                       </a>
                     </div>

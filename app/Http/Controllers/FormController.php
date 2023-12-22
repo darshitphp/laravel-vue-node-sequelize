@@ -62,7 +62,7 @@ class FormController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'form/getFormDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'form/getFormDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Form/Edit",[
@@ -86,7 +86,7 @@ class FormController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'form/deleteFormData', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'form/deleteFormData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

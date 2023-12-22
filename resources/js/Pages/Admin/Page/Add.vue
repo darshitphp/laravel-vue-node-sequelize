@@ -15,7 +15,7 @@
               <h1 class="h3 mb-4">Add Page</h1>
               <form class="row">
                 <!-- Form -->
-                <div class="accordion" id="accordionExample" style="width: 85%!important;">
+                <div class="accordion" id="accordionExample">
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -25,35 +25,35 @@
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                       <div class="accordion-body row">
                         <div class="mb-4 col-3">
-                          <label for="name">Page name</label>
+                          <label for="name">Name</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter page name" id="name" required>
                           </div>
                           <div id="nameError" className="text-danger d-none">Please Enter Page Name</div>
                         </div>
                         <div class="mb-4 col-3">
-                          <label for="slug">Page slug</label>
+                          <label for="slug">Slug</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter page slug" id="slug" required>
                           </div>
                           <div id="slugError" className="text-danger d-none">Please Enter Page Slug</div>
                         </div>
                         <div class="mb-4 col-3">
-                          <label for="title">Page title</label>
+                          <label for="title">Title</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter page title" id="title" required>
                           </div>
                           <div id="titleError" className="text-danger d-none">Please Enter Page Title</div>
                         </div>
                         <div class="mb-4 col-3">
-                          <label for="meta_title">Page meta title</label>
+                          <label for="meta_title">Meta title</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter meta title" id="meta_title" required>
                           </div>
                           <div id="meta_titleError" className="text-danger d-none">Please Enter Page Meta Title</div>
                         </div>
                         <div class="mb-4 col-6">
-                          <label for="meta_data">Page meta data</label>
+                          <label for="meta_data">Meta data</label>
                           <editor v-model="meta_data" id="meta_data" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     menubar: 'file edit view format tools',
                     plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
@@ -62,7 +62,7 @@
                           <div id="meta_dataError" className="text-danger d-none">Please Enter Page Meta Data</div>
                         </div>
                         <div class="mb-4 col-6">
-                          <label for="meta_keyword">Page meta keyword</label>
+                          <label for="meta_keyword">Meta keyword</label>
                           <editor v-model="meta_keyword" id="meta_keyword" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     menubar: 'file edit view format tools',
                     plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
@@ -71,7 +71,7 @@
                           <div id="meta_keywordError" className="text-danger d-none">Please Enter Page Meta Keyword</div>
                         </div>
                         <div class="mb-4 col-6">
-                          <label for="meta_description">Page meta description</label>
+                          <label for="meta_description">Meta description</label>
                           <editor v-model="meta_description" id="meta_description" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     menubar: 'file edit view format tools',
                     plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
@@ -196,12 +196,12 @@
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                       <div class="accordion-body row">
                         <div class="mb-4 col-6">
-                          <label for="custom_js">Custom JS Text</label>
-                          <textarea name="custom_js" id="custom_js" cols="40" rows="10"></textarea>
+                          <label for="custom_js">JS</label>
+                          <textarea name="custom_js" id="custom_js" cols="50" rows="10"></textarea>
                         </div>
                         <div class="mb-4 col-6">
-                          <label for="custom_css">Custom CSS Text</label>
-                          <textarea name="custom_css" id="custom_css" cols="40" rows="10"></textarea>
+                          <label for="custom_css">CSS</label>
+                          <textarea name="custom_css" id="custom_css" cols="50" rows="10"></textarea>
                         </div>
                       </div>
                     </div>
@@ -216,9 +216,9 @@
                       <div class="accordion-body row d-flex">
                         <label>Select Page Layout</label>
                         <div class="image-radio col-2">
-                          <input type="radio" name="page_layout" id="layout1" value="layout1">
-                          <label for="layout1">
-                            <img src="/assets/img/layouts/img-2.png" alt="layout 1">
+                          <input type="radio" name="page_layout" id="layout3" value="layout3">
+                          <label for="layout3">
+                            <img src="/assets/img/layouts/img-5.png" alt="layout 3">
                           </label>
                         </div>
                         <div class="image-radio col-2">
@@ -228,9 +228,9 @@
                           </label>
                         </div>
                         <div class="image-radio col-2">
-                          <input type="radio" name="page_layout" id="layout3" value="layout3">
-                          <label for="layout3">
-                            <img src="/assets/img/layouts/img-5.png" alt="layout 3">
+                          <input type="radio" name="page_layout" id="layout1" value="layout1">
+                          <label for="layout1">
+                            <img src="/assets/img/layouts/img-2.png" alt="layout 1">
                           </label>
                         </div>
                         <div class="image-radio col-6">

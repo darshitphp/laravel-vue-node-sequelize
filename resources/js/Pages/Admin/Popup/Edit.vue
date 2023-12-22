@@ -12,7 +12,7 @@
 
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Page</h1>
+              <h1 class="h3 mb-4">Edit Popup</h1>
               <form>
                 <div class="mb-4">
                   <label for="name">Popup name</label>
@@ -93,7 +93,7 @@
                   <div id="positionError" style="display: none" className="text-danger">Please Select header position type</div>
                 </div>
                 <div class="d-grid offset-4 col-3 align-items-center justify-content-center">
-                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Submit</button>
+                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800 mb-2">Update</button>
                   <button @click="openSwal">Open SweetAlert</button>
                 </div>
               </form>

@@ -63,8 +63,9 @@ class SliderController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'slider/getSliderDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'slider/getSliderDataById', $data);
         $data = $response->json();
+//        dd($data['data']);
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Slider/Edit",[
             'slider' => $data['data']
@@ -87,7 +88,7 @@ class SliderController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'slider/deleteSliderData', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'slider/deleteSliderData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

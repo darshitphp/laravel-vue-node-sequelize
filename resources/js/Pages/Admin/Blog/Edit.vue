@@ -12,9 +12,9 @@
 
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Category</h1>
-              <form>
-                <div class="mb-4">
+              <h1 class="h3 mb-4">Edit Category</h1>
+              <form class="row">
+                <div class="mb-4 col-4">
                   <label for="name">Category name</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter category name" v-model="data.name" @input="updatePage('name')" id="name" required>
@@ -22,14 +22,14 @@
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Page Name</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="slug">Page slug</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter data name" v-model="data.slug" @input="updatePage('slug')" id="slug" required>
                   </div>
                   <div id="slugError" className="text-danger d-none">Please Enter Page Name</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label>Select blog category</label>
                   <div class="input-group">
                     <select name="category_id" id="category_id" class="form-control">
@@ -39,21 +39,21 @@
                   </div>
                   <div id="category_idError" className="text-danger d-none">Please Select Blog Category</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="tags">Tags</label>
                   <div class="input-group">
                     <input type="text" class="form-control" v-model="data.tags" @input="updatePage('tags')" placeholder="Enter Tags" id="tags" required>
                   </div>
                   <div id="tagsError" className="text-danger d-none">Please Enter Tags</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="comments">Comments</label>
                   <div class="input-group">
                     <input type="text" class="form-control" v-model="data.comments" @input="updatePage('comments')" placeholder="Enter Comments" id="comments" required>
                   </div>
                   <div id="commentsError" className="text-danger d-none">Please Enter Comments</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label>Select blog status</label>
                   <div class="input-group">
                     <select name="blog_status" id="blog_status" class="form-control">
@@ -64,7 +64,7 @@
                   </div>
                   <div id="blog_statusError" className="text-danger d-none">Please Select Blog Status</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="author">Author (Optional)</label>
                   <div class="input-group">
                     <input type="text" class="form-control" v-model="data.author" @input="updatePage('author')" placeholder="Enter Author Name" id="author" required>
@@ -78,8 +78,8 @@
                     toolbar: 'code',
                   }"></editor>
                 </div>
-                <div class="d-grid">
-                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Submit</button>
+                <div class="d-grid offset-4 col-3 align-items-center justify-content-center">
+                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Update</button>
                 </div>
               </form>
             </div>

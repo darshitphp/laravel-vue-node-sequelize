@@ -119,6 +119,7 @@ Route::get('/setting', [SettingController::class, 'index']);
 });
 
 //Login Register Forgot Password
+Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login-action', [UserController::class, 'authenticate'])->name('login_action');
 Route::post('/register-action', [UserController::class, 'register_action'])->name('register_action');
@@ -127,4 +128,5 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/forgot-password', [UserController::class, 'forgot_password']);
 Route::post('/forgot-password-action', [UserController::class, 'forgot_password_action'])->name('forgot_password_action');
 Route::get('/testSendMail', [UserController::class, 'sendHtmlEmail']);
-
+Route::get('/get-active-user',[UserController::class,'getActiveUser']);
+Route::post('/removeFileFromPath', [UserController::class, 'removeFileFromPath'])->name('removeFileFromPath');

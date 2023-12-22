@@ -13,23 +13,23 @@
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Add Category</h1>
-              <form>
+              <form class="row">
                 <!-- Form -->
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="name">Blog name</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter blog name" id="name" required>
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Blog Name</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="slug">Blog slug</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter blog name" id="slug" required>
                   </div>
                   <div id="slugError" className="text-danger d-none">Please Enter Blog Slug</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label>Select blog category</label>
                   <div class="input-group">
                     <select name="category_id" id="category_id" class="form-control">
@@ -39,21 +39,21 @@
                   </div>
                   <div id="category_idError" className="text-danger d-none">Please Select Blog Category</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="tags">Tags</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter Tags" id="tags" required>
                   </div>
                   <div id="tagsError" className="text-danger d-none">Please Enter Tags</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="comments">Comments</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter Comments" id="comments" required>
                   </div>
                   <div id="commentsError" className="text-danger d-none">Please Enter Comments</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label>Select blog status</label>
                   <div class="input-group">
                     <select name="blog_status" id="blog_status" class="form-control">
@@ -64,7 +64,7 @@
                   </div>
                   <div id="blog_statusError" className="text-danger d-none">Please Select Blog Status</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="author">Author (Optional)</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter Author Name" id="author" required>

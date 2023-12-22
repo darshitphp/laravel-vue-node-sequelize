@@ -90,8 +90,8 @@
                       <div id="footerLinkStatusError" style="display: none" className="text-danger">Please Select header position type</div>
                     </div>
                   </div>
-                  <button type="button" id="addMoreFooters" class="btn btn-gray-800">Add</button>
                   <div class="moreSocialContents"></div>
+                  <button type="button" id="addMoreFooters" class="btn btn-gray-800">Add</button>
                   <div id="hiddenPageLink">
                     <div class="mb-4 pageLinkWrapper" style="display: none;">
                       <label>Select page link</label>

@@ -13,16 +13,16 @@
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Add Header</h1>
-              <form>
+              <form class="row">
                 <!-- Form -->
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="title">Header title</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter title name" id="title" required>
                   </div>
                   <div id="titleError" className="text-danger d-none">Please Enter Header Title</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="position">Select Position type</label>
                   <div class="input-group">
                     <select id="position" name="position" class="form-control">
@@ -34,31 +34,31 @@
                   </div>
                   <div id="positionError" className="text-danger d-none">Please Select header position type</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label>Header Logo</label>
                   <div class="input-group">
-                    <input type="file" class="form-control" id="header_logo" name="image" accept="image/*" @change="handleHeaderLogoUpload" required>
+                    <input type="file" class="form-control" id="header_logo_add" name="image" accept="image/*" @change="handleHeaderLogoUpload" required>
                   </div>
                   <div id="imageError" className="text-danger d-none">Please select logo image</div>
                 </div>
                 <div class="mb-4">
-                  <label>Social Links</label>
-                  <div class="">
-                    <div class="mb-4">
+                  <h5>Social Links</h5>
+                  <div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
+                    <div class="mb-4 col-4">
                       <label>Social account title</label>
                       <div class="input-group">
                         <input type="text" class="form-control social_title" placeholder="Enter title name" name="logo_title" required>
                       </div>
                       <div id="titleError" className="text-danger d-none">Please enter social title</div>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-4 col-4">
                       <label>Social account image</label>
                       <div class="input-group">
-                        <input type="file" class="form-control social_image" :name="'social_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>
+                        <input type="file" class="form-control social_image_add" :name="'social_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>
                       </div>
                       <div id="imageError" className="text-danger d-none">Please select logo image</div>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-4 col-4">
                       <label>Social account link</label>
                       <div class="input-group">
                         <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" required>
@@ -66,32 +66,36 @@
                       <div id="titleError" className="text-danger d-none">Please enter social link</div>
                     </div>
                   </div>
-                  <button type="button" id="addMoreInputs" class="btn btn-gray-800">Add</button>
                   <div class="moreSocialContents"></div>
+                  <div class="col-12 text-end mt-2">
+                    <button type="button" id="addMoreHeaderInputs" class="btn btn-gray-800">Add More</button>
+                  </div>
                   <div class="input-group" id="socialGroup" style="display: none">
-                    <div>
-                      <div class="mb-4">
+                    <div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
+                      <div class="mb-4 col-4">
                         <label>Social account title</label>
                         <div class="input-group">
                           <input type="text" class="form-control social_title" placeholder="Enter title name" name="logo_title" required>
                         </div>
                         <div id="titleError" className="text-danger d-none">Please enter social title</div>
                       </div>
-                      <div class="mb-4">
+                      <div class="mb-4 col-4">
                         <label>Social account image</label>
                         <div class="input-group">
-                          <input type="file" class="form-control social_image" :name="'social_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>
+                          <input type="file" class="form-control social_image_add" :name="'social_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>
                         </div>
                         <div id="imageError" className="text-danger d-none">Please select logo image</div>
                       </div>
-                      <div class="mb-4">
+                      <div class="mb-4 col-4">
                         <label>Social account link</label>
                         <div class="input-group">
                           <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" required>
                         </div>
                         <div id="titleError" className="text-danger d-none">Please enter social link</div>
                       </div>
-                      <button type="button" @click="removeFileUpload(index)" class="btn btn-danger removeMoreSocial">Remove</button>
+                      <div class="col-12 text-end mt-2">
+                        <button type="button" @click="removeFileUpload(index)" class="btn btn-danger removeMySocial">Remove</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -117,13 +121,13 @@
 <script>
 $(document).ready(function() {
 
-  $(document).on("click","#addMoreInputs",function() {
+  $(document).on("click","#addMoreHeaderInputs",function() {
     var hiddenInputs = $('#socialGroup').html();
     $('.moreSocialContents').append(hiddenInputs);
   });
 
-  $(document).on('click', '.removeMoreSocial', function() {
-    $(this).parent().remove();
+  $(document).on('click', '.removeMySocial', function() {
+    $(this).parent().parent().remove();
   });
 
 });
@@ -184,7 +188,7 @@ export default {
       this.formData.append('content', this.formData.content);
 
       // const formData = new FormData();
-      const fileInputs = document.querySelectorAll('.social_image'); // Get all elements with class name "slider_image"
+      const fileInputs = document.querySelectorAll('.social_image_add'); // Get all elements with class name "slider_image"
 
       fileInputs.forEach((fileInput) => {
         const file = fileInput.files[0];
@@ -213,7 +217,7 @@ export default {
       this.formData.social_link = social_link;
       this.formData.append('social_link', this.formData.social_link);
 
-      var header_logo = document.getElementById("header_logo");
+      var header_logo = document.getElementById("header_logo_add");
       var headerLogoFile = header_logo.files[0];
       this.formData.append('header_logo', headerLogoFile); // Append the header logo file to formData
 

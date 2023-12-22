@@ -18,7 +18,7 @@ class SettingController extends Controller
             'title' => 'Setting | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'setting/getSettingDataById');
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'setting/getSettingDataById');
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Settings/Edit",[

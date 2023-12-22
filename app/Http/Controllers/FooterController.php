@@ -31,7 +31,7 @@ class FooterController extends Controller
             'title' => 'Footer-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'page/pageData');
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'page/pageData');
         $data = $response->json();
         return Inertia::render("Admin/Footer/Add",[
             'data' => $data['data']
@@ -66,8 +66,8 @@ class FooterController extends Controller
         $data = [
             'id' => $id
         ];
-        $pageData = Http::post(env('NODE_BASEURL_LIVE').'page/pageData');
-        $response = Http::post(env('NODE_BASEURL_LIVE').'footer/getFooterDataById', $data);
+        $pageData = Http::post(env('NODE_BASEURL_LOCAL').'page/pageData');
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'footer/getFooterDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Footer/Edit",[
@@ -92,7 +92,7 @@ class FooterController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'footer/deleteFooterData', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'footer/deleteFooterData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

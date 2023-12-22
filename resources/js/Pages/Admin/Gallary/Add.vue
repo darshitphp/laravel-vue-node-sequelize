@@ -52,7 +52,7 @@
                         <div className="text-danger d-none gallary_alterError">Please enter image alter name</div>
                       </div>
                       <div class="mb-4">
-                        <label>Image image</label>
+                        <label>Image</label>
                         <div class="input-group">
                           <input type="file" class="form-control gallary_image" :name="'gallary_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>
                         </div>

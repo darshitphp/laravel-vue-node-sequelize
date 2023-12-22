@@ -12,7 +12,7 @@
 
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Page</h1>
+              <h1 class="h3 mb-4">Edit Category</h1>
               <form>
                 <div class="mb-4">
                   <label for="name">Slider name</label>
@@ -70,7 +70,7 @@
                   <div id="slugError" className="text-danger d-none">Please Enter Category Slug</div>
                 </div>
                 <div class="d-grid offset-4 col-3 align-items-center justify-content-center">
-                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Submit</button>
+                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Update</button>
                 </div>
               </form>
             </div>

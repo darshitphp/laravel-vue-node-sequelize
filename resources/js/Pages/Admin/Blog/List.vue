@@ -49,11 +49,11 @@
                     </button>
                     <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
                       <a class="dropdown-item d-flex align-items-center" :href="'/blog/edit/'+arr.id">
-                        <span class="fa fa-square me-2"></span>
+                        <span class="fa fa-eye me-2"></span>
                         View Details
                       </a>
                       <a class="dropdown-item text-danger d-flex align-items-center" :href="'/blog/delete/'+arr.id">
-                        <span class="fa fa-square me-2"></span>
+                        <span class="fa fa-trash me-2"></span>
                         Delete Blog
                       </a>
                     </div>

@@ -62,7 +62,7 @@ class GallaryController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'gallary/getGallaryDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'gallary/getGallaryDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Gallary/Edit",[
@@ -86,7 +86,7 @@ class GallaryController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'page/deleteGallaryData', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'page/deleteGallaryData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

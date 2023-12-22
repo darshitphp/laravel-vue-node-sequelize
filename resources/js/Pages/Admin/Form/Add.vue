@@ -13,40 +13,40 @@
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Add Form</h1>
-              <form>
+              <form class="row">
                 <!-- Form -->
-                <div class="mb-4">
-                  <label for="name">Form name</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter page name" id="name" required>
+                <div class="mb-4 col-4">
+                  <label for="name">Name</label>
+                  <div class="input-group gap-3">
+                    <input type="text" class="form-control rounded-1" placeholder="Enter page name" id="name" required>
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Form Name</div>
                 </div>
-                <div class="mb-4">
-                  <label for="title">Form title</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter title name" id="title" required>
+                <div class="mb-4 col-4">
+                  <label for="title">Title</label>
+                  <div class="input-group gap-3">
+                    <input type="text" class="form-control rounded-1" placeholder="Enter title name" id="title" required>
                   </div>
                   <div id="titleError" className="text-danger d-none">Please Enter Form Title</div>
                 </div>
-                <div class="mb-4">
-                  <label for="slug">Form slug</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter form slug" id="slug" required>
+                <div class="mb-4 col-4">
+                  <label for="slug">Slug</label>
+                  <div class="input-group gap-3">
+                    <input type="text" class="form-control rounded-1" placeholder="Enter form slug" id="slug" required>
                   </div>
                   <div id="slugError" className="text-danger d-none">Please Enter Form Slug</div>
                 </div>
-                <div class="mb-4">
-                  <label for="action_url">Form action url</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter form action url" id="action_url" required>
+                <div class="mb-4 col-4">
+                  <label for="action_url">Action url</label>
+                  <div class="input-group gap-3">
+                    <input type="text" class="form-control rounded-1" placeholder="Enter form action url" id="action_url" required>
                   </div>
                   <div id="action_urlError" className="text-danger d-none">Please Enter Form Action Url</div>
                 </div>
-                <div class="mb-4">
-                  <label for="submit_type">Select form submit type</label>
-                  <div class="input-group">
-                    <select id="submit_type" name="submit_type" class="form-control">
+                <div class="mb-4 col-4">
+                  <label for="submit_type">Select Submit Type</label>
+                  <div class="input-group gap-3">
+                    <select id="submit_type" name="submit_type" class="form-control rounded-1">
                       <option value="">Select form submit type</option>
                       <option value="save_entry">Save Entries</option>
                       <option value="send_email">Send Email</option>
@@ -54,16 +54,17 @@
                   </div>
                   <div id="submit_typeError" className="text-danger d-none">Please Select submit type</div>
                 </div>
-                <div class="mb-4 sendEmailWrapper" style="display: none;">
+                <div class="mb-4 col-4 sendEmailWrapper" style="display: none;">
                   <label>Enter Email Addresses With Comma Separator</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="e.g test@gmail.com,test1@gmail.com" id="email_adds" required>
+                  <div class="input-group gap-3">
+                    <input type="text" class="form-control rounded-1" placeholder="e.g test@gmail.com,test1@gmail.com" id="email_adds" required>
                   </div>
                   <div class="text-danger d-none" id="email_addsError" style="display:none;">Please Enter Input Emails</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-12">
+                  <div class="displayInputContents"></div>
                   <label>Select form fields</label>
-                  <div class="input-group">
+                  <div class="input-group gap-3">
                     <select id="" name="form_inputs" class="form-control form_inputs inputFormFields">
                       <option value="" selected>Select input form field</option>
                       <option value="text">Text Box</option>
@@ -75,78 +76,102 @@
                       <option value="email">Email</option>
                     </select>
                   </div>
-                  <button type="button" id="addMoreInputs" class="btn btn-gray-800">Add</button>
-                  <div class="displayInputContents"></div>
+                  <div class="text-end">
+                    <button type="button" id="addMoreInputs" class="btn btn-gray-800 mt-2">Add</button>
+                  </div>
                 </div>
                 <div id="hiddenInputElements" style="display:none;">
-                  <div class="mb-4 textboxElement">
+                  <div class="mb-4 textboxElement" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
                     <label>Enter Input Text Name</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Enter input text label name" required>
-                      <input type="text" class="form-control" placeholder="Enter input text name" required>
+                    <div class="input-group gap-3">
+                      <input type="text" class="form-control rounded-1" placeholder="Enter input text label name" required>
+                      <input type="text" class="form-control rounded-1" placeholder="Enter input text name" required>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-danger removeInputs">Remove</button>
+                      </div>
                     </div>
                     <div class="text-danger textboxElementError" style="display:none;">Please Enter Input Text Name</div>
-                    <button type="button" class="btn btn-danger removeInputs">Remove</button>
                   </div>
-                  <div class="mb-4 selectElement">
+                  <div class="mb-4 selectElement" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
                     <label>Enter Select Options Name</label>
-                    <input type="text" class="form-control" placeholder="Enter select field name" required>
-                    <div class="input-group addMoreOptions">
-                      <input type="text" class="form-control" placeholder="Enter input options label name" required>
-                      <input type="text" class="form-control" placeholder="Enter input options value" required>
+                    <input type="text" class="form-control rounded-1" placeholder="Enter select field name" required>
+                    <div class="input-group addMoreOptions my-2 gap-3">
+                      <input type="text" class="form-control rounded-1" placeholder="Enter input options label name" required>
+                      <input type="text" class="form-control rounded-1" placeholder="Enter input options value" required>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-danger removeInputElement">Remove</button>
+                      </div>
                     </div>
                     <div class="text-danger selectElementError" style="display:none;">Please Enter select field name</div>
-                    <button type="button" class="btn btn-primary addInputOptions">Add</button>
-                    <button type="button" class="btn btn-danger removeInputs">Remove</button>
+                    <div class="input-group-append text-end">
+                      <button type="button" class="btn btn-primary addInputOptions mt-2 me-2">Add</button>
+                      <button type="button" class="btn btn-danger removeInputs mt-2">Remove</button>
+                    </div>
                   </div>
-                  <div class="mb-4 checkboxElement">
+                  <div class="mb-4 checkboxElement" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
                     <label>Enter Input Checkbox Name</label>
-                    <input type="text" class="form-control" placeholder="Enter checkbox field name" required>
-                    <div class="input-group addMoreOptions">
-                      <input type="text" class="form-control" placeholder="Enter checkbox field label name" required>
-                      <input type="text" class="form-control" placeholder="Enter checkbox field value" required>
+                    <input type="text" class="form-control rounded-1" placeholder="Enter checkbox field name" required>
+                    <div class="input-group addMoreOptions my-2 gap-3">
+                      <input type="text" class="form-control rounded-1" placeholder="Enter checkbox field label name" required>
+                      <input type="text" class="form-control rounded-1" placeholder="Enter checkbox field value" required>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-danger removeInputElement">Remove</button>
+                      </div>
                     </div>
                     <div class="text-danger checkboxElementError" style="display:none;">Please Enter Input Checkbox Name</div>
-                    <button type="button" class="btn btn-primary addCheckboxOptions">Add</button>
-                    <button type="button" class="btn btn-danger removeInputs">Remove</button>
+                    <div class="input-group-append text-end">
+                      <button type="button" class="btn btn-primary addCheckboxOptions mt-2 me-2">Add</button>
+                      <button type="button" class="btn btn-danger removeInputs mt-2">Remove</button>
+                    </div>
                   </div>
-                  <div class="mb-4 radioElement">
+                  <div class="mb-4 radioElement" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
                     <label>Enter Input Radio Name</label>
-                    <input type="text" class="form-control" placeholder="Enter radio field name" required>
-                    <div class="input-group addMoreOptions">
-                      <input type="text" class="form-control" placeholder="Enter radio field label name" required>
-                      <input type="text" class="form-control" placeholder="Enter radio field value" required>
+                    <input type="text" class="form-control rounded-1" placeholder="Enter radio field name" required>
+                    <div class="input-group addMoreOptions my-2 gap-3">
+                      <input type="text" class="form-control rounded-1" placeholder="Enter radio field label name" required>
+                      <input type="text" class="form-control rounded-1" placeholder="Enter radio field value" required>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-danger removeInputElement">Remove</button>
+                      </div>
                     </div>
                     <div class="text-danger radioElementError" style="display:none;">Please Enter Input Radio Name</div>
-                    <button type="button" class="btn btn-primary addRadioOptions">Add</button>
-                    <button type="button" class="btn btn-danger removeInputs">Remove</button>
+                    <div class="input-group-append text-end">
+                      <button type="button" class="btn btn-primary addRadioOptions mt-2 me-2">Add</button>
+                      <button type="button" class="btn btn-danger removeInputs mt-2">Remove</button>
+                    </div>
                   </div>
-                  <div class="mb-4 fileElement">
+                  <div class="mb-4 fileElement" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
                     <label>Enter Input File Name</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Enter file field label name" required>
-                      <input type="text" class="form-control" placeholder="Enter file field name" required>
+                    <div class="input-group gap-3">
+                      <input type="text" class="form-control rounded-1" placeholder="Enter file field label name" required>
+                      <input type="text" class="form-control rounded-1" placeholder="Enter file field name" required>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-danger removeInputs">Remove</button>
+                      </div>
                     </div>
                     <div class="text-danger fileElementError" style="display:none;">Please Enter Input File Name</div>
-                    <button type="button" class="btn btn-danger removeInputs">Remove</button>
                   </div>
-                  <div class="mb-4 numberElement">
+                  <div class="mb-4 numberElement" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
                     <label>Enter Input Number</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Enter number field label name" required>
-                      <input type="text" class="form-control" placeholder="Enter number field name" required>
+                    <div class="input-group gap-3">
+                      <input type="text" class="form-control rounded-1" placeholder="Enter number field label name" required>
+                      <input type="text" class="form-control rounded-1" placeholder="Enter number field name" required>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-danger removeInputs">Remove</button>
+                      </div>
                     </div>
                     <div class="text-danger numberElementError" style="display:none;">Please Enter Input Number</div>
-                    <button type="button" class="btn btn-danger removeInputs">Remove</button>
                   </div>
-                  <div class="mb-4 emailElement">
+                  <div class="mb-4 emailElement" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
                     <label>Enter Input Email</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Enter Email field label name" required>
-                      <input type="text" class="form-control" placeholder="Enter Email field name" required>
+                    <div class="input-group gap-3">
+                      <input type="text" class="form-control rounded-1" placeholder="Enter Email field label name" required>
+                      <input type="text" class="form-control rounded-1" placeholder="Enter Email field name" required>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-danger removeInputs">Remove</button>
+                      </div>
                     </div>
                     <div class="text-danger emailElementError" style="display:none;">Please Enter Input Email</div>
-                    <button type="button" class="btn btn-danger removeInputs">Remove</button>
                   </div>
                 </div>
 
@@ -171,13 +196,12 @@
                     toolbar: 'code',
                   }"></editor>
                 </div>
-                <div class="d-grid offset-4 col-3 align-items-center justify-content-center">
+                <div class="offset-4 col-3">
+                  <button type="button" id="generateForm" class="btn btn-gray-800 me-2">Preview Form</button>
                   <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Submit</button>
                 </div>
               </form>
-              <button type="button" id="generateForm" class="btn btn-gray-800">Generate Form</button>
-              <button type="button" id="closeGeneratedForm" class="btn btn-gray-800" style="display:none">Close Generate Form</button>
-              <div class="displayGeneratedForm"></div>
+              <div class="displayGeneratedForm mt-4" style="display: none"></div>
             </div>
           </div>
         </div>
@@ -197,28 +221,36 @@ $(document).ready(function() {
 
   $(document).on('click', '#generateForm', function() {
     var html = "";
-    var error = false;
+    var err = false;
     var action_url = document.getElementById("action_url").value;
-    html += '<div class="card"><div class="card-body"><form action="'+action_url+'" method="post" enctype="multipart/form-data" id="dynamicForm">';
-    $(this).parent().find('.displayInputContents').find(".mb-4").each(function(){
+    var formName = document.getElementById("name").value;
+    var formDescription = tinymce.get('content').getContent();
+    var form_custom_js = tinymce.get('custom_js').getContent();
+    var form_custom_css = $(tinymce.get('custom_css').getContent()).text();
+    const styleTag = document.createElement('style');
+    styleTag.type = 'text/css';
+    styleTag.innerHTML = form_custom_css;
+    console.log(form_custom_css);
+    html += '<div class="card"><div class="card-body"><style>'+form_custom_css+'</style><h2 class="text-center">'+formName+'</h2><p class="text-muted text-center">'+formDescription+'</p><form action="'+action_url+'" method="post" enctype="multipart/form-data" id="dynamicForm">';
+    $('.displayInputContents').find(".mb-4").each(function(){
       if($(this).hasClass('textboxElement')){
         var textName = $(this).find('input[type="text"]').val();
         var textVal = $(this).find('input[type="text"]').last().val();
 
         if(textVal.length == 0){
           $(this).find(".textboxElementError").show();
-          error = true;
+          err = true;
         }else{
           $(this).find(".textboxElementError").hide();
           html += '<label>'+textName+'</label>';
-          html += '<input type="text" class="form-control" name="'+textVal+'" placeholder="Enter input '+textName+' name" required="">';
+          html += '<input type="text" class="form-control rounded-1" name="'+textVal+'" placeholder="Enter input '+textName+' name" required="">';
         }
       }
       if($(this).hasClass('selectElement')){
         var textVal = $(this).find('input[type="text"]').val();
         if(textVal.length == 0){
           $(this).find(".selectElementError").show();
-          error = true;
+          err = true;
         }else {
           $(this).find(".selectElementError").hide();
           html += '<select class="form-select" name="' + textVal + '">';
@@ -233,32 +265,35 @@ $(document).ready(function() {
       }
       if($(this).hasClass('checkboxElement')){
         var textVal = $(this).find('input[type="text"]').val();
+        var convertedText = textVal.toLowerCase().replace(/\s+/g, '_');
+
         if(textVal.length == 0){
           $(this).find(".checkboxElementError").show();
-          error = true;
+          err = true;
         }else {
           $(this).find(".checkboxElementError").hide();
           html += '<label>' + textVal + '</label>';
           $(this).find('.addMoreOptions').each(function () {
             var tName = $(this).find('input[type="text"]').val();
             var tVal = $(this).find('input[type="text"]').last().val();
-            html += '<div className="form-check"><input className="form-check-input" type="checkbox" value="' + tVal + '" id="'+tName+'_"><label className="form-check-label" for="'+tName+'_">';
+            html += '<div className="form-check"><input className="form-check-input" type="checkbox" name="'+convertedText+'" value="' + tVal + '" id="'+tName+'_"><label className="form-check-label" for="'+tName+'_">';
             html += tName + '</label></div>';
           })
         }
       }
       if($(this).hasClass('radioElement')){
         var textVal = $(this).find('input[type="text"]').val();
+        var convertedText = textVal.toLowerCase().replace(/\s+/g, '_');
         if(textVal.length == 0){
           $(this).find(".radioElementError").show();
-          error = true;
+          err = true;
         }else {
           $(this).find(".radioElementError").hide();
           html += '<label>' + textVal + '</label>';
           $(this).find('.addMoreOptions').each(function () {
             var tName = $(this).find('input[type="text"]').val();
             var tVal = $(this).find('input[type="text"]').last().val();
-            html += '<div class="form-check"><input class="form-check-input" type="radio" name="flexRadioDefault" id="'+tName+'_" value="' + tVal + '"><label for="'+tName+'_" class="form-check-label">';
+            html += '<div class="form-check"><input class="form-check-input" type="radio" name="'+convertedText+'" id="'+tName+'_" value="' + tVal + '"><label for="'+tName+'_" class="form-check-label">';
             html += tName + '</label></div>';
           })
         }
@@ -268,11 +303,11 @@ $(document).ready(function() {
         var textVal = $(this).find('input[type="text"]').last().val();
         if(textVal.length == 0){
           $(this).find(".fileElementError").show();
-          error = true;
+          err = true;
         }else {
           $(this).find(".fileElementError").hide();
           html += '<label>' + textName + '</label>';
-          html += '<input type="file" class="form-control" name="' + textVal + '" required="">';
+          html += '<input type="file" class="form-control rounded-1" name="' + textVal + '" required="">';
         }
       }
       if($(this).hasClass('numberElement')){
@@ -280,11 +315,11 @@ $(document).ready(function() {
         var textVal = $(this).find('input[type="text"]').last().val();
         if(textVal.length == 0){
           $(this).find(".numberElementError").show();
-          error = true;
+          err = true;
         }else {
           $(this).find(".numberElementError").hide();
           html += '<label>' + textName + '</label>';
-          html += '<input type="number" class="form-control" name="' + textVal + '" placeholder="Enter input ' + textVal + '" required="">';
+          html += '<input type="number" class="form-control rounded-1" name="' + textVal + '" placeholder="Enter input ' + textVal + '" required="">';
         }
       }
       if($(this).hasClass('emailElement')){
@@ -292,32 +327,48 @@ $(document).ready(function() {
         var textVal = $(this).find('input[type="text"]').last().val();
         if(textVal.length == 0){
           $(this).find(".emailElementError").show();
-          error = true;
+          err = true;
         }else {
           $(this).find(".emailElementError").hide();
           html += '<label>' + textName + '</label>';
-          html += '<input type="email" class="form-control" name="' + textVal + '" placeholder="Enter input ' + textVal + '" required="">';
+          html += '<input type="email" class="form-control rounded-1" name="' + textVal + '" placeholder="Enter input ' + textVal + '" required="">';
         }
       }
     })
     html += '<input type="submit" name="submit" class="btn btn-primary" value="submit"></form></div></div>';
-    if(error == false){
-      $(".displayGeneratedForm").html(html);
-      $(".displayGeneratedForm").show();
-      $("#closeGeneratedForm").show();
-    }else{
-      $("#closeGeneratedForm").hide();
-    }
-  });
-
-  $(document).on('click', '#closeGeneratedForm', function() {
-    $(".displayGeneratedForm").hide();
+    const notyf = new Notyf({
+      position: {
+        x: 'right',
+        y: 'top',
+      },
+      types: [
+        {
+          type: 'error',
+          background: '#FA5252',
+          icon: {
+            className: 'fas fa-times',
+            tagName: 'span',
+            color: '#fff'
+          },
+          dismissible: false
+        }
+      ]
+    });
+    notyf.open({
+      type: 'success',
+      message: 'Form Generated Successfully.'
+    });
+    $(".displayGeneratedForm").html(html);
+    $(".displayGeneratedForm").show();
   });
 
   $(document).on('click', '#addMoreInputs', function() {
     var selectedField = $(".inputFormFields").val();
     var displayInputContents = $(this).closest('.mb-4').find('.displayInputContents');
 
+    if(selectedField.length == 0){
+      alert("Please select any input field first");
+    }
     // displayInputContents.empty();
     if (selectedField === 'text') {
       var textboxElement = $('#hiddenInputElements').find('.textboxElement').clone();
@@ -358,15 +409,18 @@ $(document).ready(function() {
     $(this).before(radioField);
   });
 
-  $('#addMoreInputs').click(function() {
-    var hiddenInputs = $('#hiddenInputs').clone();
-    $('#hiddenMoreInputs').append(hiddenInputs);
-  });
+  // $('#addMoreInputs').click(function() {
+  //   var hiddenInputs = $('#hiddenInputs').clone();
+  //   $('#hiddenMoreInputs').append(hiddenInputs);
+  // });
 
   $(document).on('click', '.removeInputs', function() {
     $(this).closest('.mb-4').remove();
   });
 
+  $(document).on('click','.removeInputElement',function(){
+    $(this).parent().parent().remove();
+  })
 });
 
 import AdminLayout from "@/Pages/AdminLayout.vue";
@@ -397,6 +451,124 @@ export default {
   },
   methods: {
     handleSubmit(){
+      //form creating dynamically and apply inner HTML to hidden field .displayGeneratedForm
+      var html = "";
+      var err = false;
+      var action_url = document.getElementById("action_url").value;
+      var formName = document.getElementById("name").value;
+      var formDescription = tinymce.get('content').getContent();
+      var form_custom_js = tinymce.get('custom_js').getContent();
+      var form_custom_css = $(tinymce.get('custom_css').getContent()).text();
+      const styleTag = document.createElement('style');
+      styleTag.type = 'text/css';
+      styleTag.innerHTML = form_custom_css;
+      html += '<div class="card"><div class="card-body"><style>'+form_custom_css+'</style><h2 class="text-center">'+formName+'</h2><p class="text-muted">'+formDescription+'</p><form action="'+action_url+'" method="post" enctype="multipart/form-data" id="dynamicForm">';
+      $('.displayInputContents').find(".mb-4").each(function(){
+        if($(this).hasClass('textboxElement')){
+          var textName = $(this).find('input[type="text"]').val();
+          var textVal = $(this).find('input[type="text"]').last().val();
+
+          if(textVal.length == 0){
+            $(this).find(".textboxElementError").show();
+            err = true;
+          }else{
+            $(this).find(".textboxElementError").hide();
+            html += '<label>'+textName+'</label>';
+            html += '<input type="text" class="form-control rounded-1" name="'+textVal+'" placeholder="Enter input '+textName+' name" required="">';
+          }
+        }
+        if($(this).hasClass('selectElement')){
+          var textVal = $(this).find('input[type="text"]').val();
+          if(textVal.length == 0){
+            $(this).find(".selectElementError").show();
+            err = true;
+          }else {
+            $(this).find(".selectElementError").hide();
+            html += '<select class="form-select" name="' + textVal + '">';
+            html += '<option value="">Select ' + textVal + '</option>';
+            $(this).find('.addMoreOptions').each(function () {
+              var tName = $(this).find('input[type="text"]').val();
+              var tVal = $(this).find('input[type="text"]').last().val();
+              html += '<option value="' + tVal + '">' + tName + '</option>';
+            })
+            html += '</select>';
+          }
+        }
+        if($(this).hasClass('checkboxElement')){
+          var textVal = $(this).find('input[type="text"]').val();
+          var convertedText = textVal.toLowerCase().replace(/\s+/g, '_');
+
+          if(textVal.length == 0){
+            $(this).find(".checkboxElementError").show();
+            err = true;
+          }else {
+            $(this).find(".checkboxElementError").hide();
+            html += '<label>' + textVal + '</label>';
+            $(this).find('.addMoreOptions').each(function () {
+              var tName = $(this).find('input[type="text"]').val();
+              var tVal = $(this).find('input[type="text"]').last().val();
+              html += '<div className="form-check"><input className="form-check-input" type="checkbox" name="'+convertedText+'" value="' + tVal + '" id="'+tName+'_"><label className="form-check-label" for="'+tName+'_">';
+              html += tName + '</label></div>';
+            })
+          }
+        }
+        if($(this).hasClass('radioElement')){
+          var textVal = $(this).find('input[type="text"]').val();
+          var convertedText = textVal.toLowerCase().replace(/\s+/g, '_');
+          if(textVal.length == 0){
+            $(this).find(".radioElementError").show();
+            err = true;
+          }else {
+            $(this).find(".radioElementError").hide();
+            html += '<label>' + textVal + '</label>';
+            $(this).find('.addMoreOptions').each(function () {
+              var tName = $(this).find('input[type="text"]').val();
+              var tVal = $(this).find('input[type="text"]').last().val();
+              html += '<div class="form-check"><input class="form-check-input" type="radio" name="'+convertedText+'" id="'+tName+'_" value="' + tVal + '"><label for="'+tName+'_" class="form-check-label">';
+              html += tName + '</label></div>';
+            })
+          }
+        }
+        if($(this).hasClass('fileElement')){
+          var textName = $(this).find('input[type="text"]').val();
+          var textVal = $(this).find('input[type="text"]').last().val();
+          if(textVal.length == 0){
+            $(this).find(".fileElementError").show();
+            err = true;
+          }else {
+            $(this).find(".fileElementError").hide();
+            html += '<label>' + textName + '</label>';
+            html += '<input type="file" class="form-control rounded-1" name="' + textVal + '" required="">';
+          }
+        }
+        if($(this).hasClass('numberElement')){
+          var textName = $(this).find('input[type="text"]').val();
+          var textVal = $(this).find('input[type="text"]').last().val();
+          if(textVal.length == 0){
+            $(this).find(".numberElementError").show();
+            err = true;
+          }else {
+            $(this).find(".numberElementError").hide();
+            html += '<label>' + textName + '</label>';
+            html += '<input type="number" class="form-control rounded-1" name="' + textVal + '" placeholder="Enter input ' + textVal + '" required="">';
+          }
+        }
+        if($(this).hasClass('emailElement')){
+          var textName = $(this).find('input[type="text"]').val();
+          var textVal = $(this).find('input[type="text"]').last().val();
+          if(textVal.length == 0){
+            $(this).find(".emailElementError").show();
+            err = true;
+          }else {
+            $(this).find(".emailElementError").hide();
+            html += '<label>' + textName + '</label>';
+            html += '<input type="email" class="form-control rounded-1" name="' + textVal + '" placeholder="Enter input ' + textVal + '" required="">';
+          }
+        }
+      })
+      html += '<input type="submit" name="submit" class="btn btn-primary" value="submit"></form></div></div>';
+      $(".displayGeneratedForm").html(html);
+
       var name = document.getElementById("name").value;
       var title = document.getElementById("title").value;
       var slug = document.getElementById("slug").value;
@@ -464,11 +636,7 @@ export default {
           email_addsError.classList.add("d-none");
         }
       }
-
-      console.log(error);
-
       if (error === false) {
-
         const fetchItems = async () => {
           try {
             const response = await fetch(apiBaseUrl+'form/addFormData', {

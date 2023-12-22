@@ -37,11 +37,11 @@
                     </button>
                     <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
                       <a class="dropdown-item d-flex align-items-center" :href="'/page/edit/'+arr.id">
-                        <span class="fas fa fa-columns me-2"></span>
+                        <span class="fas fa fa-eye me-2"></span>
                         View Details
                       </a>
                       <a class="dropdown-item text-danger d-flex align-items-center" :href="'/page/delete/'+arr.id">
-                        <span class="fas fa fa-columns me-2"></span>
+                        <span class="fas fa fa-trash me-2"></span>
                         Delete page
                       </a>
                     </div>

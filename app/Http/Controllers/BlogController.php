@@ -27,7 +27,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $response = Http::post(env('NODE_BASEURL_LIVE').'blogCategory/blogCategoryData');
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'blogCategory/blogCategoryData');
         $blogCategoryData = $response->json();
         $data = [
             'title' => 'Blog-Add | AdornCommerce',
@@ -66,9 +66,9 @@ class BlogController extends Controller
             'title' => 'Blog-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'blog/getBlogDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'blog/getBlogDataById', $data);
         $data = $response->json();
-        $categoryData = Http::post(env('NODE_BASEURL_LIVE').'blogCategory/blogCategoryData',$data);
+        $categoryData = Http::post(env('NODE_BASEURL_LOCAL').'blogCategory/blogCategoryData',$data);
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Blog/Edit",[
             'category' => $categoryData['data'],
@@ -92,7 +92,7 @@ class BlogController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'blog/deleteBlogData', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'blog/deleteBlogData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

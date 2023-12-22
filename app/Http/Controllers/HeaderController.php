@@ -62,9 +62,10 @@ class HeaderController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'header/getHeaderDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'header/getHeaderDataById', $data);
         $data = $response->json();
         $data['data']['social_links'] = json_decode($data['data']['social_links']);
+//        dd($data['data']);
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Header/Edit",[
             'header' => $data['data']
@@ -87,7 +88,7 @@ class HeaderController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'header/deleteHeaderData', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'header/deleteHeaderData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

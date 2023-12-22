@@ -30,7 +30,6 @@ SliderModel.getAllSliderData = (req)=>{
 
 //get by id tags data
 SliderModel.getIdSliderData = (req) => {
-    console.log(req);
   return SliderModel.findOne({
     where: { id: req.body.id }
   });

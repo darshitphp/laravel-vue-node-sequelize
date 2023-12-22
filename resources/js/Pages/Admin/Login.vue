@@ -40,13 +40,7 @@
                     </div>
                     <!-- End of Form -->
                     <div class="d-flex justify-content-between align-items-top mb-4">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="remember">
-                        <label class="form-check-label mb-0" for="remember">
-                          Remember me
-                        </label>
-                      </div>
-                      <div><a href="/forgot-password" class="small text-right">Lost password?</a>
+                      <div class="text-end"><a href="/forgot-password" class="small text-right">Lost password?</a>
                       </div>
                     </div>
                   </div>
@@ -54,12 +48,12 @@
                     <button type="submit" class="btn btn-gray-800">Sign in</button>
                   </div>
                 </form>
-                <div class="d-flex justify-content-center align-items-center mt-4">
-                  <span class="fw-normal">
-                      Not registered?
-                      <a href="/register" class="fw-bold">Create account</a>
-                  </span>
-                </div>
+<!--                <div class="d-flex justify-content-center align-items-center mt-4">-->
+<!--                  <span class="fw-normal">-->
+<!--                      Not registered?-->
+<!--                      <a href="/register" class="fw-bold">Create account</a>-->
+<!--                  </span>-->
+<!--                </div>-->
               </div>
             </div>
           </div>
@@ -88,18 +82,81 @@ export default {
         email: this.vEmail,
         password: this.vPassword
       };
-      console.log(formData);
-
       axios.post('/login-action', formData)
           .then(response => {
             // Handle the response from the Laravel controller
-            console.log(response.data);
             if(response.data.status == 200){
-              window.location.href = 'page';
+              const notyf = new Notyf({
+                position: {
+                  x: 'right',
+                  y: 'top',
+                },
+                types: [
+                  {
+                    type: 'error',
+                    background: '#FA5252',
+                    icon: {
+                      className: 'fas fa-times',
+                      tagName: 'span',
+                      color: '#fff'
+                    },
+                    dismissible: false
+                  }
+                ]
+              });
+              notyf.open({
+                type: 'success',//error/success
+                message: response.data.data.user_name+' Login Successfully.'//custom message
+              });
+              setTimeout(function(){
+                window.location.href = 'page';
+              },500);
             }else if(response.data.status == 500){
-              alert(response.data.message);
+              const notyf = new Notyf({
+                position: {
+                  x: 'right',
+                  y: 'top',
+                },
+                types: [
+                  {
+                    type: 'error',
+                    background: '#FA5252',
+                    icon: {
+                      className: 'fas fa-times',
+                      tagName: 'span',
+                      color: '#fff'
+                    },
+                    dismissible: false
+                  }
+                ]
+              });
+              notyf.open({
+                type: 'error',//error/success
+                message: response.data.message//custom message
+              });
             }else{
-              alert(response.data.message);
+              const notyf = new Notyf({
+                position: {
+                  x: 'right',
+                  y: 'top',
+                },
+                types: [
+                  {
+                    type: 'error',
+                    background: '#FA5252',
+                    icon: {
+                      className: 'fas fa-times',
+                      tagName: 'span',
+                      color: '#fff'
+                    },
+                    dismissible: false
+                  }
+                ]
+              });
+              notyf.open({
+                type: 'error',//error/success
+                message: response.data.message//custom message
+              });
             }
           })
           .catch(error => {

@@ -14,16 +14,16 @@
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Add Popup</h1>
               <div id="forCustomStyle"></div>
-              <form>
+              <form class="row">
                 <!-- Form -->
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="name">Popup name</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter popup name" id="name" required>
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Popup Name</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="status">Select status</label>
                   <div class="input-group">
                     <select id="status" name="status" class="form-control">
@@ -34,28 +34,28 @@
                   </div>
                   <div id="statusError" className="text-danger d-none">Please Select Popup Status</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="start_date">Start Date</label>
                   <div class="input-group">
                     <input type="date" class="form-control" placeholder="Enter start date name" id="start_date" required>
                   </div>
                   <div id="start_dateError" className="text-danger d-none">Please select start date</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="end_date">End Date</label>
                   <div class="input-group">
                     <input type="date" class="form-control" placeholder="Enter end date name" id="end_date" required>
                   </div>
                   <div id="end_dateError" className="text-danger d-none">Please select end date</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="timer">Timer for popup</label>
                   <div class="input-group">
                     <input type="number" class="form-control" placeholder="Enter timer for popup (in sec)" id="timer" required>
                   </div>
                   <div id="timerError" className="text-danger d-none">Please Enter timer for popup</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="rules">Rules for popup</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter rules for popup" id="rules" required>
@@ -69,19 +69,13 @@
                     toolbar: 'code',
                   }"></editor>
                 </div>
-                <div class="mb-4">
-                  <label for="custom_css">Custom CSS Text</label>
-                  <editor v-model="custom_css" id="custom_css" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
-                    plugins: 'code',
-                    toolbar: 'code',
-                  }"></editor>
-                </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="custom_js">Custom JS Text</label>
-                  <editor v-model="custom_js" id="custom_js" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
-                    plugins: 'code',
-                    toolbar: 'code',
-                  }"></editor>
+                  <textarea name="custom_js" id="custom_js" cols="52" rows="10"></textarea>
+                </div>
+                <div class="mb-4 col-6">
+                  <label for="custom_css">Custom CSS Text</label>
+                  <textarea name="custom_css" id="custom_css" cols="52" rows="10"></textarea>
                 </div>
                 <div class="mb-4">
                   <label>Select page link</label>
@@ -94,9 +88,8 @@
                   <div id="positionError" style="display: none" className="text-danger">Please Select header position type</div>
                 </div>
                 <div class="d-grid offset-4 col-3 align-items-center justify-content-center">
-                  <button type="button" @click="handleSubmit"  class="btn btn-gray-800">Submit</button>
-                  <button @click="openSwal">Open SweetAlert</button>
-
+                  <button type="button" @click="handleSubmit" class="btn btn-gray-800 mb-2">Submit</button>
+                  <button @click="openSwal" class="btn btn-gray-800 mb-2">Open SweetAlert</button>
                 </div>
               </form>
             </div>
@@ -140,7 +133,13 @@ export default {
   },
   methods: {
     openSwal() {
-      const custom_css = tinymce.get('custom_css').getContent({ format: 'text' });
+      const custom_css = $("#custom_css").val();
+      const custom_js =  $("#custom_js").val();
+
+      // Create a script tag and append it to the head of the document
+      const scriptTag = document.createElement('script');
+      scriptTag.type = 'text/javascript';
+      scriptTag.innerHTML = custom_js;
 
       const customStyles = `
         .swal2-styled.swal2-confirm {
@@ -184,10 +183,21 @@ export default {
         customClass: {
           popup: 'custom-swal-popup',
         },
-        onOpen: (modalElement) => {
-          // Add your custom JS logic here
-          console.log('SweetAlert opened!', modalElement);
-          modalElement.classList.add('custom-swal-popup');
+        didRender: () => {
+          // The didRender callback is called after the popup has been rendered
+          // Now, you can select and style the elements
+
+          // Select the element with the class "swal2-confirm"
+          var confirmButton = document.querySelector('.swal2-confirm');
+
+          // Check if the element is found before applying styles
+          if (confirmButton) {
+            // Apply your custom styling here
+            confirmButton.style.backgroundColor = 'red';
+            document.head.appendChild(scriptTag);
+          } else {
+            console.error('Element with class "swal2-confirm" not found.');
+          }
         },
       });
     },
@@ -199,8 +209,8 @@ export default {
       var rules = document.getElementById("rules").value;
       var timer = document.getElementById("timer").value;
       var content = tinymce.get('content').getContent();
-      var custom_css = tinymce.get('custom_css').getContent();
-      var custom_js = tinymce.get('custom_js').getContent();
+      var custom_css = document.getElementById("custom_css").value;
+      var custom_js = document.getElementById("custom_js").value;
       var pageLink = $(".pageLink").val();
       var pages = pageLink.toString();
 

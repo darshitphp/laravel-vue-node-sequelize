@@ -112,19 +112,135 @@ export default {
             // Handle the response from the Laravel controller
             console.log(response.data);
             if(response.data.status == 200){
-              window.location.href = 'login';
+              const notyf = new Notyf({
+                position: {
+                  x: 'right',
+                  y: 'top',
+                },
+                types: [
+                  {
+                    type: 'error',
+                    background: '#FA5252',
+                    icon: {
+                      className: 'fas fa-times',
+                      tagName: 'span',
+                      color: '#fff'
+                    },
+                    dismissible: false
+                  }
+                ]
+              });
+              notyf.open({
+                type: 'success',//error/success
+                message: 'Registration successfully we will get back you to Login!'//custom message
+              });
+              setTimeout(function(){
+                window.location.href = 'login';
+              },500);
             }else if(response.data.status == 500){
-              alert(response.data.message);
+              const notyf = new Notyf({
+                position: {
+                  x: 'right',
+                  y: 'top',
+                },
+                types: [
+                  {
+                    type: 'error',
+                    background: '#FA5252',
+                    icon: {
+                      className: 'fas fa-times',
+                      tagName: 'span',
+                      color: '#fff'
+                    },
+                    dismissible: false
+                  }
+                ]
+              });
+              notyf.open({
+                type: 'success',//error/success
+                message: response.data.message//custom message
+              });
             }else{
-              alert(response.data.message);
+              const notyf = new Notyf({
+                position: {
+                  x: 'right',
+                  y: 'top',
+                },
+                types: [
+                  {
+                    type: 'error',
+                    background: '#FA5252',
+                    icon: {
+                      className: 'fas fa-times',
+                      tagName: 'span',
+                      color: '#fff'
+                    },
+                    dismissible: false
+                  }
+                ]
+              });
+              notyf.open({
+                type: 'success',//error/success
+                message: response.data.message//custom message
+              });
             }
           })
           .catch(error => {
             // Handle any errors
             console.error(error);
+            const notyf = new Notyf({
+              position: {
+                x: 'right',
+                y: 'top',
+              },
+              types: [
+                {
+                  type: 'error',
+                  background: '#FA5252',
+                  icon: {
+                    className: 'fas fa-times',
+                    tagName: 'span',
+                    color: '#fff'
+                  },
+                  dismissible: false
+                }
+              ]
+            });
+            if(error.response.data.errors.password){
+              notyf.open({
+                type: 'error',//error/success
+                message: error.response.data.errors.password//custom message
+              });
+            }else if(error.response.data.errors.user_name){
+              notyf.open({
+                type: 'error',//error/success
+                message: error.response.data.errors.user_name//custom message
+              });
+            }
           });
       }else{
-        alert('your password didnt match');
+        const notyf = new Notyf({
+          position: {
+            x: 'right',
+            y: 'top',
+          },
+          types: [
+            {
+              type: 'error',
+              background: '#FA5252',
+              icon: {
+                className: 'fas fa-times',
+                tagName: 'span',
+                color: '#fff'
+              },
+              dismissible: false
+            }
+          ]
+        });
+        notyf.open({
+          type: 'error',//error/success
+          message: 'your password didnt match'//custom message
+        });
       }
     }
   }

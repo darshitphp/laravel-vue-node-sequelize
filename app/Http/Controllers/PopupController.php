@@ -31,7 +31,7 @@ class PopupController extends Controller
             'title' => 'Popup-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $pageData = Http::post(env('NODE_BASEURL_LIVE').'page/pageData');
+        $pageData = Http::post(env('NODE_BASEURL_LOCAL').'page/pageData');
         return Inertia::render("Admin/Popup/Add",[
             'data' => $pageData['data']
         ])->with($metadata);
@@ -65,8 +65,8 @@ class PopupController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'popup/getPopupDataById', $data);
-        $pageData = Http::post(env('NODE_BASEURL_LIVE').'page/pageData');
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'popup/getPopupDataById', $data);
+        $pageData = Http::post(env('NODE_BASEURL_LOCAL').'page/pageData');
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Popup/Edit",[
@@ -91,7 +91,7 @@ class PopupController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'page/deletePopupData', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'page/deletePopupData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

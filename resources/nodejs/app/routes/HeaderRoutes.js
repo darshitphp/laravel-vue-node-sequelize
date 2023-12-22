@@ -5,6 +5,8 @@ module.exports = app =>{
     router.post("/headerData",HeaderController.FindAllData)
     router.post("/getHeaderDataById",HeaderController.FindIdData)
     router.post("/addHeaderData",HeaderController.AddData)
+    router.post("/socialImageUpload",HeaderController.socialImageUpload)
+    router.post("/headerLogoUpload",HeaderController.headerLogoUpload)
     router.post("/updateHeaderData",HeaderController.UpdateData)
     router.post("/deleteHeaderData",HeaderController.DeleteData)
     

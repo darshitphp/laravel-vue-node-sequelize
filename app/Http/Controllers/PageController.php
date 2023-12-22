@@ -31,9 +31,9 @@ class PageController extends Controller
             'title' => 'Page-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $sliderResponse = Http::post(env('NODE_BASEURL_LIVE').'slider/sliderData', $data);
+        $sliderResponse = Http::post(env('NODE_BASEURL_LOCAL').'slider/sliderData', $data);
         $sliderData = $sliderResponse->json();
-        $formResponse = Http::post(env('NODE_BASEURL_LIVE').'form/formData', $data);
+        $formResponse = Http::post(env('NODE_BASEURL_LOCAL').'form/formData', $data);
         $formData = $formResponse->json();
         return Inertia::render("Admin/Page/Add",[
             'slider' => $sliderData['data'],
@@ -65,11 +65,11 @@ class PageController extends Controller
         $data = [
             'id' => $iPageId
         ];
-        $response = Http::post(env('NODE_BASEURL_LIVE').'page/getPageDataById', $data);
+        $response = Http::post(env('NODE_BASEURL_LOCAL').'page/getPageDataById', $data);
         $data = $response->json();
-        $sliderResponse = Http::post(env('NODE_BASEURL_LIVE').'slider/sliderData', $data);
+        $sliderResponse = Http::post(env('NODE_BASEURL_LOCAL').'slider/sliderData', $data);
         $sliderData = $sliderResponse->json();
-        $formResponse = Http::post(env('NODE_BASEURL_LIVE').'form/formData', $data);
+        $formResponse = Http::post(env('NODE_BASEURL_LOCAL').'form/formData', $data);
         $formData = $formResponse->json();
 //        dd($data);
         $metaData = [
@@ -100,7 +100,7 @@ class PageController extends Controller
         $data = [
             'id' => $id
         ];
-            $response = Http::post(env('NODE_BASEURL_LIVE').'page/deletePageData', $data);
+            $response = Http::post(env('NODE_BASEURL_LOCAL').'page/deletePageData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){
