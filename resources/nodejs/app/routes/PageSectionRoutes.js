@@ -1,6 +1,9 @@
 module.exports = app =>{
     const PageSectionController = require("../controller/PageSectionController.js");
     const router = require("express").Router();
+    const myMiddleware = require('../middleware/MyMiddleware.js'); 
+
+    router.use(myMiddleware);
 
     router.post("/pageSectionData",PageSectionController.FindAllData)
     router.post("/getPageSectionDataById",PageSectionController.FindIdData)

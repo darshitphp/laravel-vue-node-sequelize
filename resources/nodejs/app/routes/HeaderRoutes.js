@@ -1,6 +1,9 @@
 module.exports = app =>{
     const HeaderController = require("../controller/HeaderController.js");
     const router = require("express").Router();
+    const myMiddleware = require('../middleware/MyMiddleware.js'); 
+
+    router.use(myMiddleware);
 
     router.post("/headerData",HeaderController.FindAllData)
     router.post("/getHeaderDataById",HeaderController.FindIdData)

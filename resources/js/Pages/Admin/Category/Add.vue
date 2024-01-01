@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :data="data">
+  <AdminLayout :data="data" :token="token">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -13,16 +13,16 @@
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Add Category</h1>
-              <form>
+              <form class="row">
                 <!-- Form -->
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="name">Category name</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter Category name" id="name" required>
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Slider Title</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="status">Select status</label>
                   <div class="input-group">
                     <select id="status" name="status" class="form-control">
@@ -33,7 +33,7 @@
                   </div>
                   <div id="statusError" className="text-danger d-none">Please Select Category Status</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="status">Include in menu</label>
                   <div class="input-group">
                     <select id="include" name="status" class="form-control">
@@ -44,7 +44,7 @@
                   </div>
                   <div id="includeError" className="text-danger d-none">Please Select Include Option</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-12">
                   <label for="content">Content</label>
                   <editor v-model="content" id="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
@@ -52,13 +52,13 @@
                   }"></editor>
                   <div id="contentError" className="text-danger d-none">Please enter category content</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="options">Upload category images</label>
                   <div class="input-group mb-2">
                     <input type="file" name="banner_image" class="form-control" id="banner_image" @change="handleFileUpload" accept="image/*">
                   </div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="slug">Category slug</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter page name" id="slug" required>
@@ -85,6 +85,9 @@ export default {
   components: {
     AdminLayout,
     'editor': Editor
+  },
+  props:{
+    token: String,
   },
   data() {
     return {
@@ -179,6 +182,10 @@ export default {
             const response = await fetch(apiBaseUrl+'category/addCategoryData', {
               method: 'POST',
               body: this.formData,
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': this.token,
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){

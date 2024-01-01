@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :slider="slider">
+  <AdminLayout :slider="slider" :token="token">
     <!-- Your middle slider content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -117,6 +117,7 @@ export default {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
+    token: String,
   },
   data() {
     return {
@@ -250,6 +251,10 @@ export default {
             const response = await fetch(apiBaseUrl+'slider/updateSliderData', {
               method: 'POST',
               body: this.formData,
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': this.token,
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){

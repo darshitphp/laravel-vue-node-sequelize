@@ -14,12 +14,14 @@ class PageController extends Controller
      */
     public function index()
     {
+        $token['token'] = $this->xAuthToken;
         //Loading component with proper file structure managable
         $data = [
             'title' => 'Page | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        return Inertia::render("Admin/Page/List")->with($data);
+
+        return Inertia::render("Admin/Page/List",$token)->with($data);
     }
 
     /**
@@ -27,17 +29,23 @@ class PageController extends Controller
      */
     public function create()
     {
+        $token = $this->xAuthToken;
         $data = [
             'title' => 'Page-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $sliderResponse = Http::post(env('NODE_BASEURL_LOCAL').'slider/sliderData', $data);
+        $sliderResponse = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'slider/sliderData', $data);
         $sliderData = $sliderResponse->json();
-        $formResponse = Http::post(env('NODE_BASEURL_LOCAL').'form/formData', $data);
+        $formResponse = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'form/formData', $data);
         $formData = $formResponse->json();
         return Inertia::render("Admin/Page/Add",[
             'slider' => $sliderData['data'],
-            'form' => $formData['data']
+            'form' => $formData['data'],
+            'token' => $token
         ])->with($data);
     }
 
@@ -65,13 +73,19 @@ class PageController extends Controller
         $data = [
             'id' => $iPageId
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'page/getPageDataById', $data);
+        $token = $this->xAuthToken;
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'page/getPageDataById', $data);
         $data = $response->json();
-        $sliderResponse = Http::post(env('NODE_BASEURL_LOCAL').'slider/sliderData', $data);
+        $sliderResponse = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'slider/sliderData', $data);
         $sliderData = $sliderResponse->json();
-        $formResponse = Http::post(env('NODE_BASEURL_LOCAL').'form/formData', $data);
+        $formResponse = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'form/formData', $data);
         $formData = $formResponse->json();
-//        dd($data);
         $metaData = [
             'title' => 'Page-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
@@ -80,7 +94,8 @@ class PageController extends Controller
         return Inertia::render("Admin/Page/Edit",[
             'page' => $data['data'],
             'slider' => $sliderData['data'],
-            'form' => $formData['data']
+            'form' => $formData['data'],
+            'token' => $token
         ])->with($metaData);
     }
 
@@ -100,7 +115,10 @@ class PageController extends Controller
         $data = [
             'id' => $id
         ];
-            $response = Http::post(env('NODE_BASEURL_LOCAL').'page/deletePageData', $data);
+        $token = $this->xAuthToken;
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'page/deletePageData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

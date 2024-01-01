@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :category="category">
+  <AdminLayout :category="category" :token="token">
     <!-- Your middle slider content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -13,8 +13,8 @@
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Edit Category</h1>
-              <form>
-                <div class="mb-4">
+              <form class="row">
+                <div class="mb-4 col-4">
                   <label for="name">Slider name</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter name name" v-model="category.name" @input="updatePage('name')" id="name" required>
@@ -22,7 +22,7 @@
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Slider Title</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="status">Select status</label>
                   <div class="input-group">
                     <select id="status" name="status" class="form-control" v-model="category.status">
@@ -33,7 +33,7 @@
                   </div>
                   <div id="statusError" className="text-danger d-none">Please Select Category Status</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-4">
                   <label for="status">Include in menu</label>
                   <div class="input-group">
                     <select id="include" name="include" class="form-control">
@@ -44,7 +44,7 @@
                   </div>
                   <div id="includeError" className="text-danger d-none">Please Select Include Option</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-12">
                   <label for="content">Content</label>
                   <editor id="content" v-model="category.content" @input="updatePage('content')" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
@@ -52,17 +52,17 @@
                   }"></editor>
                   <div id="contentError" className="text-danger d-none">Please enter slider content</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="options">Upload category images</label>
                   <div class="input-group mb-2">
                     <input type="file" name="banner_image" class="form-control" id="banner_image" @change="handleFileUpload" accept="image/*">
                   </div>
-                  <div class="row">
+                  <div class="d-flex">
                     <i class="fa fa-close removeCategoryImage" :data-id="category.id" :data-src="category.banner_image" style="font-size:14px;color:darkgrey;cursor: pointer;position: absolute;padding-left: 63px"></i>
-                    <img :src="'/assets/img/category/' + category.banner_image" id="old_banner_image" :data-src="category.banner_image" height="75" style="width: 100px!important;border: 2px solid grey;border-radius: 5px;" />
+                    <img :src="'/assets/img/category/' + category.banner_image" id="old_banner_image" :data-src="category.banner_image" height="75" style="width: 75px!important;border: 2px solid grey;border-radius: 5px;" />
                   </div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="slug">Category slug</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter page name" id="slug" v-model="category.slug" @input="updatePage('slug')" required>
@@ -94,6 +94,7 @@ export default {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
+    token: String,
   },
   data() {
     return {
@@ -195,6 +196,10 @@ export default {
             const response = await fetch(apiBaseUrl+'category/updateCategoryData', {
               method: 'POST',
               body: this.formData,
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': this.token,
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){

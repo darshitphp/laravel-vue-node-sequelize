@@ -14,15 +14,19 @@ class SettingController extends Controller
      */
     public function index()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Setting | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'setting/getSettingDataById');
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'setting/getSettingDataById');
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Settings/Edit",[
-            'data' => $data['data']
+            'data' => $data['data'],
+            'token' => $token
         ])->with($metadata);
     }
 

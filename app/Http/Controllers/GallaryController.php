@@ -14,12 +14,13 @@ class GallaryController extends Controller
      */
     public function index()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Gallery-List | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Gallary/List")->with($metadata);
+        return Inertia::render("Admin/Gallary/List",['token' => $token])->with($metadata);
     }
 
     /**
@@ -27,11 +28,12 @@ class GallaryController extends Controller
      */
     public function create()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Gallery-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        return Inertia::render("Admin/Gallary/Add")->with($metadata);
+        return Inertia::render("Admin/Gallary/Add",['token' => $token])->with($metadata);
     }
 
     /**
@@ -55,6 +57,7 @@ class GallaryController extends Controller
      */
     public function edit($id)
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Gallary-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
@@ -62,11 +65,14 @@ class GallaryController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'gallary/getGallaryDataById', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'gallary/getGallaryDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Gallary/Edit",[
             'data' => $data['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -83,10 +89,13 @@ class GallaryController extends Controller
      */
     public function destroy($id)
     {
+        $token = $this->xAuthToken;
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'page/deleteGallaryData', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'page/deleteGallaryData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

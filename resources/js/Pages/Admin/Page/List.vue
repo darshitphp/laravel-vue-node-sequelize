@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :data="data">
+  <AdminLayout :data="data" :token="token">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -9,7 +9,6 @@
               <a href="/page/add" class="btn btn-gray-800 me-2 my-2">Add Page</a>
             </div>
           </div>
-
           <div class="table-responsive">
             <table class="table table-centered table-nowrap mb-0 rounded">
               <thead class="thead-light">
@@ -67,8 +66,11 @@ export default {
   },
   data() {
     return {
-      data: ''
+      data: '',
     };
+  },
+  props: {
+    token: String,
   },
   created() {
     this.fetchData();
@@ -76,7 +78,17 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await axios.post(apiBaseUrl+'page/pageData');
+        const response = await axios.post(
+        apiBaseUrl+'page/pageData',
+        {
+          // Your request payload goes here
+        },
+        {
+          headers: {
+            'x-auth-token': this.token,
+          },
+        }
+        );
         this.data = response.data.data;
       } catch (error) {
         console.error(error);

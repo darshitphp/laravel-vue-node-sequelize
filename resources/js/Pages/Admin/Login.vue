@@ -1,5 +1,5 @@
 <template>
-  <AdminLoginLayout :data="data">
+  <AdminLoginLayout :data="data" :old_remember="old_remember">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <section class="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
@@ -40,6 +40,10 @@
                     </div>
                     <!-- End of Form -->
                     <div class="d-flex justify-content-between align-items-top mb-4">
+                      <label for="remember">
+                        <input type="checkbox" name="remember" id="remember" v-model="remember">
+                        Remember Me
+                      </label>
                       <div class="text-end"><a href="/forgot-password" class="small text-right">Lost password?</a>
                       </div>
                     </div>
@@ -48,12 +52,6 @@
                     <button type="submit" class="btn btn-gray-800">Sign in</button>
                   </div>
                 </form>
-<!--                <div class="d-flex justify-content-center align-items-center mt-4">-->
-<!--                  <span class="fw-normal">-->
-<!--                      Not registered?-->
-<!--                      <a href="/register" class="fw-bold">Create account</a>-->
-<!--                  </span>-->
-<!--                </div>-->
               </div>
             </div>
           </div>
@@ -69,19 +67,46 @@ export default {
   components: {
     AdminLoginLayout
   },
+  props: {
+    old_remember: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       vEmail: '',
       vPassword: '',
+      remember: false,
       data: ''
     };
   },
+  mounted() {
+    // Check if "Remember Me" was selected in the previous login
+    const rememberSelected = localStorage.getItem('rememberSelected');
+
+    if (rememberSelected === 'true') {
+      // Autofill username and password
+      this.vEmail = localStorage.getItem('savedUsername') || '';
+      this.vPassword = localStorage.getItem('savedPassword') || '';
+      this.remember = true;
+    }
+  },
   methods: {
     submitForm() {
+      const rememberToken = $("#remember").val();
       const formData = {
         email: this.vEmail,
-        password: this.vPassword
+        password: this.vPassword,
+        remember:this.remember
       };
+      // Store the "Remember Me" option
+      localStorage.setItem('rememberSelected', this.remember);
+      // If "Remember Me" is selected, store the username and password
+      if (this.remember) {
+        localStorage.setItem('savedUsername', this.vEmail);
+        localStorage.setItem('savedPassword', this.vPassword);
+      }
       axios.post('/login-action', formData)
           .then(response => {
             // Handle the response from the Laravel controller
@@ -109,7 +134,8 @@ export default {
                 message: response.data.data.user_name+' Login Successfully.'//custom message
               });
               setTimeout(function(){
-                window.location.href = 'page';
+                console.log(response);
+                window.location.href = 'dashboard';
               },500);
             }else if(response.data.status == 500){
               const notyf = new Notyf({

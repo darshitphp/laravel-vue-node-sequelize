@@ -1,6 +1,9 @@
 module.exports = app =>{
     const ProductController = require("../controller/ProductController.js");
     const router = require("express").Router();
+    const myMiddleware = require('../middleware/MyMiddleware.js'); 
+
+    router.use(myMiddleware);
 
     router.post("/productData",ProductController.FindAllData)
     router.post("/getProductDataById",ProductController.FindIdData)

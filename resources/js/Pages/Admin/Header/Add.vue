@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :data="data">
+  <AdminLayout :data="data" :token="token">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -15,14 +15,14 @@
               <h1 class="h3 mb-4">Add Header</h1>
               <form class="row">
                 <!-- Form -->
-                <div class="mb-4 col-4">
+                <div class="mb-4 col-6">
                   <label for="title">Header title</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter title name" id="title" required>
                   </div>
                   <div id="titleError" className="text-danger d-none">Please Enter Header Title</div>
                 </div>
-                <div class="mb-4 col-4">
+                <div class="mb-4 col-6">
                   <label for="position">Select Position type</label>
                   <div class="input-group">
                     <select id="position" name="position" class="form-control">
@@ -34,14 +34,34 @@
                   </div>
                   <div id="positionError" className="text-danger d-none">Please Select header position type</div>
                 </div>
-                <div class="mb-4 col-4">
+                <div class="mb-4 col-6 d-flex gap-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="headerOption" value="logo" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Logo
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="headerOption" value="link" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Social Links
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="headerOption" value="content" id="flexRadioDefault3">
+                    <label class="form-check-label" for="flexRadioDefault3">
+                      Content
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-4 col-6 logoWrapper" style="display: none">
                   <label>Header Logo</label>
                   <div class="input-group">
                     <input type="file" class="form-control" id="header_logo_add" name="image" accept="image/*" @change="handleHeaderLogoUpload" required>
                   </div>
                   <div id="imageError" className="text-danger d-none">Please select logo image</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 socialLinkWrapper" style="display: none">
                   <h5>Social Links</h5>
                   <div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
                     <div class="mb-4 col-4">
@@ -100,7 +120,7 @@
                   </div>
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-4 col-6 contentWrapper" style="display: none">
                   <label for="content">Content Text</label>
                   <editor id="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
@@ -120,8 +140,24 @@
 </template>
 <script>
 $(document).ready(function() {
+  $('input[name="headerOption"]').change(function() {
+    var selectedValue = $('input[name="headerOption"]:checked').val();
+    if(selectedValue == 'logo'){
+      $(".logoWrapper").show();
+      $(".socialLinkWrapper").hide();
+      $(".contentWrapper").hide();
+    }else if(selectedValue == 'content'){
+      $(".contentWrapper").show();
+      $(".logoWrapper").hide();
+      $(".socialLinkWrapper").hide();
+    }else if(selectedValue == 'link'){
+      $(".socialLinkWrapper").show();
+      $(".logoWrapper").hide();
+      $(".contentWrapper").hide();
+    }
+  });
 
-  $(document).on("click","#addMoreHeaderInputs",function() {
+    $(document).on("click","#addMoreHeaderInputs",function() {
     var hiddenInputs = $('#socialGroup').html();
     $('.moreSocialContents').append(hiddenInputs);
   });
@@ -139,6 +175,9 @@ export default {
   components: {
     AdminLayout,
     'editor': Editor
+  },
+  props:{
+    token: String,
   },
   data() {
     return {
@@ -241,12 +280,15 @@ export default {
       }
 
       if (error === false) {
-        console.log(this.formData);
         const fetchItems = async () => {
           try {
             const response = await fetch(apiBaseUrl+'header/addHeaderData', {
               method: 'POST',
               body: this.formData,
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': this.token,
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){

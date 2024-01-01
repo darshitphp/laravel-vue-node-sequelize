@@ -14,12 +14,13 @@ class FormController extends Controller
      */
     public function index()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Form-List | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Form/List")->with($metadata);
+        return Inertia::render("Admin/Form/List",['token' => $token])->with($metadata);
     }
 
     /**
@@ -27,11 +28,13 @@ class FormController extends Controller
      */
     public function create()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Form-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        return Inertia::render("Admin/Form/Add")->with($metadata);
+
+        return Inertia::render("Admin/Form/Add",['token' => $token])->with($metadata);
     }
 
     /**
@@ -55,6 +58,7 @@ class FormController extends Controller
      */
     public function edit($id)
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Form-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
@@ -62,11 +66,14 @@ class FormController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'form/getFormDataById', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'form/getFormDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Form/Edit",[
-            'form' => $data['data']
+            'form' => $data['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -83,10 +90,13 @@ class FormController extends Controller
      */
     public function destroy($id)
     {
+        $token = $this->xAuthToken;
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'form/deleteFormData', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'form/deleteFormData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

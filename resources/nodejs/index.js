@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-const cors = require('cors')
+const cors = require('cors');
 require("dotenv").config();
 const bodyParser = require('body-parser');
 const db = require('./app/model/index.js');
-const myMiddleware = require('./app/middleware/MyMiddleware.js'); // Adjust the path accordingly
+// const myMiddleware = require('./app/middleware/MyMiddleware.js'); // Adjust the path accordingly
 
 var corsOptions = {
     origin:"*",
@@ -13,11 +13,12 @@ var corsOptions = {
         'POST'
     ],
     allowedHeaders:[
-        'Content-type'
+        'Content-type',
+        'X-Auth-Token'
     ]
 }
 
-app.use(myMiddleware);
+// app.use(myMiddleware);
 app.use(cors(corsOptions))
 app.get('/get',(req,resp)=>{
     resp.send("server is working")

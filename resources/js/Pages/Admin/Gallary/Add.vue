@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :data="data">
+  <AdminLayout :data="data" :token="token">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -103,6 +103,9 @@ export default {
     AdminLayout,
     'editor': Editor
   },
+  props:{
+    token: String,
+  },
   data() {
     return {
       data: '',
@@ -161,23 +164,7 @@ export default {
         this.formData.append('gallary_image[]', file); // Add each file separately
       });
 
-
-
-      //
       let error = false;
-      // if (this.formData.alter.length === 0) {
-      //   alterError.classList.remove("d-none");
-      //   error = true;
-      // } else {
-      //   alterError.classList.add("d-none");
-      // }
-      //
-      // if (this.formData.custom_link.length === 0) {
-      //   custom_linkError.classList.remove("d-none");
-      //   error = true;
-      // } else {
-      //   custom_linkError.classList.add("d-none");
-      // }
 
       if (error === false) {
 
@@ -186,6 +173,10 @@ export default {
             const response = await fetch(apiBaseUrl+'gallary/addGallaryData', {
               method: 'POST',
               body: this.formData,
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': this.token,
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){

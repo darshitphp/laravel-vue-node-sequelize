@@ -1,6 +1,9 @@
 module.exports = app =>{
     const GallaryController = require("../controller/GallaryController.js");
     const router = require("express").Router();
+    const myMiddleware = require('../middleware/MyMiddleware.js'); 
+
+    router.use(myMiddleware);
 
     router.post("/gallaryData",GallaryController.FindAllData)
     router.post("/getGallaryDataById",GallaryController.FindIdData)

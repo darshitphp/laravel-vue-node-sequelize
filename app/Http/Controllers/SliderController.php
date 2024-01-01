@@ -14,12 +14,13 @@ class SliderController extends Controller
      */
     public function index()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Slider-List | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Slider/List")->with($metadata);
+        return Inertia::render("Admin/Slider/List",['token' => $token])->with($metadata);
     }
 
     /**
@@ -27,11 +28,12 @@ class SliderController extends Controller
      */
     public function create()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Slider-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        return Inertia::render("Admin/Slider/Add")->with($metadata);
+        return Inertia::render("Admin/Slider/Add",['token' => $token])->with($metadata);
     }
 
     /**
@@ -56,6 +58,7 @@ class SliderController extends Controller
      */
     public function edit($id)
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Slider-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
@@ -63,12 +66,15 @@ class SliderController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'slider/getSliderDataById', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'slider/getSliderDataById', $data);
         $data = $response->json();
 //        dd($data['data']);
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Slider/Edit",[
-            'slider' => $data['data']
+            'slider' => $data['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -85,10 +91,13 @@ class SliderController extends Controller
      */
     public function destroy($id)
     {
+        $token = $this->xAuthToken;
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'slider/deleteSliderData', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'slider/deleteSliderData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

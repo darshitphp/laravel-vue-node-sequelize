@@ -1,5 +1,5 @@
-<template>
-  <AdminLayout :page="data">
+  <template>
+  <AdminLayout :page="data" :token="token">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -13,16 +13,16 @@
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Add Footer</h1>
-              <form>
+              <form class="row">
                 <!-- Form -->
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="title">Footer title</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter title name" id="title" required>
                   </div>
                   <div id="titleError" style="display: none" className="text-danger">Please Enter Header Title</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="position">Footer status</label>
                   <div class="input-group">
                     <select id="footerStatus" name="footerStatus" class="form-control">
@@ -34,8 +34,8 @@
                   <div id="footerStatusError" style="display: none" className="text-danger">Please Select Footer Status</div>
                 </div>
                 <div class="mb-4">
-                  <div class="">
-                    <div class="mb-4">
+                  <div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 10px;margin-bottom: 20px;">
+                    <div class="mb-4 col-6">
                       <label>Link Type</label>
                       <div class="input-group">
                         <select name="position" class="form-control linkType">
@@ -46,14 +46,14 @@
                       </div>
                       <div id="positionError" style="display: none" className="text-danger">Please Select header position type</div>
                     </div>
-                    <div class="mb-4 customLinkWrapper" style="display: none;">
+                    <div class="mb-4 col-6 customLinkWrapper" style="display: none;">
                       <label>Custom link</label>
                       <div class="input-group">
                         <input type="text" class="form-control customLink" placeholder="Enter custom link" required>
                       </div>
                       <div id="customLinkError" style="display: none" className="text-danger">Please Enter Custom Link</div>
                     </div>
-                    <div class="mb-4 pageLinkWrapper" style="display: none;">
+                    <div class="mb-4 col-6 pageLinkWrapper" style="display: none;">
                       <label>Select page link</label>
                       <div class="input-group">
                         <select name="pageLink" class="form-control pageLink">
@@ -63,7 +63,7 @@
                       </div>
                       <div id="positionError" style="display: none" className="text-danger">Please Select header position type</div>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-4 col-6">
                       <label>Content Text</label>
                       <editor id="content" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                           menubar: false,
@@ -78,7 +78,7 @@
                             bullist numlist outdent indent | removeformat | help'
                       }"></editor>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-4 col-6">
                       <label for="position">Footer link status</label>
                       <div class="input-group">
                         <select name="footerLinkStatus" class="form-control footerLinkStatus">
@@ -93,7 +93,7 @@
                   <div class="moreSocialContents"></div>
                   <button type="button" id="addMoreFooters" class="btn btn-gray-800">Add</button>
                   <div id="hiddenPageLink">
-                    <div class="mb-4 pageLinkWrapper" style="display: none;">
+                    <div class="mb-4 pageLinkWrapper col-6" style="display: none;">
                       <label>Select page link</label>
                       <div class="input-group">
                         <select name="pageLink" class="form-control pageLink">
@@ -124,8 +124,8 @@ $(document).ready(function() {
     // var hiddenInputs = $('#socialGroup').html();
     var uniqueId = 'editor_'+count;
     var hiddenPageLink = $("#hiddenPageLink").html();
-    var hiddenInputs = `<div class="">
-      <div class="mb-4">
+    var hiddenInputs = `<div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 10px;margin-bottom: 20px;">
+      <div class="mb-4 col-6">
         <label>Link Type</label>
         <div class="input-group">
           <select name="position" class="form-control linkType">
@@ -136,7 +136,7 @@ $(document).ready(function() {
         </div>
         <div id="positionError" class="text-danger d-none">Please Select header position type</div>
       </div>
-      <div class="mb-4 customLinkWrapper" style="display: none;">
+      <div class="mb-4 customLinkWrapper col-6" style="display: none;">
         <label>Custom link</label>
         <div class="input-group">
           <input type="text" class="form-control customLink" placeholder="Enter custom link" required>
@@ -144,7 +144,7 @@ $(document).ready(function() {
         <div id="customLinkError" class="text-danger" style="display: none">Please Enter Custom Link</div>
       </div>`;
       hiddenInputs += hiddenPageLink;
-      hiddenInputs += `<div class="mb-4">
+      hiddenInputs += `<div class="mb-4 col-6">
         <label>Content Text</label>
         <editor id="`+uniqueId+`" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{ menubar: false, plugins: [ 'advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount' ], toolbar: 'undo redo | formatselect | bold italic backcolor | \ alignleft aligncenter alignright alignjustify | \ bullist numlist outdent indent | removeformat | help' }"></editor>
       </div>
@@ -159,7 +159,9 @@ $(document).ready(function() {
         </div>
         <div className="text-danger footerLinkStatusError" style="display: none">Please Select header position type</div>
       </div>
-      <button type="button" class="btn btn-danger removeMoreSocial">Remove</button>
+      <div class="input-group">
+        <button type="button" class="btn btn-danger removeMoreSocial mb-2">Remove</button>
+      </div>
     </div>`;
     $('.moreSocialContents').append(hiddenInputs);
     tinymce.init({
@@ -189,7 +191,7 @@ $(document).ready(function() {
   });
 
   $(document).on('click', '.removeMoreSocial', function() {
-    $(this).parent().remove();
+    $(this).parent().parent().remove();
   });
 
 });
@@ -207,6 +209,7 @@ export default {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
+    token: String,
   },
   data() {
     return {
@@ -314,6 +317,7 @@ export default {
               }),
               headers: {
                 'Content-Type': 'application/json',
+                'x-auth-token': this.token,
               },
             });
             const data = await response.json();

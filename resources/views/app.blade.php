@@ -1,8 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php $baseUrl = env('NODE_BASEURL_LOCAL'); ?>
-    <?php $laravelBaseUrl = env('BASEURL_LIVE'); ?>
+    <style>
+        .card {
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+        }
+        .content {
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+    </style>
+    <?php $baseUrl = env('NODE_BASEURL_LIVE'); ?>
+    <?php $laravelBaseUrl = env('BASEURL_LOCAL'); ?>
 
     <title>{{ $page['props']['title'] ?? 'Custom Web|Adorn commerce' }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">

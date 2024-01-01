@@ -14,12 +14,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Category-List | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Category/List")->with($metadata);
+        return Inertia::render("Admin/Category/List",['token' => $token])->with($metadata);
     }
 
     /**
@@ -27,11 +28,12 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Category-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        return Inertia::render("Admin/Category/Add")->with($metadata);
+        return Inertia::render("Admin/Category/Add",['token' => $token])->with($metadata);
     }
 
     /**
@@ -55,6 +57,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Category-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
@@ -62,11 +65,14 @@ class CategoryController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'category/getCategoryDataById', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'category/getCategoryDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Category/Edit",[
-            'category' => $data['data']
+            'category' => $data['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -83,10 +89,13 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $token = $this->xAuthToken;
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'category/deleteCategoryData', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'category/deleteCategoryData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

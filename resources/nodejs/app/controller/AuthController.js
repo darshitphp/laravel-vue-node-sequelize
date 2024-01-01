@@ -1,72 +1,56 @@
 const AuthsModel = require('../model/AuthsModel.js')
+const secretKey = 'kaU8VHzc21KuC90iA13GuVKyzBh92m5zTSbPB749GYfgldaE9ug9hN6Css1uTer4';
+const jwt = require('jsonwebtoken');
+const axios = require('axios');
+// const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
-// exports.create_users_auth = (req,res)=>{
-//         console.log(req.body.vUsername,"{{{{{{{{{{{{");
-//         const vUsername = req.body.vUsername
-//         const vEmail = req.body.vEmail
-//         const vOTP = req.body.vOTP
-//         const vPassword = req.body.vPassword
-//         // if(vEmail == "" || vEmail == undefined){
-//         //   return res.status(400).send({
-//         //     "messsgae":"Enter proper data"
-//         //   })
-      
-        
-//         // }
-        
+exports.login = async (req, res) => {
+  const result1 = await AuthsModel.checkForUserData(req);
+  if (!result1) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
 
-//         if(vEmail){
-//         const userData = {
-//             vUsername:vUsername,
-//             vEmail:vEmail,
-//             // vOTP:vOTP,
-//             vPassword:vPassword
-//         }
-//         AuthsModel.create(userData).then((result)=>{
-//             if(result){
-//             res.send({
-//                 "message":"success",
-//                 "data":userData
-//             })
-//         }else{
-//             res.send({
-//                 "message":"NAhi hua "
-//             })   
-//         }
-//         }).catch((err)=>{
-//             console.log(err)
-//             res.send({
-//                 "message":err
-//             })
-//         })
-//     }else{
-//         const userData = {
-//             vUsername:vUsername,
-//             // vEmail:vEmail,
-//             vOTP:vOTP,
-//             vPassword:vPassword
-//         }
-//         AuthsModel.create(userData).then((result)=>{
-//             if(result){
-//             res.send({
-//                 "message":"success",
-//                 "data":userData
-//             })
-//         }else{
-//             res.send({
-//                 "message":"NAhi hua "
-//             })   
-//         }
-//         }).catch((err)=>{
-//             console.log(err)
-//             res.send({
-//                 "message":err
-//             })
-//         })
-//     }
-// }
+  const storedHash = result1.password;
+  const plainPassword = req.body.password;
+  
+  // Compare the provided password with the stored hash
+  const passwordMatch = await bcrypt.compare(plainPassword, storedHash);
+
+  if (!passwordMatch) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+
+  // Authenticate user (e.g., validate credentials against database)
+  const user = { id: result1.id, username: result1.user_name };
+
+  // Generate JWT token
+  const token = jwt.sign({ sub: user.id, username: user.username }, secretKey, { expiresIn: 24 * 60 * 60 });
+
+  // Send token in the response
+  res.status(200).json({ message: 'Login successful ' + user.username, token });
+};
+
+exports.updateUserPassword = (req, resp) => {
+  console.log(req.body);
+  AuthsModel.updateUserPassword(req,req.body.email)
+    .then((result) => {
+        resp.send({
+            status: "success",
+            code: "200",
+            message: "your record has been updated successfully.",
+        });
+    })
+    .catch((error) => {
+      resp.send({
+        status: "error",
+        code: "500",
+        message: error,
+      });
+    });
+};
+
 exports.create_users_auth = async(req,res)=>{
-    console.log(req.body.vUsername,"{{{{{{{{{{{{");
     const vUsername = req.body.vUsername
     const vEmail = req.body.vEmail
     const vOTP = req.body.vOTP
@@ -83,13 +67,6 @@ exports.create_users_auth = async(req,res)=>{
         vCity,
         vPincode
       };
-
-
-      // if(vEmail == undefined || vEmail == ""){
-      //   return res.status(400).send({
-      //     "message":"error"
-      //   })
-      // }
     
       if (vEmail) {
         commonUserData.vEmail = vEmail;

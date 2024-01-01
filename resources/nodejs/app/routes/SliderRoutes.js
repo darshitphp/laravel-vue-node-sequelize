@@ -1,6 +1,9 @@
 module.exports = app =>{
     const SliderController = require("../controller/SliderController.js");
     const router = require("express").Router();
+    const myMiddleware = require('../middleware/MyMiddleware.js'); 
+
+    router.use(myMiddleware);
 
     router.post("/sliderData",SliderController.FindAllData)
     router.post("/getSliderDataById",SliderController.FindIdData)

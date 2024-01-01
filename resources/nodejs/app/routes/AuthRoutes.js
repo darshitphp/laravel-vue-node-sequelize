@@ -2,9 +2,8 @@ module.exports = app =>{
     const AuthController = require("../controller/AuthController.js");
     var router = require("express").Router()
     
-    router.post("/authUser",AuthController.create_users_auth);
-
+    router.post("/login",AuthController.login);
+    router.post("/update_user_password",AuthController.updateUserPassword);
     
     app.use("/api/auth",router)
-    
-    }
+}

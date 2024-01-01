@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :header="header">
+  <AdminLayout :header="header" :token="token">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -15,7 +15,7 @@
               <h1 class="h3 mb-4">Edit Header</h1>
               <form class="row">
                 <!-- Form -->
-                <div class="mb-4 col-4">
+                <div class="mb-4 col-6">
                   <label for="title">Header title</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter title name" :value="header.title" id="title" required>
@@ -23,7 +23,7 @@
                   </div>
                   <div id="titleError" className="text-danger d-none">Please Enter Header Title</div>
                 </div>
-                <div class="mb-4 col-4">
+                <div class="mb-4 col-6">
                   <label for="position">Select Position type</label>
                   <div class="input-group">
                     <select id="position" name="position" class="form-control">
@@ -35,16 +35,36 @@
                   </div>
                   <div id="positionError" className="text-danger d-none">Please Select header position type</div>
                 </div>
-                <div class="mb-4 col-4">
+                <div class="mb-4 col-6 d-flex gap-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="headerOption" value="logo" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Logo
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="headerOption" value="link" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Social Links
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="headerOption" value="content" id="flexRadioDefault3">
+                    <label class="form-check-label" for="flexRadioDefault3">
+                      Content
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-4 col-6 logoWrapper">
                   <label>Header Logo</label>
                   <div class="input-group">
                     <input type="file" class="form-control" id="header_logo" name="image" accept="image/*" @change="handleHeaderLogoUpload" required>
                     <input type="hidden" id="old_header_logo" :value="header.logo_img">
                   </div>
-                  <img :src="'/assets/img/header_logo/'+header.logo_img" class="image-preview" alt="" height="100" width="100">
+                  <img :src="'/assets/img/header_logo/'+header.logo_img" class="image-preview" alt="" height="50" width="50">
                   <div id="imageError" className="text-danger d-none">Please select logo image</div>
                 </div>
-                <div class="mb-4 socialWrapper">
+                <div class="mb-4 socialWrapper socialLinkWrapper">
                   <h5>Social Links</h5>
                   <div class="hiddenSocialGroup" style="display: none">
                     <div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
@@ -61,7 +81,7 @@
                           <input type="file" class="form-control social_image" name="social_image[]" accept="image/*" required>
                           <input type="hidden" name="social_image" class="hidden_social_image" value="">
                         </div>
-                        <img src="https://placehold.co/100x100/EEE/31343C" class="image-preview" alt="" height="100" width="100">
+                        <img src="https://placehold.co/50x50/EEE/31343C" class="image-preview" alt="" height="50" width="50">
                         <div id="imageError" className="text-danger d-none">Please select logo image</div>
                       </div>
                       <div class="mb-4 col-4">
@@ -91,7 +111,7 @@
                           <input type="file" class="form-control social_image" name="social_image[]" accept="image/*" required>
                           <input type="hidden" name="social_image" class="hidden_social_image" :value="datas[1]">
                         </div>
-                        <img :src="'/assets/img/header_logo/social_media/'+datas[1]" class="image-preview" alt="" height="100" width="100">
+                        <img :src="'/assets/img/header_logo/social_media/'+datas[1]" class="image-preview" alt="" height="50" width="50">
                         <div id="imageError" className="text-danger d-none">Please select logo image</div>
                       </div>
                       <div class="mb-4 col-4">
@@ -111,7 +131,7 @@
                   </div>
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-4 contentWrapper">
                   <label for="content">Content Text</label>
                   <editor id="content" @input="updatePage('content',$event)" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
@@ -150,6 +170,10 @@ $(document).ready(function() {
         const response = await fetch(apiBaseUrl + 'header/headerLogoUpload', {
           method: 'POST',
           body: myFormData,
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': this.token,
+          },
         });
         const respdata = await response.json();
         if (respdata && respdata.data) {
@@ -184,6 +208,10 @@ $(document).ready(function() {
         const response = await fetch(apiBaseUrl + 'header/socialImageUpload', {
           method: 'POST',
           body: myFormData,
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': this.token,
+          },
         });
         const respdata = await response.json();
         if (respdata && respdata.data) {
@@ -224,6 +252,7 @@ export default {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
+    token: String,
   },
   mounted() {
     const self = this;
@@ -334,6 +363,7 @@ export default {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json', // Set the content type to JSON
+                'x-auth-token': this.token,
               },
               body: JSON.stringify(this.formData),
             });

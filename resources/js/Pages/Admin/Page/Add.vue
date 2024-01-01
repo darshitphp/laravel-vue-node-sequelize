@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :data="data" :slider="slider" :form="form">
+  <AdminLayout :data="data" :slider="slider" :token="token" :form="form">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -218,25 +218,25 @@
                         <div class="image-radio col-2">
                           <input type="radio" name="page_layout" id="layout3" value="layout3">
                           <label for="layout3">
-                            <img src="/assets/img/layouts/img-5.png" alt="layout 3">
+                            <img src="/public/assets/img/layouts/img-5.png" alt="layout 3">
                           </label>
                         </div>
                         <div class="image-radio col-2">
                           <input type="radio" name="page_layout" id="layout2" value="layout2">
                           <label for="layout2">
-                            <img src="/assets/img/layouts/img-3.png" alt="layout 2">
+                            <img src="/public/assets/img/layouts/img-3.png" alt="layout 2">
                           </label>
                         </div>
                         <div class="image-radio col-2">
                           <input type="radio" name="page_layout" id="layout1" value="layout1">
                           <label for="layout1">
-                            <img src="/assets/img/layouts/img-2.png" alt="layout 1">
+                            <img src="/public/assets/img/layouts/img-2.png" alt="layout 1">
                           </label>
                         </div>
                         <div class="image-radio col-6">
                           <input type="radio" name="page_layout" id="layout4" value="layout4">
                           <label for="layout4">
-                            <img src="/assets/img/layouts/img-6.png" alt="layout 4">
+                            <img src="/public/assets/img/layouts/img-6.png" alt="layout 4">
                           </label>
                         </div>
                         <div class="row d-flex" style="display: block">
@@ -416,6 +416,7 @@ export default {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
+    token: String,
     form: {
       type: Array, // Adjust the type based on your data type
       required: true,
@@ -581,6 +582,7 @@ export default {
               }),
               headers: {
                 'Content-Type': 'application/json',
+                'x-auth-token': this.token,
               },
             });
             const data = await response.json();

@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :data="data">
+  <AdminLayout :data="data" :token="token">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -431,6 +431,9 @@ export default {
     AdminLayout,
     'editor': Editor
   },
+  props:{
+    token: String,
+  },
   data() {
     return {
       data: '',
@@ -655,6 +658,7 @@ export default {
               }),
               headers: {
                 'Content-Type': 'application/json',
+                'x-auth-token': this.token,
               },
             });
             const data = await response.json();

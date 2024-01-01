@@ -9,7 +9,7 @@
       </div>
       <div class="d-block">
         <h2 class="h5 mb-3">Hi, Jane</h2>
-        <a href="/login" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
+        <a href="/dashboard" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
           <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -32,13 +32,19 @@
   </div>
   <ul class="nav flex-column pt-3 pt-md-0">
     <li class="nav-item">
-      <a href="/page" class="nav-link d-flex align-items-center">
+      <a href="/dashboard" class="nav-link d-flex align-items-center">
           <span class="sidebar-icon me-3">
             <img src="/public/assets/img/favicon/fav-icon.svg" height="20" width="20" alt="Volt Logo">
           </span>
         <span class="mt-1 ms-1 sidebar-text">
             Custom CMS Adorn
           </span>
+      </a>
+    </li>
+    <li :class="{ 'active': currentModule === 'dashboard' }">
+      <a href="/dashboard" class="nav-link">
+        <span class="fas fa-tachometer-alt me-2"></span>
+        <span class="sidebar-text">Dashboard</span>
       </a>
     </li>
     <li :class="{ 'active': currentModule === 'page' }">

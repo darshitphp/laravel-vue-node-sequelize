@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :category="category" :data="data">
+  <AdminLayout :category="category" :data="data" :token="token">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -107,6 +107,7 @@ export default {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
+    token: String,
   },
   data() {
     return {
@@ -210,6 +211,7 @@ export default {
               }),
               headers: {
                 'Content-Type': 'application/json',
+                'x-auth-token': this.token,
               },
             });
             const data = await response.json();

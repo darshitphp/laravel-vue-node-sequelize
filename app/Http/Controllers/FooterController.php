@@ -14,12 +14,13 @@ class FooterController extends Controller
      */
     public function index()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Footer-List | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Footer/List")->with($metadata);
+        return Inertia::render("Admin/Footer/List",['token' => $token])->with($metadata);
     }
 
     /**
@@ -27,14 +28,18 @@ class FooterController extends Controller
      */
     public function create()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Footer-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'page/pageData');
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'page/pageData');
         $data = $response->json();
         return Inertia::render("Admin/Footer/Add",[
-            'data' => $data['data']
+            'data' => $data['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -59,6 +64,7 @@ class FooterController extends Controller
      */
     public function edit($id)
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Footer-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
@@ -66,13 +72,18 @@ class FooterController extends Controller
         $data = [
             'id' => $id
         ];
-        $pageData = Http::post(env('NODE_BASEURL_LOCAL').'page/pageData');
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'footer/getFooterDataById', $data);
+        $pageData = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'page/pageData');
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'footer/getFooterDataById', $data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Footer/Edit",[
             'footer' => $data['data'],
-            'data' => $pageData['data']
+            'data' => $pageData['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -89,10 +100,13 @@ class FooterController extends Controller
      */
     public function destroy($id)
     {
+        $token = $this->xAuthToken;
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'footer/deleteFooterData', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'footer/deleteFooterData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

@@ -32,8 +32,8 @@ use Inertia\Inertia;
 //        'test_val' => 'Prop value'
 //    ]);
 //});
+//Route::group(['middleware' => 'jwt.verify'], function () {
 Route::middleware('auth')->group(function (){
-
 
 Route::get('/', [UserController::class, 'login']);
 
@@ -126,6 +126,8 @@ Route::post('/register-action', [UserController::class, 'register_action'])->nam
 Route::get('/register', [UserController::class, 'register']);
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/forgot-password', [UserController::class, 'forgot_password']);
+Route::get('/reset-password', [UserController::class, 'reset_password']);
+Route::post('/reset-password-action', [UserController::class, 'reset_password_action'])->name('reset_password_action');
 Route::post('/forgot-password-action', [UserController::class, 'forgot_password_action'])->name('forgot_password_action');
 Route::get('/testSendMail', [UserController::class, 'sendHtmlEmail']);
 Route::get('/get-active-user',[UserController::class,'getActiveUser']);

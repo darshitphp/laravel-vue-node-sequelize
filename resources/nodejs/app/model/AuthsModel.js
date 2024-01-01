@@ -1,38 +1,62 @@
 const Sequelize = require('sequelize');
 const db = require('./index.js');
 
-const AuthsModel = db.define('auths',{
-    iUserId:{
+const AuthsModel = db.define('users',{
+    id:{
         type:Sequelize.INTEGER,
         primaryKey:true,
         autoIncrement:true
     },
-    vUsername:{
+    user_name:{
         type:Sequelize.STRING
     },
-    vEmail:{
+    email:{
         type:Sequelize.STRING
     },
-    vAddress:{
+    password:{
         type:Sequelize.STRING
     },
-    vCity:{
+    gender:{
         type:Sequelize.STRING
     },
-    vPincode:{
+    address:{
         type:Sequelize.STRING
     },
-
-    vOTP:{
+    number:{
         type:Sequelize.INTEGER
     } ,
-    vPassword:{
+    city:{
         type:Sequelize.STRING
     }, 
+    ZIP:{
+        type:Sequelize.STRING
+    },
+    email_verified_at:{
+        type:Sequelize.STRING
+    },
+    remember_token:{
+        type:Sequelize.STRING
+    },
 },{
     createdAt:false,
     updatedAt:false,
-    freezeTableName:true,   
+    tableName: 'users',
+    // freezeTableName:true,   
 });
+
+AuthsModel.checkForUserData = (req)=>{
+    return AuthsModel.findAll({
+        where: { 
+            email: req.body.email,
+        }
+    }).then((result) => {
+        console.log(result);
+        return result[0].dataValues;
+    });
+}
+
+AuthsModel.updateUserPassword = (req,email)=>{
+    return AuthsModel.update(req.body, { where: { email: email } })
+}
 
 module.exports = AuthsModel

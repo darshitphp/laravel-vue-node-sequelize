@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :product="product" :category="category">
+  <AdminLayout :product="product" :category="category" :token="token">
     <!-- Your middle slider content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -13,16 +13,16 @@
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Edit Product</h1>
-              <form>
-                <div class="mb-4">
-                  <label for="title">Slider title</label>
+              <form class="row">
+                <div class="mb-4 col-6">
+                  <label for="title">Title</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter title name" v-model="product.title" @input="updatePage('title',$event)" id="title" required>
                     <input type="hidden" name="id" id="id" :value="product.id">
                   </div>
-                  <div id="titleError" className="text-danger d-none">Please Enter Slider Title</div>
+                  <div id="titleError" className="text-danger d-none">Please Enter Title</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label>Select product category</label>
                   <div class="input-group">
                     <select name="category_id" id="category_id" class="form-control">
@@ -32,7 +32,7 @@
                   </div>
                   <div id="category_idError" className="text-danger d-none">Please Select Product Category</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="status">Select Product status</label>
                   <div class="input-group">
                     <select id="status" name="status" class="form-control" v-model="product.status">
@@ -43,50 +43,52 @@
                   </div>
                   <div id="statusError" className="text-danger d-none">Please Select Product Status</div>
                 </div>
-                <div class="mb-4">
-                  <label for="short_description">Product short description</label>
+                <div class="mb-4 col-6">
+                  <label for="short_description">Short description</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter product short description" v-model="product.short_description" @input="updatePage('short_description',$event)" id="short_description" required>
                   </div>
                   <div id="short_descriptionError" className="text-danger d-none">Please Enter Product Short Description</div>
                 </div>
-                <div class="mb-4">
-                  <label for="options">Upload slider images</label>
-                  <div class="input-group mb-2">
+                <div class="mb-4 col-12 row">
+                  <label>Upload Product images</label>
+                  <div class="fileUpload col-6">
                     <input type="file" class="form-control product_image" @change="handleFileUpload" accept="image/*">
                   </div>
-                  <div v-for="(fileUpload, indx) in fileUploads" :key="indx" class="fileUpload">
+                  <div v-for="(fileUpload, indx) in fileUploads" :key="indx" class="fileUpload col-6">
                     <div class="input-group mb-2">
                       <input type="file"  class="form-control product_image" @change="handleFileUpload" accept="image/*">
                       <button @click="removeFileUpload(indx)" type="button" class="btn btn-danger">Remove</button>
                     </div>
                   </div>
-                  <div class="row">
-                    <div style="width: 100px!important;position: relative;" v-for="arr in JSON.parse(product.images)" :key="arr">
-                      <input type="hidden" id="product_img_src" :value="product.images">
-                      <input type="hidden" name="old_product_image" id="old_product_image" class="form-control" :value="product.images">
-                      <i class="fa fa-close removeProductImage" :data-id="product.id" :data-src="arr" style="font-size:14px;color:darkgrey;cursor: pointer;position: absolute;padding-left: 63px"></i>
-                      <img :src="'/assets/img/product/' + arr" height="75" style="width: 100px!important;border: 2px solid grey;border-radius: 5px;" />
-                    </div>
+                  <div class="input-group mt-2">
+                    <button @click="addFileUpload" type="button" class="btn btn-primary">Add More</button>
                   </div>
-                  <button @click="addFileUpload" type="button" class="btn btn-primary">Add More</button>
                 </div>
-                <div class="mb-4">
-                  <label for="slug">Product Slug</label>
+                <div class="row mt-2" style="border: 1px solid grey; border-radius: 10px; padding: 10px;margin-left: 10px; margin-bottom: 20px;">
+                  <div style="width: 100px!important;position: relative;" v-for="arr in JSON.parse(product.images)" :key="arr">
+                    <input type="hidden" id="product_img_src" :value="product.images">
+                    <input type="hidden" name="old_product_image" id="old_product_image" class="form-control" :value="product.images">
+                    <i class="fa fa-close removeProductImage" :data-id="product.id" :data-src="arr" style="font-size:14px;color:darkgrey;cursor: pointer;position: absolute;padding-left: 63px"></i>
+                    <img :src="'/assets/img/product/' + arr" height="75" style="width: 100px!important;border: 2px solid grey;border-radius: 5px;" />
+                  </div>
+                </div>
+                <div class="mb-4 col-4">
+                  <label for="slug">Slug</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter product slug" id="slug" v-model="product.slug" @input="updatePage('slug',$event)" required>
                   </div>
                   <div id="slugError" className="text-danger d-none">Please Enter Product Slug</div>
                 </div>
-                <div class="mb-4">
-                  <label for="unique_id">Product Unique Id</label>
+                <div class="mb-4 col-4">
+                  <label for="unique_id">Unique Id</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter product unique id" id="unique_id" v-model="product.unique_id" @input="updatePage('unique_id',$event)" required>
                   </div>
                   <div id="unique_idError" className="text-danger d-none">Please Enter Product Unique Id</div>
                 </div>
-                <div class="mb-4">
-                  <label>Select product layout</label>
+                <div class="mb-4 col-4">
+                  <label>Select layout</label>
                   <div class="input-group">
                     <select name="layout" id="layout" class="form-control">
                       <option value="">Select Product Layout</option>
@@ -167,6 +169,7 @@ export default {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
+    token: String,
   },
   data() {
     return {
@@ -298,6 +301,10 @@ export default {
             const response = await fetch(apiBaseUrl+'product/updateProductData', {
               method: 'POST',
               body: this.formData,
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': this.token,
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){

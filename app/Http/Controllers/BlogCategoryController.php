@@ -14,12 +14,13 @@ class BlogCategoryController extends Controller
      */
     public function index()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Blog-Category | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/BlogCategory/List")->with($metadata);
+        return Inertia::render("Admin/BlogCategory/List",['token' => $token])->with($metadata);
     }
 
     /**
@@ -27,14 +28,18 @@ class BlogCategoryController extends Controller
      */
     public function create()
     {
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'blogCategory/blogCategoryData');
+        $token = $this->xAuthToken;
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'blogCategory/blogCategoryData');
         $data = $response->json();
         $metadata = [
             'title' => 'Blog-Category-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
         return Inertia::render("Admin/BlogCategory/Add",[
-            'data' => $data['data']
+            'data' => $data['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -59,6 +64,7 @@ class BlogCategoryController extends Controller
      */
     public function edit($id)
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Blog-Category-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
@@ -66,13 +72,18 @@ class BlogCategoryController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'blogCategory/getBlogCategoryDataById', $data);
-        $categoryData = Http::post(env('NODE_BASEURL_LOCAL').'blogCategory/blogCategoryData',$data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'blogCategory/getBlogCategoryDataById', $data);
+        $categoryData = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'blogCategory/blogCategoryData',$data);
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/BlogCategory/Edit",[
             'category' => $categoryData['data'],
             'data' => $data['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -89,10 +100,13 @@ class BlogCategoryController extends Controller
      */
     public function destroy($id)
     {
+        $token = $this->xAuthToken;
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'blogCategory/deleteBlogCategoryData', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'blogCategory/deleteBlogCategoryData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

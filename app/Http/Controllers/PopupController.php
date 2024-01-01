@@ -14,12 +14,13 @@ class PopupController extends Controller
      */
     public function index()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Popup-List | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Popup/List")->with($metadata);
+        return Inertia::render("Admin/Popup/List",['token' => $token])->with($metadata);
     }
 
     /**
@@ -27,13 +28,17 @@ class PopupController extends Controller
      */
     public function create()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Popup-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        $pageData = Http::post(env('NODE_BASEURL_LOCAL').'page/pageData');
+        $pageData = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'page/pageData');
         return Inertia::render("Admin/Popup/Add",[
-            'data' => $pageData['data']
+            'data' => $pageData['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -58,6 +63,7 @@ class PopupController extends Controller
      */
     public function edit($id)
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Popup-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
@@ -65,13 +71,18 @@ class PopupController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'popup/getPopupDataById', $data);
-        $pageData = Http::post(env('NODE_BASEURL_LOCAL').'page/pageData');
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'popup/getPopupDataById', $data);
+        $pageData = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'page/pageData');
         $data = $response->json();
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Popup/Edit",[
             'data' => $data['data'],
-            'page' => $pageData['data']
+            'page' => $pageData['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -88,10 +99,13 @@ class PopupController extends Controller
      */
     public function destroy($id)
     {
+        $token = $this->xAuthToken;
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'page/deletePopupData', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'page/deletePopupData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

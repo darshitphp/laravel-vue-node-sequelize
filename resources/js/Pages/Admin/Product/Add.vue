@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :category="category">
+  <AdminLayout :category="category" :token="token">
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -13,16 +13,16 @@
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="p-4 p-lg-5 col-12">
               <h1 class="h3 mb-4">Add Product</h1>
-              <form>
+              <form class="row">
                 <!-- Form -->
-                <div class="mb-4">
-                  <label for="title">Product title</label>
+                <div class="mb-4 col-6">
+                  <label for="title">Title</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter product name" id="title" required>
+                    <input type="text" class="form-control" placeholder="Enter product title" id="title" required>
                   </div>
-                  <div id="titleError" className="text-danger d-none">Please Enter Product Title</div>
+                  <div id="titleError" className="text-danger d-none">Please Enter Title</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label>Select product category</label>
                   <div class="input-group">
                     <select name="category_id" id="category_id" class="form-control">
@@ -32,7 +32,7 @@
                   </div>
                   <div id="category_idError" className="text-danger d-none">Please Select Product Category</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="status">Select Product status</label>
                   <div class="input-group">
                     <select id="status" name="status" class="form-control">
@@ -43,42 +43,44 @@
                   </div>
                   <div id="statusError" className="text-danger d-none">Please Select Product Status</div>
                 </div>
-                <div class="mb-4">
-                  <label for="short_description">Product short description</label>
+                <div class="mb-4 col-6">
+                  <label for="short_description">Short description</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter product short description" id="short_description" required>
                   </div>
                   <div id="short_descriptionError" className="text-danger d-none">Please Enter Product Short Description</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-12 row">
                   <label>Upload product images</label>
-                  <div class="input-group mb-2">
+                  <div class="fileUpload col-6">
                     <input type="file" :name="'product_image[' + index + ']'" class="form-control product_image" @change="handleFileUpload" accept="image/*">
                   </div>
-                  <div v-for="(fileUpload, index) in fileUploads" :key="index" class="fileUpload">
+                  <div v-for="(fileUpload, index) in fileUploads" :key="index" class="fileUpload col-6">
                     <div class="input-group mb-2">
                       <input type="file" :name="'product_image[' + index + ']'" class="form-control product_image" @change="handleFileUpload" accept="image/*">
                       <button @click="removeFileUpload(index)" type="button" class="btn btn-danger">Remove</button>
                     </div>
                   </div>
                 </div>
-                <button @click="addFileUpload" type="button" class="btn btn-primary">Add More</button>
-                <div class="mb-4">
-                  <label for="slug">Product Slug</label>
+                <div class="input-group">
+                  <button @click="addFileUpload" type="button" class="btn btn-primary">Add More</button>
+                </div>
+                <div class="mb-4 col-4">
+                  <label for="slug">Slug</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter product slug" id="slug" required>
                   </div>
                   <div id="slugError" className="text-danger d-none">Please Enter Product Slug</div>
                 </div>
-                <div class="mb-4">
-                  <label for="unique_id">Product Unique Id</label>
+                <div class="mb-4 col-4">
+                  <label for="unique_id">Unique Id</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter product unique id" id="unique_id" required>
                   </div>
                   <div id="unique_idError" className="text-danger d-none">Please Enter Product Unique Id</div>
                 </div>
-                <div class="mb-4">
-                  <label>Select product layout</label>
+                <div class="mb-4 col-4">
+                  <label>Select layout</label>
                   <div class="input-group">
                     <select name="layout" id="layout" class="form-control">
                       <option value="">Select Product Layout</option>
@@ -115,6 +117,7 @@ export default {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
+    token: String,
   },
   data() {
     return {
@@ -241,6 +244,10 @@ export default {
             const response = await fetch(apiBaseUrl+'product/addProductData', {
               method: 'POST',
               body: this.formData,
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': this.token,
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){

@@ -14,12 +14,13 @@ class HeaderController extends Controller
      */
     public function index()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Header-List | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
         //Loading component with proper file structure managable
-        return Inertia::render("Admin/Header/List")->with($metadata);
+        return Inertia::render("Admin/Header/List",['token' => $token])->with($metadata);
     }
 
     /**
@@ -27,11 +28,12 @@ class HeaderController extends Controller
      */
     public function create()
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Header-Add | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
         ];
-        return Inertia::render("Admin/Header/Add")->with($metadata);
+        return Inertia::render("Admin/Header/Add",['token' => $token])->with($metadata);
     }
 
     /**
@@ -55,6 +57,7 @@ class HeaderController extends Controller
      */
     public function edit($id)
     {
+        $token = $this->xAuthToken;
         $metadata = [
             'title' => 'Header-Edit | AdornCommerce',
             'description' => 'AdornCommerce Top Magento Development Agency',
@@ -62,13 +65,16 @@ class HeaderController extends Controller
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'header/getHeaderDataById', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'header/getHeaderDataById', $data);
         $data = $response->json();
         $data['data']['social_links'] = json_decode($data['data']['social_links']);
 //        dd($data['data']);
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Header/Edit",[
-            'header' => $data['data']
+            'header' => $data['data'],
+            'token' => $token
         ])->with($metadata);
     }
 
@@ -85,10 +91,13 @@ class HeaderController extends Controller
      */
     public function destroy($id)
     {
+        $token = $this->xAuthToken;
         $data = [
             'id' => $id
         ];
-        $response = Http::post(env('NODE_BASEURL_LOCAL').'header/deleteHeaderData', $data);
+        $response = Http::withHeaders([
+            'x-auth-token' => $token,
+        ])->post(env('NODE_BASEURL_LIVE').'header/deleteHeaderData', $data);
         unset($data);
         $data = $response->json();
         if($data['code']  == 200){

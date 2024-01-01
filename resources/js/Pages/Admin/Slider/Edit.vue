@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :slider="slider">
+  <AdminLayout :slider="slider" :token="token">
     <!-- Your middle slider content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
@@ -164,6 +164,10 @@ $(document).ready(function () {
         const response = await fetch(apiBaseUrl + 'slider/sliderImageUpload', {
           method: 'POST',
           body: myFormData,
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': this.token,
+          },
         });
         const respdata = await response.json();
         if (respdata && respdata.data) {
@@ -201,6 +205,7 @@ $(document).on("click",".removeSliderImage",function(event){
       }),
       headers: {
         'Content-Type': 'application/json',
+        'x-auth-token': this.token,
       },
     });
     const data = await response.json();
@@ -258,6 +263,7 @@ export default {
       type: Array, // Adjust the type based on your data type
       required: true,
     },
+    token: String,
   },
   mounted() {
     const self = this;
@@ -459,10 +465,11 @@ export default {
           try {
             const response = await fetch(apiBaseUrl+'slider/updateSliderData', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json', // Set the content type to JSON
-              },
               body: JSON.stringify(this.formData),
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': this.token,
+              },
             });
             const data = await response.json();
             if(data.status == 'success'){
