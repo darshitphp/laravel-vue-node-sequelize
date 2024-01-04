@@ -11,8 +11,7 @@
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Edit Category</h1>
+            <div class="p-1">
               <form class="row">
                 <div class="mb-4 col-4">
                   <label for="name">Category name</label>

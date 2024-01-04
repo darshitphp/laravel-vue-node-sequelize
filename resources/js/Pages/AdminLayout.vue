@@ -1,15 +1,15 @@
 <template>
-  <div>
+
     <Nav />
     <SideNav />
-    <main class="content">
+    <main class="content page-main-wrapper">
       <TopBar />
 <!--      <Footer />-->
       <!-- Middle page content -->
       <slot name="middleContent"></slot>
       <Footer2 />
     </main>
-  </div>
+
 </template>
 
 <script>

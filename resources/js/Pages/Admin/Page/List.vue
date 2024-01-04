@@ -3,13 +3,13 @@
     <!-- Your middle page content goes here -->
     <template v-slot:middleContent>
       <div class="card border-0 shadow mb-4">
-        <div class="card-body">
+        <div class="card-body table-wrapper table-responsive">
           <div class="row justify-content-end">
             <div class="col-auto">
               <a href="/page/add" class="btn btn-gray-800 me-2 my-2">Add Page</a>
             </div>
           </div>
-          <div class="table-responsive">
+          <div>
             <table class="table table-centered table-nowrap mb-0 rounded">
               <thead class="thead-light">
               <tr>
@@ -18,9 +18,9 @@
                 <th class="border-0 rounded-end">Action</th>
               </tr>
               </thead>
-              <tbody v-if="data">
+              <tbody v-if="data && data.length > 0">
               <!-- Item -->
-              <tr v-for="(arr, key) in data">
+                <tr v-for="(arr, key) in data">
                 <td>{{ key+1 }}</td>
                 <td>
                   {{ arr.name }}
@@ -37,17 +37,22 @@
                     <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
                       <a class="dropdown-item d-flex align-items-center" :href="'/page/edit/'+arr.id">
                         <span class="fas fa fa-eye me-2"></span>
-                        View Details
+                        View
                       </a>
                       <a class="dropdown-item text-danger d-flex align-items-center" :href="'/page/delete/'+arr.id">
                         <span class="fas fa fa-trash me-2"></span>
-                        Delete page
+                        Delete
                       </a>
                     </div>
                   </div>
                 </td>
               </tr>
               <!-- End of Item -->
+              </tbody>
+              <tbody v-else>
+                <tr>
+                  <td colspan="3" class="text-center">No record found</td>
+                </tr>
               </tbody>
             </table>
           </div>

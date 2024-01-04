@@ -4,12 +4,12 @@
   <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
     <div class="d-flex align-items-center">
       <div class="avatar-lg me-4">
-        <img src="/public/assets/img/team/profile-picture-3.jpg" class="card-img-top rounded-circle border-white"
+        <img src="/public/assets/img/team/profile-picture-3.jpg" class="card-img-top rounded-circle border-white avatar"
              alt="Bonnie Green">
       </div>
       <div class="d-block">
-        <h2 class="h5 mb-3">Hi, Jane</h2>
-        <a href="/dashboard" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
+        <h2 class="h5 mb-3 userName">Hi, Jane</h2>
+        <a href="/logout" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
           <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -43,7 +43,10 @@
     </li>
     <li :class="{ 'active': currentModule === 'dashboard' }">
       <a href="/dashboard" class="nav-link">
-        <span class="fas fa-tachometer-alt me-2"></span>
+        <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+          <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+        </svg>
         <span class="sidebar-text">Dashboard</span>
       </a>
     </li>

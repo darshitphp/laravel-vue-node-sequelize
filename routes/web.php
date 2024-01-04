@@ -35,7 +35,10 @@ use Inertia\Inertia;
 //Route::group(['middleware' => 'jwt.verify'], function () {
 Route::middleware('auth')->group(function (){
 
-Route::get('/', [UserController::class, 'login']);
+Route::get('/', [UserController::class, 'dashboard']);
+
+Route::get('/profile', [UserController::class, 'my_profile']);
+Route::get('/profile_action', [UserController::class, 'my_profile_action']);
 
 Route::get('/contact-us', function () {
     return Inertia::render("Contact");

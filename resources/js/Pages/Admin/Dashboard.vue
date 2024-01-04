@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :data="data">
+  <AdminLayout>
     <template v-slot:middleContent>
     <div class="row">
       <div class="col-12 col-xl-8">

@@ -6,7 +6,7 @@
             -webkit-flex-grow: 1;
             flex-grow: 1;
         }
-        .content {
+        .page-main-wrapper {
             display: -webkit-flex;
             display: -ms-flexbox;
             display: flex;
@@ -17,7 +17,7 @@
         }
     </style>
     <?php $baseUrl = env('NODE_BASEURL_LIVE'); ?>
-    <?php $laravelBaseUrl = env('BASEURL_LOCAL'); ?>
+    <?php $laravelBaseUrl = env('BASEURL_LIVE'); ?>
 
     <title>{{ $page['props']['title'] ?? 'Custom Web|Adorn commerce' }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -28,6 +28,7 @@
     <meta property="og:description" content="AdornCommerce is the most renowned Magento eCommerce website design & development company. Globally present with offices in Ahmedabad, India & USA">
     <meta property="og:image" content="https://assets-global.website-files.com/651ab75e1593e4377b7954ca/65215ec4f6d6c2778cd69c17_AdornCommerce%20Logo.png">
     <link rel="icon" href="../../assets/img/favicon/fav-icon.svg" type="image/svg">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
     <!-- Apex Charts -->
     <link type="text/css" href="/vendor/apexcharts/apexcharts.css" rel="stylesheet">

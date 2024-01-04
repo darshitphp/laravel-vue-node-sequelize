@@ -6,24 +6,24 @@
         <div class="card-body">
           <div class="row justify-content-end">
             <div class="col-auto">
-              <a href="/page" class="btn btn-gray-800 me-2 my-2">Back</a>
+              <a href="/popup" class="btn btn-gray-800 me-2 my-2">Back</a>
             </div>
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Edit Popup</h1>
-              <form>
-                <div class="mb-4">
-                  <label for="name">Popup name</label>
+            <div class="p-1">
+              <div id="forCustomStyle"></div>
+              <form class="row">
+                <div class="mb-4 col-6">
+                  <label for="name">Name</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter popup name" v-model="data.name" @input="updatePage('name',$event)" id="name" required>
                     <input type="hidden" name="id" id="id" :value="data.id">
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Popup Name</div>
                 </div>
-                <div class="mb-4">
-                  <label for="status">Select status</label>
+                <div class="mb-4 col-6">
+                  <label for="status">Status</label>
                   <div class="input-group">
                     <select id="status" name="status" class="form-control">
                       <option value="">Select popup status</option>
@@ -33,29 +33,29 @@
                   </div>
                   <div id="statusError" className="text-danger d-none">Please Select Popup Status</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="start_date">Start Date</label>
                   <div class="input-group">
                     <input type="date" class="form-control" v-model="data.start_date" @input="updatePage('start_date',$event)" placeholder="Enter start date name" id="start_date" required>
                   </div>
                   <div id="start_dateError" className="text-danger d-none">Please select start date</div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label for="end_date">End Date</label>
                   <div class="input-group">
                     <input type="date" class="form-control" v-model="data.end_date" @input="updatePage('end_date',$event)" placeholder="Enter end date name" id="end_date" required>
                   </div>
                   <div id="end_dateError" className="text-danger d-none">Please select end date</div>
                 </div>
-                <div class="mb-4">
-                  <label for="timer">Timer for popup</label>
+                <div class="mb-4 col-6">
+                  <label for="timer">Timer</label>
                   <div class="input-group">
                     <input type="number" class="form-control" v-model="data.timer" @input="updatePage('timer',$event)" placeholder="Enter timer for popup (in sec)" id="timer" required>
                   </div>
                   <div id="timerError" className="text-danger d-none">Please Enter timer for popup</div>
                 </div>
-                <div class="mb-4">
-                  <label for="rules">Rules for popup</label>
+                <div class="mb-4 col-6">
+                  <label for="rules">Rules</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter rules for popup" v-model="data.rules" @input="updatePage('rules',$event)" id="rules" required>
                   </div>
@@ -68,21 +68,21 @@
                     toolbar: 'code',
                   }"></editor>
                 </div>
-                <div class="mb-4">
-                  <label for="custom_css">Custom CSS Text</label>
+                <div class="mb-4 col-6">
+                  <label for="custom_css">CSS</label>
                   <editor v-model="data.custom_css" @input="updatePage('custom_css',$event)" id="custom_css" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
                     toolbar: 'code',
                   }"></editor>
                 </div>
-                <div class="mb-4">
-                  <label for="custom_js">Custom JS Text</label>
+                <div class="mb-4 col-6">
+                  <label for="custom_js">JS</label>
                   <editor v-model="data.custom_js" @input="updatePage('custom_js',$event)" id="custom_js" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
                     toolbar: 'code',
                   }"></editor>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label>Select page link</label>
                   <div class="input-group">
                     <select name="pageLink" class="form-control pageLink" multiple>

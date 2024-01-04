@@ -11,8 +11,7 @@
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Edit Header</h1>
+            <div class="p-1 col-12">
               <form class="row">
                 <!-- Form -->
                 <div class="mb-4 col-6">
@@ -37,25 +36,25 @@
                 </div>
                 <div class="mb-4 col-6 d-flex gap-2">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="headerOption" value="logo" id="flexRadioDefault1">
+                    <input class="form-check-input" type="radio" name="headerOption" :checked="header.logo_img != null && header.logo_img.length" value="logo" id="flexRadioDefault1">
                     <label class="form-check-label" for="flexRadioDefault1">
                       Logo
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="headerOption" value="link" id="flexRadioDefault2">
+                    <input class="form-check-input" type="radio" name="headerOption" :checked="header.social_links !== null && header.social_links.length !== 0" value="link" id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
                       Social Links
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="headerOption" value="content" id="flexRadioDefault3">
+                    <input class="form-check-input" type="radio" name="headerOption" :checked="header.content != null && header.content.length" value="content" id="flexRadioDefault3">
                     <label class="form-check-label" for="flexRadioDefault3">
                       Content
                     </label>
                   </div>
                 </div>
-                <div class="mb-4 col-6 logoWrapper">
+                <div class="mb-4 col-6 logoWrapper" :style="{ display: header.logo_img !== null && header.logo_img.length ? 'block' : 'none' }">
                   <label>Header Logo</label>
                   <div class="input-group">
                     <input type="file" class="form-control" id="header_logo" name="image" accept="image/*" @change="handleHeaderLogoUpload" required>
@@ -64,40 +63,9 @@
                   <img :src="'/assets/img/header_logo/'+header.logo_img" class="image-preview" alt="" height="50" width="50">
                   <div id="imageError" className="text-danger d-none">Please select logo image</div>
                 </div>
-                <div class="mb-4 socialWrapper socialLinkWrapper">
-                  <h5>Social Links</h5>
-                  <div class="hiddenSocialGroup" style="display: none">
-                    <div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
-                      <div class="mb-4 col-4">
-                        <label>Social account title</label>
-                        <div class="input-group">
-                          <input type="text" class="form-control social_title" placeholder="Enter title name" v-model="header.logo_title" @input="updatePage('logo_title',$event)" name="logo_title" required>
-                        </div>
-                        <div id="titleError" className="text-danger d-none">Please enter social title</div>
-                      </div>
-                      <div class="mb-4 col-4">
-                        <label>Social account image</label>
-                        <div class="input-group">
-                          <input type="file" class="form-control social_image" name="social_image[]" accept="image/*" required>
-                          <input type="hidden" name="social_image" class="hidden_social_image" value="">
-                        </div>
-                        <img src="https://placehold.co/50x50/EEE/31343C" class="image-preview" alt="" height="50" width="50">
-                        <div id="imageError" className="text-danger d-none">Please select logo image</div>
-                      </div>
-                      <div class="mb-4 col-4">
-                        <label>Social account link</label>
-                        <div class="input-group">
-                          <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" required>
-                        </div>
-                        <div id="titleError" className="text-danger d-none">Please enter social link</div>
-                      </div>
-                      <div class="col-12 text-end">
-                        <button type="button" @click="removeFileUpload(index)" class="btn btn-danger removeEditMoreSocial">Remove</button>
-                      </div>
-                    </div>
-                  </div>
+                <div class="mb-4 socialWrapper socialLinkWrapper" :style="{ display: header.social_links !== null && header.social_links.length !== 0 ? 'block' : 'none' }">
                   <div class="moreSocialContents">
-                    <div class="row" v-for="(datas, index) in header.social_links" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
+                    <div class="row addedSocialLink m-0 mt-2" v-for="(datas, index) in header.social_links" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
                       <div class="mb-4 col-4 socialWrapper">
                         <label>Social account title</label>
                         <div class="input-group">
@@ -121,17 +89,42 @@
                         </div>
                         <div id="titleError" className="text-danger d-none">Please enter social link</div>
                       </div>
-                      <div class="col-12 text-end">
-                        <button type="button" @click="removeFileUpload(index)" class="btn btn-danger removeEditMoreSocial">Remove</button>
+                      <div class="col-12 text-end addMoreWrapper" :data-counter="index">
+                        <button type="button" v-if="index != 0" class="btn btn-danger removeEditMoreSocial mx-1">Remove</button>
+                        <button type="button" @click="addFileUpload" v-if="index == Object.keys(header.social_links).length - 1" id="addMoreSocialLink" class="btn btn-gray-800">Add More</button>
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 text-end mt-2">
-                    <button type="button" @click="addFileUpload" id="addMoreSocialLink" class="btn btn-gray-800">Add More</button>
+                </div>
+                <div id="hiddenSocialGroup" style="display: none">
+                  <div class="row m-0 mt-2" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
+                    <div class="mb-4 col-4">
+                      <label>Title</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control social_title" placeholder="Enter social title" v-model="header.logo_title" @input="updatePage('logo_title',$event)" name="logo_title" required>
+                      </div>
+                      <div id="titleError" className="text-danger d-none">Please enter social title</div>
+                    </div>
+                    <div class="mb-4 col-4">
+                      <label>Image</label>
+                      <div class="input-group">
+                        <input type="file" class="form-control social_image" name="social_image[]" accept="image/*" required>
+                        <input type="hidden" name="social_image" class="hidden_social_image" value="">
+                      </div>
+                      <img src="https://placehold.co/50x50/EEE/31343C" class="image-preview" alt="" height="50" width="50">
+                      <div id="imageError" className="text-danger d-none">Please select logo image</div>
+                    </div>
+                    <div class="mb-4 col-4">
+                      <label>Link</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" required>
+                      </div>
+                      <div id="titleError" className="text-danger d-none">Please enter social link</div>
+                    </div>
                   </div>
                 </div>
 
-                <div class="mb-4 contentWrapper">
+                <div class="mb-4 contentWrapper" :style="{ display: header.content !== null && header.content.length !== 0 ? 'block' : 'none' }">
                   <label for="content">Content Text</label>
                   <editor id="content" @input="updatePage('content',$event)" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
                     plugins: 'code',
@@ -151,7 +144,7 @@
 </template>
 <script>
 $(document).ready(function() {
-
+  var clicker = $(".addedSocialLink").length;
   $(document).on("change","#header_logo",function(event){
     var input = event.target;
     var that = $(this);
@@ -229,12 +222,36 @@ $(document).ready(function() {
   });
 
   $(document).on("click","#addMoreSocialLink",function() {
-    var hiddenInputs = $('.hiddenSocialGroup').html();
+    $("#addMoreSocialLink").remove();
+    $('#hiddenSocialGroup').find('.addMoreWrapper').remove();
+    $(".addMoreWrapper").each(function(){
+      var count = $(this).data("counter");
+      if((count) == (clicker-1)){
+        $(this).find("#addMoreSocialLink").remove();
+      }
+    })
+    $('#hiddenSocialGroup').find('.row').append('<div class="col-12 text-end addMoreWrapper" data-counter="'+clicker+'"> <button type="button" class="btn btn-danger removeEditMoreSocial">Remove</button> <button type="button" id="addMoreSocialLink" class="btn btn-gray-800">Add More</button> </div>');
+    var hiddenInputs = $('#hiddenSocialGroup').html();
     $('.moreSocialContents').append(hiddenInputs);
+    clicker++;
   });
 
   $(document).on('click', '.removeEditMoreSocial', function() {
+    var countValues = [];
     $(this).parent().parent().remove();
+    $(".socialLinkWrapper").find(".addMoreWrapper").each(function(){
+      const count = $(this).data('counter');
+      countValues.push(count);
+      $(this).find("#addMoreSocialLink").remove();
+    });
+    var maxCount = Math.max(...countValues);
+    $(".socialLinkWrapper").find(".addMoreWrapper").each(function(){
+      const count = $(this).data('counter');
+      const include = `<button class="btn btn-primary" type="button" id="addMoreSocialLink">Add more</button>`;
+      if(maxCount == count){
+        $(this).append(include);
+      }
+    });
   });
 
 });

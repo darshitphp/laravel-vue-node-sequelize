@@ -33,6 +33,30 @@ class UserController extends BaseController
         return Inertia::render("Admin/Dashboard")->with($metadata);
     }
 
+    public function my_profile(){
+        // Check if a user is authenticated
+        if (auth()->check()) {
+            $user = auth()->user();
+        }else{
+            $user = [];
+        }
+        //Loading component with proper file structure managable
+        $metadata = [
+            'title' => 'Profile | AdornCommerce',
+            'description' => 'AdornCommerce Top Magento Development Agency',
+        ];
+        $this->xAuthToken = Session::get('x-auth-token');
+//        dd($this->xAuthToken);
+        return Inertia::render("Admin/Profile",[
+            "user" => $user,
+            "token" => $this->xAuthToken
+        ])->with($metadata);
+    }
+
+    public function my_profile_action(Request $request){
+        dd($request);
+    }
+
     public function add(){
         //Loading component with proper file structure managable
         return Inertia::render("Admin/Tag/Add");
@@ -142,7 +166,7 @@ class UserController extends BaseController
         $email = $request->input('email');
         $userData = User::where('email', $email)->get();
         if(!empty($userData[0])){
-            $resetPasswordLink = env('BASEURL_LOCAL').'reset-password?q='.base64_encode($userData[0]['email']);
+            $resetPasswordLink = env('BASEURL_LIVE').'reset-password?q='.base64_encode($userData[0]['email']);
             require '../vendor/autoload.php'; // Include PHPMailer autoload file
 
             // Create a new PHPMailer instance

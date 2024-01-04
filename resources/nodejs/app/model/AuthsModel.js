@@ -16,6 +16,9 @@ const AuthsModel = db.define('users',{
     password:{
         type:Sequelize.STRING
     },
+    image:{
+        type:Sequelize.STRING
+    },
     gender:{
         type:Sequelize.STRING
     },
@@ -57,6 +60,10 @@ AuthsModel.checkForUserData = (req)=>{
 
 AuthsModel.updateUserPassword = (req,email)=>{
     return AuthsModel.update(req.body, { where: { email: email } })
+}
+
+AuthsModel.updateUserData = (req,id)=>{
+    return AuthsModel.update(req.body, { where: { id: id } })
 }
 
 module.exports = AuthsModel

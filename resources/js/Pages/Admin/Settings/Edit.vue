@@ -10,9 +10,8 @@
             </div>
           </div>
 
-          <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">General Settings</h1>
+          <div class="col-12 d-flex align-items-center justify-content-center m-0">
+            <div class="p-1 col-12 m-0">
               <form>
                 <div class="accordion" id="accordionExample">
                   <div class="accordion-item">
@@ -22,8 +21,8 @@
                       </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
-                        <div class="mb-4">
+                      <div class="accordion-body row">
+                        <div class="mb-4 col-4">
                           <label for="title">Project Title</label>
                           <div class="input-group">
                             <input type="hidden" name="id" id="id" :value="data.id">
@@ -31,42 +30,42 @@
                           </div>
                           <div id="titleError" className="text-danger d-none">Please project title</div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label for="name">Project Title</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter project name" v-model="data.name" @input="updatePage('name')" id="name" required>
                           </div>
                           <div id="nameError" className="text-danger d-none">Please project name</div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label for="url">Project Url</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter project url" v-model="data.url" @input="updatePage('url')" id="url" required>
                           </div>
                           <div id="urlError" className="text-danger d-none">Please project url</div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label for="contact_info">Project Contact Information</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter project contact info" v-model="data.contact_info" @input="updatePage('contact_info')" id="contact_info" required>
                           </div>
                           <div id="contact_infoError" className="text-danger d-none">Please contact info</div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label for="country">Enter Country Name</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter country name" v-model="data.country" @input="updatePage('country')" id="country" required>
                           </div>
                           <div id="countryError" className="text-danger d-none">Please enter country name</div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label for="state">Enter State Name</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter state name" v-model="data.state" @input="updatePage('state')" id="state" required>
                           </div>
                           <div id="stateError" className="text-danger d-none">Please enter state name</div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label for="">Select Timezone</label>
                           <div class="input-group">
                             <select class="form-control" name="timezone" id="timezone">
@@ -165,8 +164,8 @@
                       </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
-                        <div class="mb-4">
+                      <div class="accordion-body row">
+                        <div class="mb-4 col-6">
                           <label for="state">Select Recaptcha Status</label>
                             <div class="form-check">
                               <input class="form-check-input" :checked="data.recpatcha_status == 'enable'" type="radio" name="recpatcha_status" id="flexRadioDefault1" value="enable">
@@ -181,19 +180,19 @@
                               </label>
                             </div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-6">
                           <label for="country">Enter Recaptcha Secret Key</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter Recaptcha Secret Key" v-model="data.recpatcha_private" @input="updatePage('recpatcha_private')" id="recpatcha_private" required>
                           </div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-6">
                           <label for="country">Enter Recaptcha Public Key</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter Recaptcha Public Key" v-model="data.recpatcha_public" @input="updatePage('recpatcha_public')" id="recpatcha_public" required>
                           </div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-6">
                           <label>Select Recaptcha Type</label>
                           <div class="input-group">
                             <select name="recpatcha_type" id="recpatcha_type" class="form-control">
@@ -214,20 +213,20 @@
                       </button>
                     </h2>
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
-                        <div class="mb-4">
+                      <div class="accordion-body row">
+                        <div class="mb-4 col-4">
                           <label for="country">Enter SMTP Host Name</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter SMTP host name" v-model="data.smtp_host" @input="updatePage('smtp_host')" id="smtp_host" required>
                           </div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label for="country">Enter SMTP Port</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter SMTP port" v-model="data.smtp_port" @input="updatePage('smtp_port')" id="smtp_port" required>
                           </div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label>Select SMTP Secure Type</label>
                           <div class="form-check">
                             <input class="form-check-input" :checked="data.smtp_secure_type == 'SSL'" type="radio" name="smtp_secure_type" id="secure_type_ssl" checked value="SSL">
@@ -242,13 +241,13 @@
                             </label>
                           </div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label for="country">Enter SMTP Username</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter SMTP username" v-model="data.username" @input="updatePage('username')" id="username" required>
                           </div>
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4 col-4">
                           <label for="country">Enter SMTP Password</label>
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="Enter SMTP Password" v-model="data.password" @input="updatePage('password')" id="password" required>

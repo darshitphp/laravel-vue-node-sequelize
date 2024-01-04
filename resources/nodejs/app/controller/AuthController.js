@@ -32,7 +32,6 @@ exports.login = async (req, res) => {
 };
 
 exports.updateUserPassword = (req, resp) => {
-  console.log(req.body);
   AuthsModel.updateUserPassword(req,req.body.email)
     .then((result) => {
         resp.send({
@@ -48,6 +47,68 @@ exports.updateUserPassword = (req, resp) => {
         message: error,
       });
     });
+};
+
+exports.updateUserData = async (req, res) => {
+  const express = require('express');
+  const multer = require('multer');
+  const app = express();
+  var today = new Date();
+  var time = today.getFullYear() + '-' + (today.getMonth() + 1) + today.getDate() + '-' + today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
+  var imageArray = new Array();
+  // Create the multer middleware to handle file uploads
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, '../../public/assets/img/admin_profile'); // Destination folder for uploaded files
+    },
+    filename: function (req, file, cb) {
+      imageArray.push(time+'_'+file.originalname);
+      cb(null, time+'_'+file.originalname);
+    },
+  });
+
+  const upload = multer({ storage: storage }).single('image');
+  upload(req, res, function (err) {
+      if (err instanceof multer.MulterError) {
+        // Handle multer errors
+        console.log('Multer Error:', err);
+        return res.status(400).send('Error uploading files.');
+      } else if (err) {
+        // Handle other errors
+        console.log('Error:', err);
+        return res.status(500).send('Internal server error.');
+      }
+
+      // Access the form data
+      const {
+        id,
+        user_name,
+        gender,
+        address,
+        number,
+        city,
+        ZIP,
+      } = req.body;
+
+      req.body.image = imageArray[0];
+      console.log(imageArray[0]);
+      console.log(req.body);
+      AuthsModel.updateUserData(req,req.body.id)
+      .then((result) => {
+        res.send({
+          status: "success",
+          code: "200",
+          message: "your record has been updated successfully.",
+        });
+      })
+      .catch((error) => {
+        res.send({
+          status: "error",
+          code: "500",
+          message: error,
+        });
+      });
+  })
 };
 
 exports.create_users_auth = async(req,res)=>{

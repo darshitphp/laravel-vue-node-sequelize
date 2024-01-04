@@ -11,19 +11,18 @@
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Header</h1>
+            <div class="p-1 col-12">
               <form class="row">
                 <!-- Form -->
                 <div class="mb-4 col-6">
-                  <label for="title">Header title</label>
+                  <label for="title">Title</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter title name" id="title" required>
                   </div>
                   <div id="titleError" className="text-danger d-none">Please Enter Header Title</div>
                 </div>
                 <div class="mb-4 col-6">
-                  <label for="position">Select Position type</label>
+                  <label for="position">Position type</label>
                   <div class="input-group">
                     <select id="position" name="position" class="form-control">
                       <option value="">Select header position type</option>
@@ -44,7 +43,7 @@
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="headerOption" value="link" id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
-                      Social Links
+                      Links
                     </label>
                   </div>
                   <div class="form-check">
@@ -55,67 +54,63 @@
                   </div>
                 </div>
                 <div class="mb-4 col-6 logoWrapper" style="display: none">
-                  <label>Header Logo</label>
+                  <label>Logo</label>
                   <div class="input-group">
                     <input type="file" class="form-control" id="header_logo_add" name="image" accept="image/*" @change="handleHeaderLogoUpload" required>
                   </div>
                   <div id="imageError" className="text-danger d-none">Please select logo image</div>
                 </div>
                 <div class="mb-4 socialLinkWrapper" style="display: none">
-                  <h5>Social Links</h5>
-                  <div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
-                    <div class="mb-4 col-4">
-                      <label>Social account title</label>
+                  <div class="row m-0 mt-2" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
+                    <div class="mb-1 col-4">
+                      <label>Title</label>
                       <div class="input-group">
-                        <input type="text" class="form-control social_title" placeholder="Enter title name" name="logo_title" required>
+                        <input type="text" class="form-control social_title" placeholder="Enter social title" name="logo_title" required>
                       </div>
                       <div id="titleError" className="text-danger d-none">Please enter social title</div>
                     </div>
                     <div class="mb-4 col-4">
-                      <label>Social account image</label>
+                      <label>Image</label>
                       <div class="input-group">
                         <input type="file" class="form-control social_image_add" :name="'social_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>
                       </div>
                       <div id="imageError" className="text-danger d-none">Please select logo image</div>
                     </div>
                     <div class="mb-4 col-4">
-                      <label>Social account link</label>
+                      <label>Link</label>
                       <div class="input-group">
                         <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" required>
                       </div>
                       <div id="titleError" className="text-danger d-none">Please enter social link</div>
                     </div>
+                    <div class="col-12 text-end mt-2 addMoreWrapper" data-counter="0">
+                      <button type="button" id="addMoreHeaderInputs" class="btn btn-gray-800">Add More</button>
+                    </div>
                   </div>
                   <div class="moreSocialContents"></div>
-                  <div class="col-12 text-end mt-2">
-                    <button type="button" id="addMoreHeaderInputs" class="btn btn-gray-800">Add More</button>
-                  </div>
-                  <div class="input-group" id="socialGroup" style="display: none">
-                    <div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
-                      <div class="mb-4 col-4">
-                        <label>Social account title</label>
-                        <div class="input-group">
-                          <input type="text" class="form-control social_title" placeholder="Enter title name" name="logo_title" required>
-                        </div>
-                        <div id="titleError" className="text-danger d-none">Please enter social title</div>
+                </div>
+                <div class="input-group" id="socialGroup" style="display: none">
+                  <div class="row m-0 mt-2" style="border: 1px solid grey; border-radius: 10px; padding: 15px; margin-top: 5px;">
+                    <div class="mb-4 col-4">
+                      <label>Title</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control social_title" placeholder="Enter social title" name="logo_title" required>
                       </div>
-                      <div class="mb-4 col-4">
-                        <label>Social account image</label>
-                        <div class="input-group">
-                          <input type="file" class="form-control social_image_add" :name="'social_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>
-                        </div>
-                        <div id="imageError" className="text-danger d-none">Please select logo image</div>
+                      <div id="titleError" className="text-danger d-none">Please enter social title</div>
+                    </div>
+                    <div class="mb-4 col-4">
+                      <label>Image</label>
+                      <div class="input-group">
+                        <input type="file" class="form-control social_image_add" :name="'social_image[' + index + ']'" @change="handleFileUpload" accept="image/*" required>
                       </div>
-                      <div class="mb-4 col-4">
-                        <label>Social account link</label>
-                        <div class="input-group">
-                          <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" required>
-                        </div>
-                        <div id="titleError" className="text-danger d-none">Please enter social link</div>
+                      <div id="imageError" className="text-danger d-none">Please select logo image</div>
+                    </div>
+                    <div class="mb-4 col-4">
+                      <label>Link</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control social_link" placeholder="Enter social link" name="link" required>
                       </div>
-                      <div class="col-12 text-end mt-2">
-                        <button type="button" @click="removeFileUpload(index)" class="btn btn-danger removeMySocial">Remove</button>
-                      </div>
+                      <div id="titleError" className="text-danger d-none">Please enter social link</div>
                     </div>
                   </div>
                 </div>
@@ -140,6 +135,7 @@
 </template>
 <script>
 $(document).ready(function() {
+  var clicker = 1;
   $('input[name="headerOption"]').change(function() {
     var selectedValue = $('input[name="headerOption"]:checked').val();
     if(selectedValue == 'logo'){
@@ -158,14 +154,37 @@ $(document).ready(function() {
   });
 
     $(document).on("click","#addMoreHeaderInputs",function() {
-    var hiddenInputs = $('#socialGroup').html();
-    $('.moreSocialContents').append(hiddenInputs);
-  });
+      $("#addMoreHeaderInputs").remove();
+      $('#socialGroup').find('.addMoreWrapper').remove();
+      $(".addMoreWrapper").each(function(){
+        var count = $(this).data("counter");
+        if((count) == (clicker-1)){
+          $(this).find("#addMoreHeaderInputs").remove();
+        }
+      })
+      $('#socialGroup').find('.row').append('<div class="col-12 text-end addMoreWrapper" data-counter="'+clicker+'"> <button type="button" class="btn btn-danger removeMySocial">Remove</button> <button type="button" id="addMoreHeaderInputs" class="btn btn-gray-800">Add More</button> </div>');
+      var hiddenInputs = $('#socialGroup').html();
+      $('.moreSocialContents').append(hiddenInputs);
+      clicker++;
+    });
 
   $(document).on('click', '.removeMySocial', function() {
+    var countValues = [];
     $(this).parent().parent().remove();
+    $(".socialLinkWrapper").find(".addMoreWrapper").each(function(){
+      const count = $(this).data('counter');
+      countValues.push(count);
+      $(this).find("#addMoreHeaderInputs").remove();
+    });
+    var maxCount = Math.max(...countValues);
+    $(".socialLinkWrapper").find(".addMoreWrapper").each(function(){
+      const count = $(this).data('counter');
+      const include = `<button class="btn btn-primary" type="button" id="addMoreHeaderInputs">Add more</button>`;
+      if(maxCount == count){
+        $(this).append(include);
+      }
+    });
   });
-
 });
 
 import AdminLayout from "@/Pages/AdminLayout.vue";

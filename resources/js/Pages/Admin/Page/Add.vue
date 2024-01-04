@@ -11,8 +11,7 @@
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Page</h1>
+            <div class="p-1 col-12">
               <form class="row">
                 <!-- Form -->
                 <div class="accordion" id="accordionExample">
@@ -197,11 +196,11 @@
                       <div class="accordion-body row">
                         <div class="mb-4 col-6">
                           <label for="custom_js">JS</label>
-                          <textarea name="custom_js" id="custom_js" cols="50" rows="10"></textarea>
+                          <textarea name="custom_js" id="custom_js" class="w-100" rows="10"></textarea>
                         </div>
                         <div class="mb-4 col-6">
                           <label for="custom_css">CSS</label>
-                          <textarea name="custom_css" id="custom_css" cols="50" rows="10"></textarea>
+                          <textarea name="custom_css" id="custom_css" class="w-100" rows="10"></textarea>
                         </div>
                       </div>
                     </div>

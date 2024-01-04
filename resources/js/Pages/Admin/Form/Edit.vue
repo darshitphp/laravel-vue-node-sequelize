@@ -11,8 +11,7 @@
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Edit Form</h1>
+            <div class="p-1 col-12">
               <form class="row">
                 <div class="mb-4 col-4">
                   <label for="name">Name</label>
@@ -181,19 +180,13 @@
                     toolbar: 'code',
                   }"></editor>
                 </div>
-                <div class="mb-4">
-                  <label for="custom_js">Custom JS Text</label>
-                  <editor v-model="form.custom_js" @input="updatePage('custom_js',$event)" id="custom_js" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
-                    plugins: 'code',
-                    toolbar: 'code',
-                  }"></editor>
+                <div class="mb-4 col-6">
+                  <label for="custom_js">JS</label>
+                  <textarea name="custom_js" v-model="form.custom_js" id="custom_js" class="w-100" rows="10"></textarea>
                 </div>
-                <div class="mb-4">
-                  <label for="custom_css">Custom CSS Text</label>
-                  <editor v-model="form.custom_css" @input="updatePage('custom_css',$event)" id="custom_css" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
-                    plugins: 'code',
-                    toolbar: 'code',
-                  }"></editor>
+                <div class="mb-4 col-6">
+                  <label for="custom_css">CSS</label>
+                  <textarea name="custom_css" v-model="form.custom_css" id="custom_css" class="w-100" rows="10"></textarea>
                 </div>
                 <div class="offset-4 col-3">
                   <button type="button" id="generateForm" class="btn btn-gray-800 me-2">Preview Form</button>
@@ -466,8 +459,10 @@ export default {
       var action_url = document.getElementById("action_url").value;
       var formName = document.getElementById("name").value;
       var formDescription = tinymce.get('content').getContent();
-      var form_custom_js = tinymce.get('custom_js').getContent();
-      var form_custom_css = $(tinymce.get('custom_css').getContent()).text();
+      var form_custom_js = document.getElementById("custom_js").value;
+      var form_custom_css = '.displayGeneratedForm .card{ ';
+      form_custom_css += document.getElementById("custom_css").value;
+      form_custom_css += ' }';
       console.log(form_custom_css);
       const styleTag = document.createElement('style');
       styleTag.type = 'text/css';
@@ -591,8 +586,10 @@ export default {
         var email_adds = null;
       }
       var content = tinymce.get('content').getContent();
-      var custom_js = tinymce.get('custom_js').getContent();
-      var custom_css = tinymce.get('custom_css').getContent();
+      var custom_js = document.getElementById("custom_js").value;
+      var custom_css = '.displayGeneratedForm .card{ ';
+      custom_css += document.getElementById("custom_css").value;
+      custom_css += ' }';
       var fields = $(".displayGeneratedForm").html();
 
       var nameError = document.getElementById("nameError");

@@ -11,8 +11,7 @@
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Edit Page</h1>
+            <div class="p-1 col-12">
               <form>
                 <div class="accordion" id="accordionExample">
                   <div class="accordion-item">
@@ -226,7 +225,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-12 text-end addMoreWrapper" :data-counter="0">
+                            <div class="col-12 text-end addMoreWrapper" data-counter="0">
                               <button class="btn btn-primary" type="button" id="addMorePageSection">Add more</button>
                             </div>
                           </div>
@@ -267,11 +266,11 @@
                       <div class="accordion-body row">
                         <div class="mb-4 col-6">
                           <label for="custom_js">JS</label>
-                          <textarea name="custom_js" id="custom_js" v-model="page.page.custom_js" @input="updatePage('custom_js',$event)" cols="50" rows="10"></textarea>
+                          <textarea name="custom_js" id="custom_js" v-model="page.page.custom_js" @input="updatePage('custom_js',$event)" class="w-100" rows="10"></textarea>
                         </div>
                         <div class="mb-4 col-6">
                           <label for="custom_css">CSS</label>
-                          <textarea name="custom_css" id="custom_css" v-model="page.page.custom_css" @input="updatePage('custom_css',$event)" cols="50" rows="10"></textarea>
+                          <textarea name="custom_css" id="custom_css" v-model="page.page.custom_css" @input="updatePage('custom_css',$event)" class="w-100" rows="10"></textarea>
                         </div>
                       </div>
                     </div>

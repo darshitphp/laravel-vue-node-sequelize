@@ -9,11 +9,8 @@
               <a href="/slider" class="btn btn-gray-800 me-2 my-2">Back</a>
             </div>
           </div>
-
-
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Edit Slider</h1>
+            <div class="p-1 col-12">
               <form>
                 <div class="d-flex col-12 row">
                   <!-- Form -->
@@ -33,7 +30,7 @@
                     <div id="shortcodeError" className="text-danger d-none">Please Enter Slider Name</div>
                   </div>
                   <div id="appendMorSliders">
-                    <div style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;" class="addedSliders row" v-for="(arr, key) in slider.sliderTransaction">
+                    <div style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px !important;" class="addedSliders row m-0" v-for="(arr, key) in slider.sliderTransaction">
                       <div class="mb-4 col-6">
                         <label :for="`slider_content_`+key">Content</label>
                         <editor :id="`slider_content_`+key" @input="updateContent(`slider_content_`+key,$event)" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
@@ -44,11 +41,11 @@
                         <div class="contentError text-danger d-none">Please Enter Slider Content</div>
                       </div>
                       <div class="mb-4 col-4">
-                        <label>Upload slider images</label>
+                        <label>Image</label>
                         <div class="input-group mb-2">
                           <input type="file" :name="'slider_image['+key+']'" class="form-control slider_image" @change="handleFileUpload" accept="image/*">
                         </div>
-                        <div class="row">
+                        <div class="row m-0">
                           <div style="width: 100px!important;position: relative;">
                             <input type="hidden" name="old_slider_image" class="form-control old_slider_image" :value="arr.slider_image ? arr.slider_image : ''">
                             <i class="fa fa-close removeSliderImage" :data-id="arr.id" :data-src="arr.slider_image" style="font-size:14px;color:darkgrey;cursor: pointer;position: absolute;padding-left: 63px"></i>
@@ -57,20 +54,17 @@
                         </div>
                       </div>
                       <div class="mb-4 col-2">
-                        <label>Select status</label>
                         <div class="form-check form-switch">
                           <input class="form-check-input status" :checked="arr.status === 'active'" type="checkbox" :id="`status_`+key">
                           <label class="form-check-label" :for="`status_`+key">Status</label>
                         </div>
                         <div class="statusError text-danger d-none">Please Select Slider Status</div>
                       </div>
-                      <div class="col-12 text-end" v-if="key != 0">
-                        <button type="button" class="btn btn-danger removeAddedSliders mb-2">Remove</button>
+                      <div class="col-12 text-end addMoreWrapper" :data-counter="key">
+                        <button type="button" v-if="key != 0" class="btn btn-danger removeAddedSliders mb-2">Remove</button>
+                        <button class="btn btn-primary" v-if="key == Object.keys(slider.sliderTransaction).length - 1" type="button" id="addMoreSlider">Add more</button>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-12 text-end mt-2">
-                    <button type="button" class="btn btn-primary" id="addMoreSlider">Add More</button>
                   </div>
                   <div class="mb-4 col-6">
                     <label for="start_from">Start Date</label>
@@ -102,16 +96,24 @@
 $(document).ready(function () {
   var clicker = $(".addedSliders").length;
   $(document).on("click","#addMoreSlider",function(){
+    $("#addMoreSlider").remove();
+    $(".addMoreWrapper").each(function(){
+      var count = $(this).data("counter");
+      if((count) == (clicker-1)){
+        $(this).find("#addMoreSlider").remove();
+      }
+    })
+
     var uniqueId = 'slider_content_'+clicker;
     var uniqueCheckBox = 'status_'+clicker;
-    var html = `<div class="addedSliders row" style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
+    var html = `<div class="addedSliders row m-0" style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px !important;">
                   <div class="mb-4 col-6">
                     <label>Content</label>
                     <editor id="`+uniqueId+`" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{ plugins: 'code',toolbar: 'code',}"></editor>
                     <div class="contentError text-danger d-none">Please Enter Slider Content</div>
                   </div>
                   <div class="mb-4 col-4">
-                    <label>Upload slider images</label>
+                    <label>Image</label>
                     <div class="input-group mb-2">
                       <input type="file" name="slider_image[`+clicker+`]" class="form-control slider_image" accept="image/*">
                     </div>
@@ -124,15 +126,15 @@ $(document).ready(function () {
                     </div>
                   </div>
                   <div class="mb-4 col-2">
-                    <label>Select status</label>
                     <div class="form-check form-switch">
                       <input class="form-check-input status" type="checkbox" id="`+uniqueCheckBox+`">
                       <label class="form-check-label" for="`+uniqueCheckBox+`">Status</label>
                     </div>
                     <div class="statusError text-danger d-none">Please Select Slider Status</div>
                   </div>
-                  <div class="col-12 text-end">
+                  <div class="col-12 text-end addMoreWrapper" data-counter="`+clicker+`">
                     <button type="button" class="btn btn-danger removeAddedSliders mb-2">Remove</button>
+                    <button type="button" class="btn btn-primary mb-2" id="addMoreSlider">Add More</button>
                   </div>
                 </div>`;
     $("#appendMorSliders").append(html);
@@ -188,7 +190,21 @@ $(document).ready(function () {
   });
 
   $(document).on("click",".removeAddedSliders",function(){
+    var countValues = [];
     $(this).parent().parent().remove();
+    $(".addMoreWrapper").each(function(){
+      const count = $(this).data('counter');
+      countValues.push(count);
+      $(this).find("#addMoreSlider").remove();
+    });
+    var maxCount = Math.max(...countValues);
+    $(".addMoreWrapper").each(function(){
+      const count = $(this).data('counter');
+      const include = `<button class="btn btn-primary" type="button" id="addMoreSlider">Add more</button>`;
+      if(maxCount == count){
+        $(this).append(include);
+      }
+    });
   });
 })
 

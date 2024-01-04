@@ -11,31 +11,26 @@
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Footer</h1>
+            <div class="p-1 col-12">
               <form class="row">
                 <!-- Form -->
-                <div class="mb-4 col-6">
-                  <label for="title">Footer title</label>
+                <div class="mb-4 col-6 m-0 p-1">
+                  <label for="title">Title</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter title name" id="title" required>
                   </div>
                   <div id="titleError" style="display: none" className="text-danger">Please Enter Header Title</div>
                 </div>
                 <div class="mb-4 col-6">
-                  <label for="position">Footer status</label>
-                  <div class="input-group">
-                    <select id="footerStatus" name="footerStatus" class="form-control">
-                      <option value="">Select footer status</option>
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
-                    </select>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input status" name="footerStatus" type="checkbox" id="footerStatus" >
+                    <label class="form-check-label" for="footerStatus">Status</label>
                   </div>
-                  <div id="footerStatusError" style="display: none" className="text-danger">Please Select Footer Status</div>
+                  <div class="text-danger" id="footerStatusError" style="display: none">Please Select Footer Status</div>
                 </div>
                 <div class="mb-4">
                   <div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 10px;margin-bottom: 20px;">
-                    <div class="mb-4 col-6">
+                    <div class="mb-4 col-3">
                       <label>Link Type</label>
                       <div class="input-group">
                         <select name="position" class="form-control linkType">
@@ -45,6 +40,13 @@
                         </select>
                       </div>
                       <div id="positionError" style="display: none" className="text-danger">Please Select header position type</div>
+                    </div>
+                    <div class="mb-4 col-3">
+                      <div class="form-check form-switch">
+                        <input class="form-check-input status footerLinkStatus" name="footerLinkStatus" type="checkbox" id="footerLinkStatus" >
+                        <label class="form-check-label" for="footerLinkStatus">Status</label>
+                      </div>
+                      <div class="text-danger" style="display: none" id="footerLinkStatusError">Please Check Footer Link Status</div>
                     </div>
                     <div class="mb-4 col-6 customLinkWrapper" style="display: none;">
                       <label>Custom link</label>
@@ -78,20 +80,11 @@
                             bullist numlist outdent indent | removeformat | help'
                       }"></editor>
                     </div>
-                    <div class="mb-4 col-6">
-                      <label for="position">Footer link status</label>
-                      <div class="input-group">
-                        <select name="footerLinkStatus" class="form-control footerLinkStatus">
-                          <option value="">Select footer link status</option>
-                          <option value="active">Active</option>
-                          <option value="inactive">Inactive</option>
-                        </select>
-                      </div>
-                      <div id="footerLinkStatusError" style="display: none" className="text-danger">Please Select header position type</div>
+                    <div class="col-12 text-end mt-2 addMoreWrapper" data-counter="0">
+                      <button type="button" id="addMoreFooters" class="btn btn-gray-800">Add</button>
                     </div>
                   </div>
                   <div class="moreSocialContents"></div>
-                  <button type="button" id="addMoreFooters" class="btn btn-gray-800">Add</button>
                   <div id="hiddenPageLink">
                     <div class="mb-4 pageLinkWrapper col-6" style="display: none;">
                       <label>Select page link</label>
@@ -121,11 +114,18 @@
 $(document).ready(function() {
   var count = 0;
   $(document).on("click","#addMoreFooters",function() {
-    // var hiddenInputs = $('#socialGroup').html();
+    $("#addMoreFooters").remove();
+    $(".addMoreWrapper").each(function(){
+      var currentCount = $(this).data("counter");
+      if((currentCount) == (count-1)){
+        $(this).find("#addMoreFooters").remove();
+      }
+    })
     var uniqueId = 'editor_'+count;
+    var uniqueStatus = 'footerLinkStatus_'+count;
     var hiddenPageLink = $("#hiddenPageLink").html();
     var hiddenInputs = `<div class="row" style="border: 1px solid grey; border-radius: 10px; padding: 10px;margin-bottom: 20px;">
-      <div class="mb-4 col-6">
+      <div class="mb-4 col-3">
         <label>Link Type</label>
         <div class="input-group">
           <select name="position" class="form-control linkType">
@@ -135,6 +135,13 @@ $(document).ready(function() {
           </select>
         </div>
         <div id="positionError" class="text-danger d-none">Please Select header position type</div>
+      </div>
+      <div class="mb-4 col-3">
+        <div class="form-check form-switch">
+          <input class="form-check-input status footerLinkStatus" name="footerLinkStatus" type="checkbox" id="`+uniqueStatus+`" >
+          <label class="form-check-label" for="`+uniqueStatus+`">Status</label>
+        </div>
+        <div class="text-danger" style="display: none" id="footerLinkStatusError">Please Check Footer Link Status</div>
       </div>
       <div class="mb-4 customLinkWrapper col-6" style="display: none;">
         <label>Custom link</label>
@@ -148,19 +155,9 @@ $(document).ready(function() {
         <label>Content Text</label>
         <editor id="`+uniqueId+`" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{ menubar: false, plugins: [ 'advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount' ], toolbar: 'undo redo | formatselect | bold italic backcolor | \ alignleft aligncenter alignright alignjustify | \ bullist numlist outdent indent | removeformat | help' }"></editor>
       </div>
-      <div class="mb-4">
-        <label for="position">Footer link status</label>
-        <div class="input-group">
-          <select name="footerLinkStatus" class="form-control footerLinkStatus">
-            <option value="">Select footer link status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
-        <div className="text-danger footerLinkStatusError" style="display: none">Please Select header position type</div>
-      </div>
-      <div class="input-group">
-        <button type="button" class="btn btn-danger removeMoreSocial mb-2">Remove</button>
+      <div class="col-12 text-end addMoreWrapper" data-counter="`+count+`">
+        <button type="button" class="btn btn-danger removeMoreSocial">Remove</button>
+        <button type="button" class="btn btn-primary" id="addMoreFooters">Add</button>
       </div>
     </div>`;
     $('.moreSocialContents').append(hiddenInputs);
@@ -192,6 +189,21 @@ $(document).ready(function() {
 
   $(document).on('click', '.removeMoreSocial', function() {
     $(this).parent().parent().remove();
+    var countValues = [];
+    $(this).parent().parent().remove();
+    $(".addMoreWrapper").each(function(){
+      const currentCount = $(this).data('counter');
+      countValues.push(currentCount);
+      $(this).find("#addMoreFooters").remove();
+    });
+    var maxCount = Math.max(...countValues);
+    $(".addMoreWrapper").each(function(){
+      const currentCount = $(this).data('counter');
+      const include = `<button class="btn btn-primary" type="button" id="addMoreFooters">Add</button>`;
+      if(maxCount == currentCount){
+        $(this).append(include);
+      }
+    });
   });
 
 });

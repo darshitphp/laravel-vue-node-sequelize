@@ -186,6 +186,9 @@ export default {
       try {
         const response = await axios.get(laravelBaseUrl+'get-active-user');
         this.data = response.data.data;
+        if($(".avatar").hasClass('rounded-circle')){
+          $(".avatar").attr('src','/assets/img/admin_profile/'+this.data.image);
+        }
         $(".userName").html(this.data.user_name);
       } catch (error) {
         console.error(error);

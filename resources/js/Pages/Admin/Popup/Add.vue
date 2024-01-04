@@ -11,20 +11,19 @@
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Popup</h1>
+            <div class="p-1">
               <div id="forCustomStyle"></div>
               <form class="row">
                 <!-- Form -->
                 <div class="mb-4 col-6">
-                  <label for="name">Popup name</label>
+                  <label for="name">Name</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter popup name" id="name" required>
                   </div>
                   <div id="nameError" className="text-danger d-none">Please Enter Popup Name</div>
                 </div>
                 <div class="mb-4 col-6">
-                  <label for="status">Select status</label>
+                  <label for="status">Status</label>
                   <div class="input-group">
                     <select id="status" name="status" class="form-control">
                       <option value="">Select popup status</option>
@@ -49,14 +48,14 @@
                   <div id="end_dateError" className="text-danger d-none">Please select end date</div>
                 </div>
                 <div class="mb-4 col-6">
-                  <label for="timer">Timer for popup</label>
+                  <label for="timer">Timer</label>
                   <div class="input-group">
                     <input type="number" class="form-control" placeholder="Enter timer for popup (in sec)" id="timer" required>
                   </div>
                   <div id="timerError" className="text-danger d-none">Please Enter timer for popup</div>
                 </div>
                 <div class="mb-4 col-6">
-                  <label for="rules">Rules for popup</label>
+                  <label for="rules">Rules</label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter rules for popup" id="rules" required>
                   </div>
@@ -70,14 +69,14 @@
                   }"></editor>
                 </div>
                 <div class="mb-4 col-6">
-                  <label for="custom_js">Custom JS Text</label>
-                  <textarea name="custom_js" id="custom_js" cols="52" rows="10"></textarea>
+                  <label for="custom_js">JS</label>
+                  <textarea name="custom_js" id="custom_js" class="w-100" rows="10"></textarea>
                 </div>
                 <div class="mb-4 col-6">
-                  <label for="custom_css">Custom CSS Text</label>
-                  <textarea name="custom_css" id="custom_css" cols="52" rows="10"></textarea>
+                  <label for="custom_css">CSS</label>
+                  <textarea name="custom_css" id="custom_css" class="w-100" rows="10"></textarea>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4 col-6">
                   <label>Select page link</label>
                   <div class="input-group">
                     <select name="pageLink" class="form-control pageLink" multiple>

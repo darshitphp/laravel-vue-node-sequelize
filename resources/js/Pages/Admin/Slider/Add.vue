@@ -11,8 +11,8 @@
           </div>
 
           <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="p-4 p-lg-5 col-12">
-              <h1 class="h3 mb-4">Add Slider</h1>
+            <div class="p-1 col-12">
+<!--              <h1 class="h3 mb-4">Add Slider</h1>-->
               <form>
                 <div class="d-flex col-12 row">
                 <!-- Form -->
@@ -31,7 +31,7 @@
                   <div id="shortcodeError" className="text-danger d-none">Please Enter Slider Name</div>
                 </div>
                 <div id="appendMoreSliders">
-                  <div class="row" style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
+                  <div class="row m-0" style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
                     <div class="mb-4 col-6">
                       <label for="slider_content_0">Content</label>
                       <editor id="slider_content_0" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{
@@ -42,7 +42,7 @@
                       <div id="contentError" className="text-danger d-none">Please enter slider content</div>
                     </div>
                     <div class="mb-4 col-4">
-                      <label>Upload slider images</label>
+                      <label>Image</label>
                       <div class="input-group mb-2">
                         <input type="file" name="slider_image_add[0]" class="form-control slider_image_add" @change="handleFileUpload" accept="image/*">
                       </div>
@@ -54,10 +54,10 @@
                       </div>
                       <div class="statusError text-danger d-none">Please Select Slider Status</div>
                     </div>
+                    <div class="col-12 text-end mt-2 addMoreWrapper" data-counter="0">
+                      <button type="button" class="btn btn-primary" id="addSlider">Add More</button>
+                    </div>
                   </div>
-                </div>
-                <div class="col-12 text-end mt-2">
-                  <button type="button" class="btn btn-primary" id="addSlider">Add More</button>
                 </div>
                 <div class="mb-4 col-6">
                   <label for="start_from">Start Date</label>
@@ -89,15 +89,23 @@
 $(document).ready(function () {
   var clicker = 1;
   $(document).on("click","#addSlider",function(){
+    $("#addSlider").remove();
+    $(".addMoreWrapper").each(function(){
+      var count = $(this).data("counter");
+      if((count) == (clicker-1)){
+        $(this).find("#addSlider").remove();
+      }
+    })
+
     var uniqueId = 'slider_content_'+clicker;
     var uniqueCheckBox = 'status_'+clicker;
-    var html = `<div class="row" style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px;">
+    var html = `<div class="row m-0" style="border: 1px solid grey;border-radius: 10px;padding: 15px;margin-top: 5px !important;">
                   <div class="mb-4 col-6">
                     <label>Content</label>
                     <editor id="`+uniqueId+`" class="content" api-key="2dc2orzzlfcteo55ky2mz5t7mmvm805jpqrihwr7nn1qa3hh" :init="{ plugins: 'code',toolbar: 'code',}"></editor>
                   </div>
                   <div class="mb-4 col-4">
-                    <label>Upload slider images</label>
+                    <label>Image</label>
                     <div class="input-group mb-2">
                       <input type="file" name="slider_image_add[`+clicker+`]" class="form-control slider_image_add" @change="handleFileUpload" accept="image/*">
                     </div>
@@ -109,8 +117,9 @@ $(document).ready(function () {
                     </div>
                     <div class="statusError text-danger d-none">Please Select Slider Status</div>
                   </div>
-                  <div class="col-12 text-end">
+                  <div class="col-12 text-end addMoreWrapper" data-counter="`+clicker+`">
                     <button type="button" class="btn btn-danger removeSlider mb-2">Remove</button>
+                    <button type="button" class="btn btn-primary mb-2" id="addSlider">Add More</button>
                   </div>
                 </div>`;
     $("#appendMoreSliders").append(html);
@@ -125,7 +134,21 @@ $(document).ready(function () {
   })
 
   $(document).on("click",".removeSlider",function(){
+    var countValues = [];
     $(this).parent().parent().remove();
+    $(".addMoreWrapper").each(function(){
+      const count = $(this).data('counter');
+      countValues.push(count);
+      $(this).find("#addSlider").remove();
+    });
+    var maxCount = Math.max(...countValues);
+    $(".addMoreWrapper").each(function(){
+      const count = $(this).data('counter');
+      const include = `<button class="btn btn-primary mb-2" type="button" id="addSlider">Add more</button>`;
+      if(maxCount == count){
+        $(this).append(include);
+      }
+    });
   });
 })
 import AdminLayout from "@/Pages/AdminLayout.vue";
